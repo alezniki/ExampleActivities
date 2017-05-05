@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Activities Example</string>
+
+    <string name="second_activity">Second Activity</string>
+    <string name="third_activity">Third Activity</string>
+
+    <string name="start_activity">Start An Activity</string>
+    <string name="open_browser">Open Web Browser</string>
+    <string name="open_camera">Open Camera</string>
+</resources>

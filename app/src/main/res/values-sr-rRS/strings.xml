@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Primer Aktivnosti</string>
+
+    <string name="second_activity">Druga Aktivnost</string>
+    <string name="third_activity">Treca Aktivnost</string>
+
+    <string name="start_activity">Pokreni Aktivnost</string>
+    <string name="open_browser">Pokreni Veb Pretrazivac</string>
+    <string name="open_camera">Pokreni Kameru</string>
+</resources>
