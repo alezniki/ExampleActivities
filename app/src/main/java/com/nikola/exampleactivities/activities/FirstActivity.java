@@ -1,4 +1,4 @@
-package com.nikola.exampleactivities;
+package com.nikola.exampleactivities.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+
+import com.nikola.exampleactivities.R;
 
 // Each activity extends Activity class
 public class FirstActivity extends Activity {
@@ -94,8 +96,8 @@ public class FirstActivity extends Activity {
         // This is an implicit intent: Load a web URL
         Uri webPage = Uri.parse("http://www.google.com");
 
-        Intent intent = new Intent(Intent.ACTION_VIEW, webPage);
-        startActivity(intent);
+        Intent browser = new Intent(Intent.ACTION_VIEW, webPage);
+        startActivity(browser);
     }
 
 }

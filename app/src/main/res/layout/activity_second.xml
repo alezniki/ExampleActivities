@@ -4,9 +4,18 @@
     android:layout_height="match_parent">
 
 
-    <TextView
+  <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/start_activity"
+      android:onClick="btnStartActivity"
+      android:text="@string/start_activity"/>
+
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SecondActivity"/>
+        android:id="@+id/open_camera"
+        android:onClick="btnOpenCamera"
+        android:text="@string/open_camera"/>
 
 </LinearLayout>

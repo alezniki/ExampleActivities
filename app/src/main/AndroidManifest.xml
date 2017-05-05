@@ -14,7 +14,7 @@
         <!-- Declares 1st (main) activity. Action "MAIN" and category "LAUNCHER" properties
          makes it visible in the application launcher -->
         <activity
-            android:name="com.nikola.exampleactivities.FirstActivity"
+            android:name="com.nikola.exampleactivities.activities.FirstActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,10 +25,20 @@
 
         <!--Declare 2nd activity-->
         <activity
-            android:name="com.nikola.exampleactivities.SecondActivity"
-            android:label="@string/app_name">
+            android:name="com.nikola.exampleactivities.activities.SecondActivity"
+            android:label="@string/second_activity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!--Declare 3rd activity-->
+        <activity
+            android:name="com.nikola.exampleactivities.activities.ThirdActivity"
+            android:label="@string/third_activity">
+            <intent-filter>
+                <action android:name="android.media.action.IMAGE_CAPTURE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
