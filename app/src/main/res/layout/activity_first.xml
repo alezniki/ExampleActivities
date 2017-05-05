@@ -9,12 +9,14 @@
         android:layout_height="wrap_content"
         android:text="@string/start_activity"
         android:id="@+id/start_activity"
-        android:onClick="btnStartActivity"/>
+        android:onClick="btnStartActivity"
+        android:drawableLeft="@drawable/ic_action_open"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/open_browser"
         android:id="@+id/open_browser"
-        android:onClick="btnOpenBrowser"/>
+        android:onClick="btnOpenBrowser"
+        android:drawableLeft="@drawable/ic_action_search"/>
 </LinearLayout>

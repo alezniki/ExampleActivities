@@ -9,13 +9,15 @@
       android:layout_height="wrap_content"
       android:id="@+id/start_activity"
       android:onClick="btnStartActivity"
-      android:text="@string/start_activity"/>
+      android:text="@string/start_activity"
+      android:drawableLeft="@drawable/ic_action_open"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/open_camera"
         android:onClick="btnOpenCamera"
-        android:text="@string/open_camera"/>
+        android:text="@string/open_camera"
+        android:drawableLeft="@drawable/ic_action_camera"/>
 
 </LinearLayout>

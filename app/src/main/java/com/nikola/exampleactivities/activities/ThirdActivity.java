@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.nikola.exampleactivities.R;
 
+
 /**
  * Created by Dzoni on 5/5/2017.
  */
