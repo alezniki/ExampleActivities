@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- In principle, each app should have unique package -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nikola.exampleactivities">
 
@@ -7,6 +9,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!-- Declares 1st (main) activity. Action "MAIN" and category "LAUNCHER" properties
+         makes it visible in the application launcher -->
         <activity android:name="com.nikola.exampleactivities.FirstActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
