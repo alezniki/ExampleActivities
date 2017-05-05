@@ -2,15 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
+
+    <!-- Declares a button that starts 2nd activity -->
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="First Activity"/>
+        android:text="@string/start_activity"
+        android:id="@+id/start_activity"
+        android:onClick="btnStartActivity"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Click"
-        android:onClick="btnTest"/>
-
+        android:text="@string/open_browser"
+        android:id="@+id/open_browser"
+        android:onClick="btnOpenBrowser"/>
 </LinearLayout>
