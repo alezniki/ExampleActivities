@@ -11,7 +11,7 @@ public class Food {
     private String name;
     private String description;
     private Category category; // jedno jelo pripada jednoj kategoriji
-    private List<Ingredients> ingredientses;// jedno jelo ima vise sastojak
+    private List<Ingredients> ingredients;// jedno jelo ima vise sastojak
     double calories;
     double price;
 
@@ -59,12 +59,12 @@ public class Food {
         this.category = category;
     }
 
-    public List<Ingredients> getIngredientses() {
-        return ingredientses;
+    public List<Ingredients> getIngredients() {
+        return ingredients;
     }
 
-    public void setIngredientses(List<Ingredients> ingredientses) {
-        this.ingredientses = ingredientses;
+    public void setIngredients(List<Ingredients> ingredients) {
+        this.ingredients = ingredients;
     }
 
     public double getCalories() {

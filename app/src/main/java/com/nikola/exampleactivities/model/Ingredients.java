@@ -16,11 +16,6 @@ public class Ingredients {
         this.name = name;
     }
 
-//    public Ingredients(String name, Food food) {
-//        this.name = name;
-//        this.food = food;
-//    }
-
     public String getName() {
         return name;
     }

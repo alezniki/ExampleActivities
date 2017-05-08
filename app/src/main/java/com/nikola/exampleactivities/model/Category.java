@@ -18,11 +18,6 @@ public class Category {
         this.name = name;
     }
 
-//    public Category(String categoryName, List<Food> food) {
-//        this.categoryName = categoryName;
-//        this.food = food;
-//    }
-
     public String getName() {
         return name;
     }
