@@ -1,5 +1,7 @@
 package com.nikola.exampleactivities.model;
 
+import java.util.List;
+
 /**
  * Created by Dzoni on 5/8/2017.
  */
@@ -8,10 +10,8 @@ public class Food {
     private String image;
     private String name;
     private String description;
-//    private Category category;
-    private String category;
-//    private List<Ingredients> ingredientses;
-    private String ingredientses;
+    private Category category; // jedno jelo pripada jednoj kategoriji
+    private List<Ingredients> ingredientses;// jedno jelo ima vise sastojak
     double calories;
     double price;
 
@@ -19,12 +19,10 @@ public class Food {
 
     }
 
-    public Food(String image, String name, String description, String category, String ingredientses, double calories, double price) {
+    public Food(String image, String name, String description, double calories, double price) {
         this.image = image;
         this.name = name;
         this.description = description;
-        this.category = category;
-        this.ingredientses = ingredientses;
         this.calories = calories;
         this.price = price;
     }
@@ -53,19 +51,19 @@ public class Food {
         this.description = description;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
-    public String getIngredientses() {
+    public List<Ingredients> getIngredientses() {
         return ingredientses;
     }
 
-    public void setIngredientses(String ingredientses) {
+    public void setIngredientses(List<Ingredients> ingredientses) {
         this.ingredientses = ingredientses;
     }
 

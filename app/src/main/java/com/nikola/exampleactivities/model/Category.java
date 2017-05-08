@@ -7,28 +7,28 @@ import java.util.List;
  */
 
 public class Category {
-    private String categoryName;
-    private List<Food> food;
+    private String name;
+    private List<Food> food; // jedna kategorija ima vise jela
 
     public Category() {
 
     }
 
-    public Category(String categoryName) {
-        this.categoryName = categoryName;
+    public Category(String name) {
+        this.name = name;
     }
 
-    public Category(String categoryName, List<Food> food) {
-        this.categoryName = categoryName;
-        this.food = food;
+//    public Category(String categoryName, List<Food> food) {
+//        this.categoryName = categoryName;
+//        this.food = food;
+//    }
+
+    public String getName() {
+        return name;
     }
 
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public void setName(String categoryName) {
+        this.name = categoryName;
     }
 
     public List<Food> getFood() {

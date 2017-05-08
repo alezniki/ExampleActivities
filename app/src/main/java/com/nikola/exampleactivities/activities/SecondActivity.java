@@ -8,7 +8,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nikola.exampleactivities.R;
+import com.nikola.exampleactivities.model.Category;
 import com.nikola.exampleactivities.model.Food;
+import com.nikola.exampleactivities.model.Ingredients;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,9 +21,11 @@ import java.io.InputStream;
  */
 
 public class SecondActivity extends Activity {
-    Food food = new Food("steak.jpg","T-bone","Chargrilled T-bone steak","Meat","Tender fillet, Sirloin steak", 275, 35.50);
-//    Category category = new Category();
-//    Ingredients ingredients = new Ingredients();
+
+    Food tbone = new Food("steak.jpg","T-bone","Chargrilled T-bone steak", 243.75, 36.99);
+    Ingredients fillet = new Ingredients("Fillet, Black pepper, Oil");
+    Category steak = new Category("Steak");
+
 
      @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,26 +38,27 @@ public class SecondActivity extends Activity {
          ImageView ivImage = (ImageView) findViewById(R.id.iv_image);
          InputStream inputStream = null;
          try {
-             inputStream = getAssets().open(food.getImage());
+             inputStream = getAssets().open(tbone.getImage());
              Drawable drawable = Drawable.createFromStream(inputStream, null);
              ivImage.setImageDrawable(drawable);
          } catch (IOException e) {
              e.printStackTrace();
          }
          TextView tvName = (TextView) findViewById(R.id.tv_name);
-         tvName.setText("Food Name: " + food.getName());
+         tvName.setText("Food Name: " + tbone.getName());
          TextView tvDescription = (TextView) findViewById(R.id.tv_description);
-         tvDescription.setText("Description: " + food.getDescription());
+         tvDescription.setText("Description: " + tbone.getDescription());
+
          TextView tvCategory = (TextView) findViewById(R.id.tv_category);
-//        tvCategory.setText(category.getCategoryName());
-         tvCategory.setText("Food Category: " + food.getCategory());
+         tvCategory.setText("Food Category: " + steak.getName());
+
          TextView tvIngredients = (TextView) findViewById(R.id.tv_ingredients);
-//        tvIngredients.setText(ingredients.getIngredientsName());
-         tvIngredients.setText("Food Ingredients" + food.getIngredientses());
+         tvIngredients.setText("Food Ingredients: " + fillet.getName());
+
          TextView tvCalories = (TextView) findViewById(R.id.tv_calories);
-         tvCalories.setText("Calories: " + String.valueOf(food.getCalories()));
+         tvCalories.setText("Calories: " + String.valueOf(tbone.getCalories()));
          TextView tvPrice = (TextView) findViewById(R.id.tv_price);
-         tvPrice.setText("Price: " + String.valueOf(food.getPrice()));
+         tvPrice.setText("Price: $" + String.valueOf(tbone.getPrice()));
      }
 
     @Override

@@ -5,28 +5,28 @@ package com.nikola.exampleactivities.model;
  */
 
 public class Ingredients {
-    private String ingredientsName;
-    private Food food;
+    private String name;
+    private Food food; // jedan sastojak ide u jedno jelo
 
     public Ingredients(){
 
     }
 
     public Ingredients(String name) {
-        this.ingredientsName = name;
+        this.name = name;
     }
 
-    public Ingredients(String name, Food food) {
-        this.ingredientsName = name;
-        this.food = food;
+//    public Ingredients(String name, Food food) {
+//        this.name = name;
+//        this.food = food;
+//    }
+
+    public String getName() {
+        return name;
     }
 
-    public String getIngredientsName() {
-        return ingredientsName;
-    }
-
-    public void setIngredientsName(String ingredientsName) {
-        this.ingredientsName = ingredientsName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Food getFood() {
@@ -39,6 +39,6 @@ public class Ingredients {
 
     @Override
     public String toString() {
-        return "Ingredients for " + food + " are: " + ingredientsName;
+        return "Ingredients for " + food + " are: " + name;
     }
 }
