@@ -34,17 +34,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-        <!--Declare 3rd activity-->
-        <activity
-            android:name="com.nikola.exampleactivities.activities.ThirdActivity"
-            android:label="@string/third_activity"
-            android:icon="@mipmap/ic_launcher">
-            <intent-filter>
-                <action android:name="android.media.action.IMAGE_CAPTURE" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
