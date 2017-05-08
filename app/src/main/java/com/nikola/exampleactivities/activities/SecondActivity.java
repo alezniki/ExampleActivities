@@ -1,10 +1,7 @@
 package com.nikola.exampleactivities.activities;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.view.View;
 import android.widget.Toast;
 
 import com.nikola.exampleactivities.R;
@@ -69,18 +66,6 @@ public class SecondActivity extends Activity {
 
         Toast toast = Toast.makeText(getBaseContext(), "SecondActivity.onDestroy()", Toast.LENGTH_SHORT);
         toast.show();
-    }
-
-    public void btnStartActivity(View view) {
-        // Explicit intent
-        Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
-        startActivity(intent);
-    }
-
-    public void btnOpenCamera(View view) {
-        // Implicit intent:  Open a camera app and receive the resulting photo
-        Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivity(camera);
     }
 
 }
