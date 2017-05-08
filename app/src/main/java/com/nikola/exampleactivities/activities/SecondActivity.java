@@ -2,6 +2,8 @@ package com.nikola.exampleactivities.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nikola.exampleactivities.R;
@@ -18,6 +20,14 @@ public class SecondActivity extends Activity {
 
         Toast toast = Toast.makeText(this, "SecondActivity.onCreate()", Toast.LENGTH_SHORT);
         toast.show();
+
+        ImageView ivImage = (ImageView) findViewById(R.id.iv_image);
+        TextView tvName = (TextView) findViewById(R.id.tv_name);
+        TextView tvDescription = (TextView) findViewById(R.id.tv_description);
+        TextView tvCategory = (TextView) findViewById(R.id.tv_category);
+        TextView tvIngredients = (TextView) findViewById(R.id.tv_ingredients);
+        TextView tvCalories = (TextView) findViewById(R.id.tv_calories);
+        TextView tvPrice = (TextView) findViewById(R.id.tv_price);
     }
 
     @Override
