@@ -8,6 +8,7 @@ import java.util.List;
  */
 
 public class Food {
+    private int id;
     private String image;
     private String name;
     private String description;
@@ -20,7 +21,8 @@ public class Food {
         ingredients = new ArrayList<>();
     }
 
-    public Food(String image, String name, String description, Category category, double calories, double price) {
+    public Food(int id, String image, String name, String description, Category category, double calories, double price) {
+        this.id = id;
         this.image = image;
         this.name = name;
         this.description = description;
@@ -29,6 +31,14 @@ public class Food {
         this.price = price;
 
         ingredients = new ArrayList<>();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getImage() {

@@ -5,6 +5,7 @@ package com.nikola.exampleactivities.model;
  */
 
 public class Ingredients {
+    private int id;
     private String name;
     private Food food; // jedan sastojak ide u jedno jelo
 
@@ -15,6 +16,14 @@ public class Ingredients {
     public Ingredients(String name, Food food) {
         this.name = name;
         this.food = food;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

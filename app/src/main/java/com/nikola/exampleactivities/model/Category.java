@@ -8,6 +8,7 @@ import java.util.List;
  */
 
 public class Category {
+    private int id;
     private String name;
     private List<Food> food; // jedna kategorija ima vise jela
 
@@ -16,10 +17,19 @@ public class Category {
 
     }
 
-    public Category(String name) {
+    public Category(int id,String name) {
+        this.id = id;
         this.name = name;
 
         food = new ArrayList<>();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

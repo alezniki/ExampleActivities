@@ -11,26 +11,58 @@ import java.util.List;
  */
 
 public class FoodProvider {
-    public List<Food> getFood (){
+    public List<Food> getFoodList (){
 
-    Category steak = new Category("Steak");
-    Category seafood = new Category("Seafood");
-    Category salad = new Category("Salad");
+    Category steak = new Category(0,"Steak");
+    Category seafood = new Category(1,"Seafood");
+    Category salad = new Category(2,"Salad");
 
     List<Food> foodList = new ArrayList<>();
-        Food tbone = new Food("steak.jpg","T-bone","Chargrilled T-bone steak",  steak, 243.75, 36.99);
+        Food tbone = new Food(0,"steak.jpg","T-bone","Chargrilled T-bone steak",  steak, 243.75, 36.99);
         foodList.add(tbone);
-        Food beef = new Food("steak.jpg","Beef Stake","Grilled Beef steak", steak, 243.75, 36.99);
+        Food beef = new Food(1,"steak.jpg","Beef","Grilled Beef steak", steak, 243.75, 36.99);
         foodList.add(beef);
-        Food caesar = new Food("steak.jpg", "Caesar Salad", "Fresh chicken salad", salad, 150.05, 15.00);
+        Food caesar = new Food(2,"salad.jpg", "Caesar", "Fresh chicken salad", salad, 150.05, 15.00);
         foodList.add(caesar);
-        Food salmon = new Food("steak.jpg", "Salmon", "Fresh Salmon", seafood, 150.05, 15.00);
+        Food salmon = new Food(3,"seafood.jpg", "Salmon", "Oven-baked Salmon", seafood, 150.05, 15.00);
         foodList.add(salmon);
-        Food tuna = new Food("steak.jpg","Tuna Tartare", "Sushi-grade tuna", seafood, 130.12, 25.00);
+        Food tuna = new Food(4,"seafood.jpg","Tuna", "Sushi-grade Tuna Tartare", seafood, 130.12, 25.00);
         foodList.add(tuna);
 
         return foodList;
 
+    }
+
+    public static List<String> getFoodNames(){
+        List<String> foodNames = new ArrayList<>();
+        foodNames.add("T-bone");
+        foodNames.add("Beef");
+        foodNames.add("Caesar");
+        foodNames.add("Salmon");
+        foodNames.add("Tuna");
+        return foodNames;
+    }
+
+    public static Food getFoodById(int id){
+        Category steak = new Category(0,"Steak");
+        Category seafood = new Category(1,"Seafood");
+        Category salad = new Category(2,"Salad");
+
+        switch (id){
+            case 0:
+                return new Food(0,"steak.jpg","T-bone","Chargrilled T-bone steak",  steak, 243.75, 36.99);
+            case 1:
+                return new Food(1,"steak.jpg","Beef","Grilled Beef steak", steak, 243.75, 36.99);
+            case 2:
+                new Food(2,"salad.jpg", "Caesar", "Fresh chicken salad", salad, 150.05, 15.00);
+            case 3:
+                new Food(3,"seafood.jpg", "Salmon", "Oven-baked Salmon", seafood, 150.05, 15.00);
+            case 4:
+                new Food(4,"seafood.jpg","Tuna", "Sushi-grade Tuna Tartare", seafood, 130.12, 25.00);
+            default:
+                return null;
+
+        }
     }
 
 }
