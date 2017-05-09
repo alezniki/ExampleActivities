@@ -3,6 +3,7 @@ package com.nikola.exampleactivities.activities;
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +15,8 @@ import com.nikola.exampleactivities.model.Ingredients;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -23,9 +26,12 @@ import java.io.InputStream;
 public class SecondActivity extends Activity {
 
     Food tbone = new Food("steak.jpg","T-bone","Chargrilled T-bone steak", 243.75, 36.99);
-    Ingredients fillet = new Ingredients("Fillet, Black pepper, Oil");
     Category steak = new Category("Steak");
+    Ingredients fillet = new Ingredients("Fillet");
+    Ingredients pepper = new Ingredients("Black Pepper");
+    Ingredients oil = new Ingredients("Oil");
 
+    List<Ingredients> list = new ArrayList<>();
 
      @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +58,19 @@ public class SecondActivity extends Activity {
          TextView tvCategory = (TextView) findViewById(R.id.tv_category);
          tvCategory.setText("Food Category: " + steak.getName());
 
+         list.add(fillet);
+         list.add(pepper);
+         list.add(oil);
+
          TextView tvIngredients = (TextView) findViewById(R.id.tv_ingredients);
-         tvIngredients.setText("Food Ingredients: " + fillet.getName());
+         tvIngredients.setText("Ingredients: ");
+         for (Ingredients i : list){
+             Log.v("TAG",i.getName());
+             tvIngredients.append(i.getName() + ", ".replaceAll(",$", ""));
+         }
+//         for (int i = 0; i <list.size() ; i++) {
+//             tvIngredients.append(list.get(i).getName() + ",");
+//         }
 
          TextView tvCalories = (TextView) findViewById(R.id.tv_calories);
          tvCalories.setText("Calories: " + String.valueOf(tbone.getCalories()));
