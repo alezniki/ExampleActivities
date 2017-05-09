@@ -1,5 +1,6 @@
 package com.nikola.exampleactivities.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,11 +12,14 @@ public class Category {
     private List<Food> food; // jedna kategorija ima vise jela
 
     public Category() {
+        food = new ArrayList<>();
 
     }
 
     public Category(String name) {
         this.name = name;
+
+        food = new ArrayList<>();
     }
 
     public String getName() {

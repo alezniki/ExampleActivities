@@ -1,5 +1,6 @@
 package com.nikola.exampleactivities.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,15 +17,18 @@ public class Food {
     double price;
 
     public Food(){
-
+        ingredients = new ArrayList<>();
     }
 
-    public Food(String image, String name, String description, double calories, double price) {
+    public Food(String image, String name, String description, Category category, double calories, double price) {
         this.image = image;
         this.name = name;
         this.description = description;
+        this.category = category;
         this.calories = calories;
         this.price = price;
+
+        ingredients = new ArrayList<>();
     }
 
     public String getImage() {

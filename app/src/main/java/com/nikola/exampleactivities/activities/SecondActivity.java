@@ -25,11 +25,12 @@ import java.util.List;
 
 public class SecondActivity extends Activity {
 
-    Food tbone = new Food("steak.jpg","T-bone","Chargrilled T-bone steak", 243.75, 36.99);
     Category steak = new Category("Steak");
-    Ingredients fillet = new Ingredients("Fillet");
-    Ingredients pepper = new Ingredients("Black Pepper");
-    Ingredients oil = new Ingredients("Oil");
+    Food tbone = new Food("steak.jpg","T-bone","Chargrilled T-bone steak",  steak, 243.75, 36.99);
+
+    Ingredients fillet = new Ingredients("Fillet",tbone);
+    Ingredients pepper = new Ingredients("Black Pepper",tbone);
+    Ingredients oil = new Ingredients("Oil",tbone);
 
     List<Ingredients> list = new ArrayList<>();
 
