@@ -26,7 +26,7 @@ public class FoodProvider {
         foodList.add(caesar);
         Food salmon = new Food("steak.jpg", "Salmon", "Fresh Salmon", seafood, 150.05, 15.00);
         foodList.add(salmon);
-        Food tuna = new Food("steak.jpg","Tuna Tartare", "Sushi-grade tuna", seafood, 150.12, 25.00);
+        Food tuna = new Food("steak.jpg","Tuna Tartare", "Sushi-grade tuna", seafood, 130.12, 25.00);
         foodList.add(tuna);
 
         return foodList;
