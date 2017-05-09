@@ -25,8 +25,8 @@ import java.util.List;
 
 public class SecondActivity extends Activity {
 
-    Category steak = new Category("Steak");
-    Food tbone = new Food("steak.jpg","T-bone","Chargrilled T-bone steak",  steak, 243.75, 36.99);
+    Category steak = new Category(0,"Steak");
+    Food tbone = new Food(0,"steak.jpg","T-bone","Chargrilled T-bone steak",  steak, 243.75, 36.99);
 
     Ingredients fillet = new Ingredients("Fillet",tbone);
     Ingredients pepper = new Ingredients("Black Pepper",tbone);
