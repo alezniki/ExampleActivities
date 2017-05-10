@@ -2,9 +2,14 @@ package com.nikola.exampleactivities.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.nikola.exampleactivities.R;
+import com.nikola.exampleactivities.providers.FoodProvider;
+
+import java.util.List;
 
 // Each activity extends Activity class
 public class FirstActivity extends Activity {
@@ -20,6 +25,16 @@ public class FirstActivity extends Activity {
         // Shows a toast message (a pop-up message)
         Toast toast = Toast.makeText(getBaseContext(), "FirstActivity.onCreate()", Toast.LENGTH_SHORT);
         toast.show();
+
+        // Loads food names from array resource
+        final List<String> foodNames = FoodProvider.getFoodNames();
+
+        // Creates an ArrayAdaptar from the array of String
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.list_item, foodNames);
+        ListView listView = (ListView) findViewById(R.id.list_view);
+
+        // Assigns ArrayAdaptar to ListView
+        listView.setAdapter(adapter);
     }
 
     // onStart method is a lifecycle method called after onCreate (or after onRestart when the

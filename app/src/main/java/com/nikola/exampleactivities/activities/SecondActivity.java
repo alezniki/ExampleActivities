@@ -69,7 +69,7 @@ public class SecondActivity extends Activity {
              Log.v("TAG",i.getName());
              tvIngredients.append(i.getName() + ", ".replaceAll(",$", ""));
          }
-         
+
          TextView tvCalories = (TextView) findViewById(R.id.tv_calories);
          tvCalories.setText("Calories: " + String.valueOf(tbone.getCalories()));
          TextView tvPrice = (TextView) findViewById(R.id.tv_price);
