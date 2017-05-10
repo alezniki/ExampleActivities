@@ -24,6 +24,7 @@ import java.util.List;
  */
 
 public class SecondActivity extends Activity {
+    //private int position = 0;
 
     Category steak = new Category(0,"Steak");
     Food tbone = new Food(0,"steak.jpg","T-bone","Chargrilled T-bone steak",  steak, 243.75, 36.99);
@@ -41,6 +42,9 @@ public class SecondActivity extends Activity {
 
         Toast toast = Toast.makeText(this, "SecondActivity.onCreate()", Toast.LENGTH_SHORT);
         toast.show();
+
+         // Loads an URL into the WebView from FirstActivity intent
+         final int position = getIntent().getIntExtra("position",0);
 
          ImageView ivImage = (ImageView) findViewById(R.id.iv_image);
          InputStream inputStream = null;
