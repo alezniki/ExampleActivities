@@ -1,7 +1,11 @@
 package com.nikola.exampleactivities.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -35,6 +39,18 @@ public class FirstActivity extends Activity {
 
         // Assigns ArrayAdaptar to ListView
         listView.setAdapter(adapter);
+
+        // Starts the SecondActivity and sends it the selected URL as an extra data
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.v("TAG", "Position: " + position + ", ID: " + id);
+                Intent intent = new Intent(FirstActivity.this, SecondActivity.class);
+                intent.putExtra("position",position); // key - value pair
+                startActivity(intent);
+            }
+        });
+
     }
 
     // onStart method is a lifecycle method called after onCreate (or after onRestart when the
