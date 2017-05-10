@@ -1,10 +1,7 @@
 package com.nikola.exampleactivities.activities;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
 import com.nikola.exampleactivities.R;
@@ -82,22 +79,4 @@ public class FirstActivity extends Activity {
         Toast toast = Toast.makeText(getBaseContext(), "FirstActivity.onDestroy()", Toast.LENGTH_SHORT);
         toast.show();
     }
-
-    // Called when btnStart button is clicked
-    public void btnStartActivity(View view) {
-        // This is an explicit intent (class property is specified)
-        Intent intent = new Intent(this, SecondActivity.class);
-        // startActivity method starts an activity
-        startActivity(intent);
-    }
-
-    // Called when btnOpen is clicked
-    public void btnOpenBrowser(View view) {
-        // This is an implicit intent: Load a web URL
-        Uri webPage = Uri.parse("http://www.google.com");
-
-        Intent browser = new Intent(Intent.ACTION_VIEW, webPage);
-        startActivity(browser);
-    }
-
 }

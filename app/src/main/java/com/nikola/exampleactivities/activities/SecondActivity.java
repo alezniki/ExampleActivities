@@ -28,9 +28,9 @@ public class SecondActivity extends Activity {
     Category steak = new Category(0,"Steak");
     Food tbone = new Food(0,"steak.jpg","T-bone","Chargrilled T-bone steak",  steak, 243.75, 36.99);
 
-    Ingredients fillet = new Ingredients("Fillet",tbone);
-    Ingredients pepper = new Ingredients("Black Pepper",tbone);
-    Ingredients oil = new Ingredients("Oil",tbone);
+    Ingredients fillet = new Ingredients(0,"Fillet");
+    Ingredients pepper = new Ingredients(0,"Black Pepper");
+    Ingredients oil = new Ingredients(0,"Olive Oil");
 
     List<Ingredients> list = new ArrayList<>();
 
@@ -69,10 +69,7 @@ public class SecondActivity extends Activity {
              Log.v("TAG",i.getName());
              tvIngredients.append(i.getName() + ", ".replaceAll(",$", ""));
          }
-//         for (int i = 0; i <list.size() ; i++) {
-//             tvIngredients.append(list.get(i).getName() + ",");
-//         }
-
+         
          TextView tvCalories = (TextView) findViewById(R.id.tv_calories);
          tvCalories.setText("Calories: " + String.valueOf(tbone.getCalories()));
          TextView tvPrice = (TextView) findViewById(R.id.tv_price);

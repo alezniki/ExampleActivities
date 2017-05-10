@@ -14,6 +14,7 @@ public class CategoryProvider {
     public static List<Category> getCategoryList(){
 
         List<Category> categoryList = new ArrayList<>();
+
         categoryList.add(new Category(0, "Steak"));
         categoryList.add(new Category(1, "Salad"));
         categoryList.add(new Category(2, "Seafood"));
@@ -23,6 +24,7 @@ public class CategoryProvider {
 
     public static List<String> getCategoryNames(){
         List<String> categoryNames = new ArrayList<>();
+
         categoryNames.add("Steak");
         categoryNames.add("Salad");
         categoryNames.add("Seafood");
