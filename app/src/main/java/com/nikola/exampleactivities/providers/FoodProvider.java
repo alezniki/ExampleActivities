@@ -15,8 +15,8 @@ public class FoodProvider {
     public static List<Food> getFoodList (){
 
         Category steak = new Category(0,"Steak");
-        Category seafood = new Category(1,"Seafood");
-        Category salad = new Category(2,"Salad");
+        Category salad = new Category(1,"Salad");
+        Category seafood = new Category(2,"Seafood");
 
         List<Food> foodList = new ArrayList<>();
         Food tbone = new Food(0,"steak.jpg","T-bone","Chargrilled T-bone steak",  steak, 243.75, 36.99);
@@ -50,8 +50,8 @@ public class FoodProvider {
     public static Food getFoodById(int id){
 
         Category steak = new Category(0,"Steak");
-        Category seafood = new Category(1,"Seafood");
-        Category salad = new Category(2,"Salad");
+        Category salad = new Category(1,"Salad");
+        Category seafood = new Category(2,"Seafood");
 
         switch (id){
             case 0:
