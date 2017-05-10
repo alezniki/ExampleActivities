@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import com.nikola.exampleactivities.R;
 import com.nikola.exampleactivities.providers.CategoryProvider;
 import com.nikola.exampleactivities.providers.FoodProvider;
+import com.nikola.exampleactivities.providers.IngredientsProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -83,6 +85,18 @@ public class SecondActivity extends Activity {
          ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
          spCategory.setAdapter(adapter);
          spCategory.setSelection(FoodProvider.getFoodById(position).getCategory().getId());
+
+
+         // Loads ingredients from array resource
+         final List<String> ingredientsNames = IngredientsProvider.getIngredientsNames();
+
+         // Creates ArrayAdapter from the array of Strings
+         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,R.layout.list_item, ingredientsNames);
+         ListView lvIngredients = (ListView) findViewById(R.id.lv_ingredients);
+
+         lvIngredients.setAdapter(arrayAdapter);
+
+         lvIngredients.setSelection(FoodProvider.getFoodById(position).getIngredients().getId());
 
 
      }
