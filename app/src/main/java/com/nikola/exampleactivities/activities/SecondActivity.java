@@ -93,10 +93,10 @@ public class SecondActivity extends Activity {
          // Creates ArrayAdapter from the array of Strings
          ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,R.layout.list_item, ingredientsNames);
          ListView lvIngredients = (ListView) findViewById(R.id.lv_ingredients);
-
+         lvIngredients.setSelection(IngredientsProvider.getIngredientsById(position).getId());
          lvIngredients.setAdapter(arrayAdapter);
 
-         lvIngredients.setSelection(FoodProvider.getFoodById(position).getIngredients().getId());
+//         lvIngredients.setSelection(FoodProvider.getFoodById(position).getIngredients().getId());
 
 
      }

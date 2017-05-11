@@ -1,5 +1,8 @@
 package com.nikola.exampleactivities.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Dzoni on 5/8/2017.
  */
@@ -10,25 +13,25 @@ public class Food {
     private String name;
     private String description;
     private Category category; // jedno jelo pripada jednoj kategoriji
-    private Ingredients ingredients;// jedno jelo ima vise sastojak
+    private List<Ingredients> ingredients;// jedno jelo ima vise sastojaka
     double calories;
     double price;
 
     public Food(){
-        //ingredients = new ArrayList<>();
+
+       ingredients = new ArrayList<>();
     }
 
-    public Food(int id, String image, String name, String description, Category category, Ingredients ingredients,double calories, double price) {
+    public Food(int id, String image, String name, String description, Category category,double calories, double price) {
         this.id = id;
         this.image = image;
         this.name = name;
         this.description = description;
         this.category = category;
-        this.ingredients = ingredients;
         this.calories = calories;
         this.price = price;
 
-       // ingredients = new ArrayList<>();
+        ingredients = new ArrayList<>();
     }
 
     public int getId() {
@@ -71,11 +74,11 @@ public class Food {
         this.category = category;
     }
 
-    public Ingredients getIngredients() {
+    public List<Ingredients> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(Ingredients ingredients) {
+    public void setIngredients(List<Ingredients> ingredients) {
         this.ingredients = ingredients;
     }
 

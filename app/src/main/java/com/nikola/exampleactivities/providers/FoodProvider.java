@@ -19,52 +19,49 @@ public class FoodProvider {
         Category salad = new Category(1,"Salad");
         Category seafood = new Category(2,"Seafood");
 
-        Ingredients fillet = new Ingredients(0,"Fillet");
-//        ingredientsList.add(fillet);
-        Ingredients pepper = new Ingredients(1,"Black Pepper");
-//        ingredientsList.add(pepper);
-        Ingredients oil = new Ingredients(2,"Olive Oil");
-//        ingredientsList.add(oil);
-        Ingredients garlic = new Ingredients(3,"Onion Garlic");
-//        ingredientsList.add(garlic);
-        Ingredients breasts = new Ingredients(4,"Chicken Breasts");
-//        ingredientsList.add(breasts);
-        Ingredients ciabatta = new Ingredients(5,"Ciabatta Loaf Bread");
-//        ingredientsList.add(ciabatta);
-        Ingredients lemon = new Ingredients(6,"Lemon Juice");
-//        ingredientsList.add(lemon);
+        List<Ingredients> tboneIngredients = new ArrayList<>();
+        List<Ingredients> beefIngredients = new ArrayList<>();
+        List<Ingredients> caesarIngredients = new ArrayList<>();
+        List<Ingredients> salmonIngredients = new ArrayList<>();
+        List<Ingredients> tunaIngredients = new ArrayList<>();
 
-//        List<Ingredients> steakList = new ArrayList<>();
-//        steakList.add(fillet);
-//        steakList.add(pepper);
-//        steakList.add(garlic);
-//
-//        List<Ingredients> saladList = new ArrayList<>();
-//        saladList.add(oil);
-//        saladList.add(breasts);
-//        saladList.add(ciabatta);
-//
-//        List<Ingredients> seafoodList = new ArrayList<>();
-//        seafoodList.add(pepper);
-//        seafoodList.add(oil);
-//        seafoodList.add(garlic);
-//        seafoodList.add(lemon);
+
+        Ingredients fillet = new Ingredients(0,"Fillet");
+        Ingredients pepper = new Ingredients(1,"Black Pepper");
+        Ingredients oil = new Ingredients(2,"Olive Oil");
+        Ingredients garlic = new Ingredients(3,"Onion Garlic");
+        Ingredients breasts = new Ingredients(4,"Chicken Breasts");
+        Ingredients ciabatta = new Ingredients(5,"Ciabatta Loaf Bread");
+        Ingredients lemon = new Ingredients(6,"Lemon Juice");
+
+        tboneIngredients.add(fillet); tboneIngredients.add(pepper); tboneIngredients.add(garlic);
+        beefIngredients.add(fillet); beefIngredients.add(pepper); beefIngredients.add(garlic);
+        caesarIngredients.add(oil); caesarIngredients.add(breasts); caesarIngredients.add(ciabatta);
+        salmonIngredients.add(fillet); salmonIngredients.add(pepper); salmonIngredients.add(lemon);
+        tunaIngredients.add(fillet); tunaIngredients.add(oil); tunaIngredients.add(lemon);
 
         List<Food> foodList = new ArrayList<>();
-        Food tbone = new Food(0,"steak.jpg","T-bone","Chargrilled T-bone steak",  steak, pepper, 243.75, 36.99);
+        Food tbone = new Food(0,"steak.jpg","T-bone","Chargrilled T-bone steak",  steak, 243.75, 36.99);
         foodList.add(tbone);
-        Food beef = new Food(1,"steak.jpg","Beef","Grilled Beef steak", steak, fillet, 243.75, 36.99);
+        Food beef = new Food(1,"steak.jpg","Beef","Grilled Beef steak", steak, 243.75, 36.99);
         foodList.add(beef);
-        Food caesar = new Food(2,"salad.jpg", "Caesar", "Fresh chicken salad", salad, breasts, 150.05, 15.00);
+        Food caesar = new Food(2,"salad.jpg", "Caesar", "Fresh chicken salad", salad, 150.05, 15.00);
         foodList.add(caesar);
-        Food salmon = new Food(3,"seafood.jpg", "Salmon", "Oven-baked Salmon", seafood, lemon,150.05, 15.00);
+        Food salmon = new Food(3,"seafood.jpg", "Salmon", "Oven-baked Salmon", seafood, 150.05, 15.00);
         foodList.add(salmon);
-        Food tuna = new Food(4,"seafood.jpg","Tuna", "Sushi-grade Tuna Tartare", seafood, oil,130.12, 25.00);
+        Food tuna = new Food(4,"seafood.jpg","Tuna", "Sushi-grade Tuna Tartare", seafood,130.12, 25.00);
         foodList.add(tuna);
+
+        tbone.setIngredients(tboneIngredients);
+        beef.setIngredients(beefIngredients);
+        caesar.setIngredients(caesarIngredients);
+        salmon.setIngredients(salmonIngredients);
+        tuna.setIngredients(tunaIngredients);
 
         return foodList;
 
     }
+
 
     public static List<String> getFoodNames(){
 
@@ -85,51 +82,61 @@ public class FoodProvider {
         Category salad = new Category(1,"Salad");
         Category seafood = new Category(2,"Seafood");
 
+        List<Ingredients> tboneIngredients = new ArrayList<>();
+        List<Ingredients> beefIngredients = new ArrayList<>();
+        List<Ingredients> caesarIngredients = new ArrayList<>();
+        List<Ingredients> salmonIngredients = new ArrayList<>();
+        List<Ingredients> tunaIngredients = new ArrayList<>();
+
 
         Ingredients fillet = new Ingredients(0,"Fillet");
-//        ingredientsList.add(fillet);
         Ingredients pepper = new Ingredients(1,"Black Pepper");
-//        ingredientsList.add(pepper);
         Ingredients oil = new Ingredients(2,"Olive Oil");
-//        ingredientsList.add(oil);
         Ingredients garlic = new Ingredients(3,"Onion Garlic");
-//        ingredientsList.add(garlic);
         Ingredients breasts = new Ingredients(4,"Chicken Breasts");
-//        ingredientsList.add(breasts);
         Ingredients ciabatta = new Ingredients(5,"Ciabatta Loaf Bread");
-//        ingredientsList.add(ciabatta);
         Ingredients lemon = new Ingredients(6,"Lemon Juice");
-//        ingredientsList.add(lemon);
 
-//        List<Ingredients> steakList = new ArrayList<>();
-//        steakList.add(fillet);
-//        steakList.add(pepper);
-//        steakList.add(garlic);
-//
-//        List<Ingredients> saladList = new ArrayList<>();
-//        saladList.add(oil);
-//        saladList.add(breasts);
-//        saladList.add(ciabatta);
-//
-//        List<Ingredients> seafoodList = new ArrayList<>();
-//        seafoodList.add(pepper);
-//        seafoodList.add(oil);
-//        seafoodList.add(garlic);
-//        seafoodList.add(lemon);
+        tboneIngredients.add(fillet); tboneIngredients.add(pepper); tboneIngredients.add(garlic);
+        beefIngredients.add(fillet); beefIngredients.add(pepper); beefIngredients.add(garlic);
+        caesarIngredients.add(oil); caesarIngredients.add(breasts); caesarIngredients.add(ciabatta);
+        salmonIngredients.add(fillet); salmonIngredients.add(pepper); salmonIngredients.add(lemon);
+        tunaIngredients.add(fillet); tunaIngredients.add(oil); tunaIngredients.add(lemon);
 
+        List<Food> foodList = new ArrayList<>();
+        Food tbone = new Food(0,"steak.jpg","T-bone","Chargrilled T-bone steak",  steak, 243.75, 36.99);
+        foodList.add(tbone);
+        Food beef = new Food(1,"steak.jpg","Beef","Grilled Beef steak", steak, 243.75, 36.99);
+        foodList.add(beef);
+        Food caesar = new Food(2,"salad.jpg", "Caesar", "Fresh chicken salad", salad, 150.05, 15.00);
+        foodList.add(caesar);
+        Food salmon = new Food(3,"seafood.jpg", "Salmon", "Oven-baked Salmon", seafood, 150.05, 15.00);
+        foodList.add(salmon);
+        Food tuna = new Food(4,"seafood.jpg","Tuna", "Sushi-grade Tuna Tartare", seafood,130.12, 25.00);
+        foodList.add(tuna);
 
+        tbone.setIngredients(tboneIngredients);
+        beef.setIngredients(beefIngredients);
+        caesar.setIngredients(caesarIngredients);
+        salmon.setIngredients(salmonIngredients);
+        tuna.setIngredients(tunaIngredients);
 
         switch (id){
             case 0:
-                return new Food(0,"steak.jpg","T-bone","Chargrilled T-bone steak",  steak, pepper, 243.75, 36.99);
+//                return new Food(0,"steak.jpg","T-bone","Chargrilled T-bone steak",  steak, 243.75, 36.99);
+                return tbone;
             case 1:
-                return new Food(1,"steak.jpg","Beef","Grilled Beef steak", steak, fillet,243.75, 36.99);
+//                return new Food(1,"steak.jpg","Beef","Grilled Beef steak", steak, 243.75, 36.99);
+                return beef;
             case 2:
-                return new Food(2,"salad.jpg", "Caesar", "Fresh chicken salad", salad, breasts,150.05, 15.00);
+//                return new Food(2,"salad.jpg", "Caesar", "Fresh chicken salad", salad, 150.05, 15.00);
+                return caesar;
             case 3:
-                return new Food(3,"seafood.jpg", "Salmon", "Oven-baked Salmon", seafood, lemon,150.05, 15.00);
+//                return new Food(3,"seafood.jpg", "Salmon", "Oven-baked Salmon", seafood, 150.05, 15.00);
+                return salmon;
             case 4:
-                return new Food(4,"seafood.jpg","Tuna", "Sushi-grade Tuna Tartare", seafood, oil,130.12, 25.00);
+//                return new Food(4,"seafood.jpg","Tuna", "Sushi-grade Tuna Tartare", seafood, 130.12, 25.00);
+                return tuna;
             default:
                 return null;
         }
