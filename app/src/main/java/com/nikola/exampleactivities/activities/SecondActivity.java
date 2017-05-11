@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nikola.exampleactivities.R;
+import com.nikola.exampleactivities.model.Ingredients;
 import com.nikola.exampleactivities.providers.CategoryProvider;
 import com.nikola.exampleactivities.providers.FoodProvider;
 import com.nikola.exampleactivities.providers.IngredientsProvider;
@@ -78,10 +79,12 @@ public class SecondActivity extends Activity {
          spCategory.setSelection(FoodProvider.getFoodById(position).getCategory().getId());
 
          // Loads ingredients from array resource
-         final List<String> ingredientsNames = IngredientsProvider.getIngredientsNames();
+         //final List<String> ingredientsNames = IngredientsProvider.getIngredientsNames();
+         final List<Ingredients> ingredientsNames = FoodProvider.getFoodById(position).getIngredients();
 
          // Creates ArrayAdapter from the array of Strings
-         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,R.layout.list_item, ingredientsNames);
+         //ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,R.layout.list_item, ingredientsNames);
+         ArrayAdapter<Ingredients> arrayAdapter = new ArrayAdapter<Ingredients>(this,R.layout.list_item, ingredientsNames);
          ListView lvIngredients = (ListView) findViewById(R.id.lv_ingredients);
 //         lvIngredients.setSelection(FoodProvider.getFoodById(position).getIngredients().get());
 

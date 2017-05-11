@@ -10,7 +10,7 @@ import java.util.List;
 public class Ingredients {
     private int id;
     private String name;
-    List<Food> food; // jedan sastojak moze da ide u vise jelo
+    List<Food> food; // jedan sastojak moze da ide u vise jela
 
     public Ingredients(){
 
@@ -65,6 +65,8 @@ public class Ingredients {
 
     @Override
     public String toString() {
-        return "Ingredients for " + food + " are: " + name;
+
+        //return "Ingredients for " + food + " are: " + name;
+        return name;
     }
 }
