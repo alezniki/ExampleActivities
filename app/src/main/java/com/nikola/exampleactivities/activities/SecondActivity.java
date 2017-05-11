@@ -27,15 +27,6 @@ import java.util.List;
 public class SecondActivity extends Activity {
     // private int position = 0;
 
-//    Category steak = new Category(0,"Steak");
-//    Food tbone = new Food(0,"steak.jpg","T-bone","Chargrilled T-bone steak",  steak, 243.75, 36.99);
-//
-//    Ingredients fillet = new Ingredients(0,"Fillet");
-//    Ingredients pepper = new Ingredients(0,"Black Pepper");
-//    Ingredients oil = new Ingredients(0,"Olive Oil");
-
-//    List<Ingredients> list = new ArrayList<>();
-
      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,17 +77,16 @@ public class SecondActivity extends Activity {
          spCategory.setAdapter(adapter);
          spCategory.setSelection(FoodProvider.getFoodById(position).getCategory().getId());
 
-
          // Loads ingredients from array resource
          final List<String> ingredientsNames = IngredientsProvider.getIngredientsNames();
 
          // Creates ArrayAdapter from the array of Strings
          ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,R.layout.list_item, ingredientsNames);
          ListView lvIngredients = (ListView) findViewById(R.id.lv_ingredients);
+//         lvIngredients.setSelection(FoodProvider.getFoodById(position).getIngredients().get());
+
          lvIngredients.setSelection(IngredientsProvider.getIngredientsById(position).getId());
          lvIngredients.setAdapter(arrayAdapter);
-
-//         lvIngredients.setSelection(FoodProvider.getFoodById(position).getIngredients().getId());
 
 
      }

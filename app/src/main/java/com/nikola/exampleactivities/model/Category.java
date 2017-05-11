@@ -49,6 +49,20 @@ public class Category {
     }
 
 
+    public void addFood(Food f) {
+
+        food.add(f);
+    }
+
+    public void removeFood(Food f) {
+
+        food.remove(f);
+    }
+
+    public Food getFood(int position) {
+
+        return food.get(position);
+    }
 
 
 

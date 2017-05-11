@@ -35,28 +35,35 @@ public class FoodProvider {
         Ingredients lemon = new Ingredients(6,"Lemon Juice");
 
         tboneIngredients.add(fillet); tboneIngredients.add(pepper); tboneIngredients.add(garlic);
+
         beefIngredients.add(fillet); beefIngredients.add(pepper); beefIngredients.add(garlic);
+
         caesarIngredients.add(oil); caesarIngredients.add(breasts); caesarIngredients.add(ciabatta);
+
         salmonIngredients.add(fillet); salmonIngredients.add(pepper); salmonIngredients.add(lemon);
+
         tunaIngredients.add(fillet); tunaIngredients.add(oil); tunaIngredients.add(lemon);
 
         List<Food> foodList = new ArrayList<>();
         Food tbone = new Food(0,"steak.jpg","T-bone","Chargrilled T-bone steak",  steak, 243.75, 36.99);
-        foodList.add(tbone);
-        Food beef = new Food(1,"steak.jpg","Beef","Grilled Beef steak", steak, 243.75, 36.99);
-        foodList.add(beef);
-        Food caesar = new Food(2,"salad.jpg", "Caesar", "Fresh chicken salad", salad, 150.05, 15.00);
-        foodList.add(caesar);
-        Food salmon = new Food(3,"seafood.jpg", "Salmon", "Oven-baked Salmon", seafood, 150.05, 15.00);
-        foodList.add(salmon);
-        Food tuna = new Food(4,"seafood.jpg","Tuna", "Sushi-grade Tuna Tartare", seafood,130.12, 25.00);
-        foodList.add(tuna);
-
         tbone.setIngredients(tboneIngredients);
+        foodList.add(tbone);
+
+        Food beef = new Food(1,"steak.jpg","Beef","Grilled Beef steak", steak, 243.75, 36.99);
         beef.setIngredients(beefIngredients);
+        foodList.add(beef);
+
+        Food caesar = new Food(2,"salad.jpg", "Caesar", "Fresh chicken salad", salad, 150.05, 15.00);
         caesar.setIngredients(caesarIngredients);
+        foodList.add(caesar);
+
+        Food salmon = new Food(3,"seafood.jpg", "Salmon", "Oven-baked Salmon", seafood, 150.05, 15.00);
         salmon.setIngredients(salmonIngredients);
+        foodList.add(salmon);
+
+        Food tuna = new Food(4,"seafood.jpg","Tuna", "Sushi-grade Tuna Tartare", seafood,130.12, 25.00);
         tuna.setIngredients(tunaIngredients);
+        foodList.add(tuna);
 
         return foodList;
 
@@ -98,28 +105,35 @@ public class FoodProvider {
         Ingredients lemon = new Ingredients(6,"Lemon Juice");
 
         tboneIngredients.add(fillet); tboneIngredients.add(pepper); tboneIngredients.add(garlic);
+
         beefIngredients.add(fillet); beefIngredients.add(pepper); beefIngredients.add(garlic);
+
         caesarIngredients.add(oil); caesarIngredients.add(breasts); caesarIngredients.add(ciabatta);
+
         salmonIngredients.add(fillet); salmonIngredients.add(pepper); salmonIngredients.add(lemon);
+
         tunaIngredients.add(fillet); tunaIngredients.add(oil); tunaIngredients.add(lemon);
 
         List<Food> foodList = new ArrayList<>();
         Food tbone = new Food(0,"steak.jpg","T-bone","Chargrilled T-bone steak",  steak, 243.75, 36.99);
-        foodList.add(tbone);
-        Food beef = new Food(1,"steak.jpg","Beef","Grilled Beef steak", steak, 243.75, 36.99);
-        foodList.add(beef);
-        Food caesar = new Food(2,"salad.jpg", "Caesar", "Fresh chicken salad", salad, 150.05, 15.00);
-        foodList.add(caesar);
-        Food salmon = new Food(3,"seafood.jpg", "Salmon", "Oven-baked Salmon", seafood, 150.05, 15.00);
-        foodList.add(salmon);
-        Food tuna = new Food(4,"seafood.jpg","Tuna", "Sushi-grade Tuna Tartare", seafood,130.12, 25.00);
-        foodList.add(tuna);
-
         tbone.setIngredients(tboneIngredients);
+        foodList.add(tbone);
+
+        Food beef = new Food(1,"steak.jpg","Beef","Grilled Beef steak", steak, 243.75, 36.99);
         beef.setIngredients(beefIngredients);
+        foodList.add(beef);
+
+        Food caesar = new Food(2,"salad.jpg", "Caesar", "Fresh chicken salad", salad, 150.05, 15.00);
         caesar.setIngredients(caesarIngredients);
+        foodList.add(caesar);
+
+        Food salmon = new Food(3,"seafood.jpg", "Salmon", "Oven-baked Salmon", seafood, 150.05, 15.00);
         salmon.setIngredients(salmonIngredients);
+        foodList.add(salmon);
+
+        Food tuna = new Food(4,"seafood.jpg","Tuna", "Sushi-grade Tuna Tartare", seafood,130.12, 25.00);
         tuna.setIngredients(tunaIngredients);
+        foodList.add(tuna);
 
         switch (id){
             case 0:

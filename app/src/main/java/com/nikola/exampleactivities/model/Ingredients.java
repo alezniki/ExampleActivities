@@ -48,6 +48,21 @@ public class Ingredients {
         this.food = food;
     }
 
+    public void addFood(Food f) {
+
+        food.add(f);
+    }
+
+    public void removeFood(Food f) {
+
+        food.remove(f);
+    }
+
+    public Food getFood(int position) {
+
+        return food.get(position);
+    }
+
     @Override
     public String toString() {
         return "Ingredients for " + food + " are: " + name;
