@@ -47,7 +47,7 @@ public class SecondActivity extends Activity {
          final int position = getIntent().getIntExtra("position",0);
 
          ImageView ivImage = (ImageView) findViewById(R.id.iv_image);
-         InputStream inputStream = null; 
+         InputStream inputStream = null;
          try {
              inputStream = getAssets().open(tbone.getImage());
              Drawable drawable = Drawable.createFromStream(inputStream, null);
