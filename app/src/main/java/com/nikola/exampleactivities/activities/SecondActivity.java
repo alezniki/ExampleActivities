@@ -3,19 +3,20 @@ package com.nikola.exampleactivities.activities;
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nikola.exampleactivities.R;
-import com.nikola.exampleactivities.model.Category;
-import com.nikola.exampleactivities.model.Food;
-import com.nikola.exampleactivities.model.Ingredients;
+import com.nikola.exampleactivities.providers.CategoryProvider;
+import com.nikola.exampleactivities.providers.FoodProvider;
+import com.nikola.exampleactivities.providers.IngredientsProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,16 +25,16 @@ import java.util.List;
  */
 
 public class SecondActivity extends Activity {
-    //private int position = 0;
+    // private int position = 0;
 
-    Category steak = new Category(0,"Steak");
-    Food tbone = new Food(0,"steak.jpg","T-bone","Chargrilled T-bone steak",  steak, 243.75, 36.99);
+//    Category steak = new Category(0,"Steak");
+//    Food tbone = new Food(0,"steak.jpg","T-bone","Chargrilled T-bone steak",  steak, 243.75, 36.99);
+//
+//    Ingredients fillet = new Ingredients(0,"Fillet");
+//    Ingredients pepper = new Ingredients(0,"Black Pepper");
+//    Ingredients oil = new Ingredients(0,"Olive Oil");
 
-    Ingredients fillet = new Ingredients(0,"Fillet");
-    Ingredients pepper = new Ingredients(0,"Black Pepper");
-    Ingredients oil = new Ingredients(0,"Olive Oil");
-
-    List<Ingredients> list = new ArrayList<>();
+//    List<Ingredients> list = new ArrayList<>();
 
      @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,35 +50,55 @@ public class SecondActivity extends Activity {
          ImageView ivImage = (ImageView) findViewById(R.id.iv_image);
          InputStream inputStream = null;
          try {
-             inputStream = getAssets().open(tbone.getImage());
+             inputStream = getAssets().open(FoodProvider.getFoodById(position).getImage());
              Drawable drawable = Drawable.createFromStream(inputStream, null);
              ivImage.setImageDrawable(drawable);
          } catch (IOException e) {
              e.printStackTrace();
          }
          TextView tvName = (TextView) findViewById(R.id.tv_name);
-         tvName.setText("Food Name: " + tbone.getName());
+         tvName.setText("Food Name: " + FoodProvider.getFoodById(position).getName());
          TextView tvDescription = (TextView) findViewById(R.id.tv_description);
-         tvDescription.setText("Description: " + tbone.getDescription());
+         tvDescription.setText("Description: " + FoodProvider.getFoodById(position).getDescription());
 
-         TextView tvCategory = (TextView) findViewById(R.id.tv_category);
-         tvCategory.setText("Food Category: " + steak.getName());
+//         TextView tvCategory = (TextView) findViewById(R.id.tv_category);
+//         tvCategory.setText("Food Category: " + CategoryProvider.getCategoryById(position).getName());
 
-         list.add(fillet);
-         list.add(pepper);
-         list.add(oil);
+//         list.add(fillet);
+//         list.add(pepper);
+//         list.add(oil);
 
-         TextView tvIngredients = (TextView) findViewById(R.id.tv_ingredients);
-         tvIngredients.setText("Ingredients: ");
-         for (Ingredients i : list){
-             Log.v("TAG",i.getName());
-             tvIngredients.append(i.getName() + ", ".replaceAll(",$", ""));
-         }
-
+//         TextView tvIngredients = (TextView) findViewById(R.id.tv_ingredients);
+//         tvIngredients.setText("Ingredients: ");
+//         for (Ingredients i : list){
+//             Log.v("TAG",i.getName());
+//             tvIngredients.append(IngredientsProvider.getIngredientsById(position).getName() + ", ");
+//         }
          TextView tvCalories = (TextView) findViewById(R.id.tv_calories);
-         tvCalories.setText("Calories: " + String.valueOf(tbone.getCalories()));
+         tvCalories.setText("Calories: " + String.valueOf(FoodProvider.getFoodById(position).getCalories()));
          TextView tvPrice = (TextView) findViewById(R.id.tv_price);
-         tvPrice.setText("Price: $" + String.valueOf(tbone.getPrice()));
+         tvPrice.setText("Price: $" + String.valueOf(FoodProvider.getFoodById(position).getPrice()));
+
+         // Finds "spCategory" Spinner and sets "selection" property
+         Spinner spCategory = (Spinner) findViewById(R.id.sp_category);
+         List<String> categories = CategoryProvider.getCategoryNames();
+         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+         spCategory.setAdapter(adapter);
+         spCategory.setSelection(FoodProvider.getFoodById(position).getCategory().getId());
+
+
+         // Loads ingredients from array resource
+         final List<String> ingredientsNames = IngredientsProvider.getIngredientsNames();
+
+         // Creates ArrayAdapter from the array of Strings
+         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,R.layout.list_item, ingredientsNames);
+         ListView lvIngredients = (ListView) findViewById(R.id.lv_ingredients);
+
+         lvIngredients.setAdapter(arrayAdapter);
+
+         lvIngredients.setSelection(FoodProvider.getFoodById(position).getIngredients().getId());
+
+
      }
 
     @Override
