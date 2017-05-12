@@ -31,7 +31,8 @@ public class SecondActivity extends Activity {
      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_second);
+//        setContentView(R.layout.activity_second);
+        setContentView(R.layout.activity_second_linear);
 
         Toast toast = Toast.makeText(this, "SecondActivity.onCreate()", Toast.LENGTH_SHORT);
         toast.show();
