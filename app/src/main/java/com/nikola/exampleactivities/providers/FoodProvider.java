@@ -137,19 +137,14 @@ public class FoodProvider {
 
         switch (id){
             case 0:
-//                return new Food(0,"steak.jpg","T-bone","Chargrilled T-bone steak",  steak, 243.75, 36.99);
                 return tbone;
             case 1:
-//                return new Food(1,"steak.jpg","Beef","Grilled Beef steak", steak, 243.75, 36.99);
                 return beef;
             case 2:
-//                return new Food(2,"salad.jpg", "Caesar", "Fresh chicken salad", salad, 150.05, 15.00);
                 return caesar;
             case 3:
-//                return new Food(3,"seafood.jpg", "Salmon", "Oven-baked Salmon", seafood, 150.05, 15.00);
                 return salmon;
             case 4:
-//                return new Food(4,"seafood.jpg","Tuna", "Sushi-grade Tuna Tartare", seafood, 130.12, 25.00);
                 return tuna;
             default:
                 return null;

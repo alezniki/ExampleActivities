@@ -53,19 +53,6 @@ public class SecondActivity extends Activity {
          TextView tvDescription = (TextView) findViewById(R.id.tv_description);
          tvDescription.setText("Description: " + FoodProvider.getFoodById(position).getDescription());
 
-//         TextView tvCategory = (TextView) findViewById(R.id.tv_category);
-//         tvCategory.setText("Food Category: " + CategoryProvider.getCategoryById(position).getName());
-
-//         list.add(fillet);
-//         list.add(pepper);
-//         list.add(oil);
-
-//         TextView tvIngredients = (TextView) findViewById(R.id.tv_ingredients);
-//         tvIngredients.setText("Ingredients: ");
-//         for (Ingredients i : list){
-//             Log.v("TAG",i.getName());
-//             tvIngredients.append(IngredientsProvider.getIngredientsById(position).getName() + ", ");
-//         }
          TextView tvCalories = (TextView) findViewById(R.id.tv_calories);
          tvCalories.setText("Calories: " + String.valueOf(FoodProvider.getFoodById(position).getCalories()));
          TextView tvPrice = (TextView) findViewById(R.id.tv_price);
@@ -79,14 +66,11 @@ public class SecondActivity extends Activity {
          spCategory.setSelection(FoodProvider.getFoodById(position).getCategory().getId());
 
          // Loads ingredients from array resource
-         //final List<String> ingredientsNames = IngredientsProvider.getIngredientsNames();
          final List<Ingredients> ingredientsNames = FoodProvider.getFoodById(position).getIngredients();
 
          // Creates ArrayAdapter from the array of Strings
-         //ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,R.layout.list_item, ingredientsNames);
          ArrayAdapter<Ingredients> arrayAdapter = new ArrayAdapter<Ingredients>(this,R.layout.list_item, ingredientsNames);
          ListView lvIngredients = (ListView) findViewById(R.id.lv_ingredients);
-//         lvIngredients.setSelection(FoodProvider.getFoodById(position).getIngredients().get());
 
          lvIngredients.setSelection(IngredientsProvider.getIngredientsById(position).getId());
          lvIngredients.setAdapter(arrayAdapter);
