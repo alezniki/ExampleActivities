@@ -9,48 +9,56 @@
         android:id="@+id/iv_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        />
+        android:src="@android:drawable/alert_dark_frame" />
+
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/iv_image"
-        android:layout_alignParentLeft="true"/>
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="11dp"
+        android:layout_toEndOf="@+id/iv_image"
+        android:text="TextView" />
 
     <TextView
         android:id="@+id/tv_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/iv_image"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/tv_name"/>
+        android:layout_alignStart="@+id/tv_calories"
+        android:layout_below="@+id/tv_calories"
+        android:text="TextView" />
+
     <TextView
         android:id="@+id/tv_calories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/iv_image"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/tv_description"/>
+        android:text="TextView"
+        android:layout_alignBottom="@+id/iv_image"
+        android:layout_alignStart="@+id/tv_price" />
 
     <TextView
         android:id="@+id/tv_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/iv_image"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/tv_calories"/>
+        android:text="TextView"
+        android:layout_below="@+id/tv_name"
+        android:layout_alignStart="@+id/tv_name" />
 
     <Spinner
         android:id="@+id/sp_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/iv_image"></Spinner>
+        android:layout_marginTop="12dp"
+        android:layout_below="@+id/tv_description"
+        android:layout_alignParentStart="true" />
+
     <ListView
         android:id="@+id/lv_ingredients"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/sp_category"></ListView>
-
+        android:layout_height="match_parent"
+        android:layout_below="@id/sp_category"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp" />
 </RelativeLayout>
