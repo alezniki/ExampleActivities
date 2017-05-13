@@ -1,22 +1,15 @@
 package com.nikola.exampleactivities.activities;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.nikola.exampleactivities.R;
-import com.nikola.exampleactivities.providers.FoodProvider;
-
-import java.util.List;
+import com.nikola.exampleactivities.fragments.MasterFragment;
 
 // Each activity extends Activity class
-public class FirstActivity extends Activity {
+public class FirstActivity extends Activity implements MasterFragment.OnItemSelectedListener {
 
     // onCreate method is a lifecycle method called when he activity is starting
     @Override
@@ -30,26 +23,16 @@ public class FirstActivity extends Activity {
         Toast toast = Toast.makeText(getBaseContext(), "FirstActivity.onCreate()", Toast.LENGTH_SHORT);
         toast.show();
 
-        // Loads food names from array resource
-        final List<String> foodNames = FoodProvider.getFoodNames();
 
-        // Creates an ArrayAdaptar from the array of String
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.list_item, foodNames);
-        ListView listView = (ListView) findViewById(R.id.list_view);
+        // CREATE MASTER FRAGMENT IF THE ACTIVITY IS STARTED FOR THE FIRST TIME
+        if (savedInstanceState == null) {
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            MasterFragment masterFragment = new MasterFragment();
 
-        // Assigns ArrayAdaptar to ListView
-        listView.setAdapter(adapter);
-
-        // Starts the SecondActivity and sends it the selected URL as an extra data
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.v("TAG", "Position: " + position + ", ID: " + id);
-                Intent intent = new Intent(FirstActivity.this, SecondActivity.class);
-                intent.putExtra("position",position); // key - value pair
-                startActivity(intent);
-            }
-        });
+            fragmentTransaction.add(R.id.master_view, masterFragment,"Master_Fragment");
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            fragmentTransaction.commit();
+        }
 
     }
 
@@ -109,5 +92,18 @@ public class FirstActivity extends Activity {
 
         Toast toast = Toast.makeText(getBaseContext(), "FirstActivity.onDestroy()", Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    // Override the method here
+    @Override
+    public void onItemSelected(int position) {
+
+        Toast.makeText(getBaseContext(), "FirstActivity.onItemSelected() ", Toast.LENGTH_SHORT).show();
+
+        //Do something with the position value passed back
+        Toast.makeText(this, "Position clicked " + position, Toast.LENGTH_SHORT).show();
+
+
+
     }
 }
