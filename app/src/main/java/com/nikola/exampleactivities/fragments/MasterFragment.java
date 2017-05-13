@@ -38,6 +38,8 @@ public class MasterFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         Toast.makeText(getActivity(), "MasterFragment.onActivityCreated()", Toast.LENGTH_SHORT).show();
 
+        // MOVED FROM FIRST ACTIVITY CLASS
+
         // Loads food names from array resource
         final List<String> foodNames = FoodProvider.getFoodNames();
 
