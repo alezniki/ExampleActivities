@@ -76,8 +76,14 @@ public class MasterFragment extends Fragment {
             return null;
         }
 
+        View view = inflater.inflate(R.layout.fragment_master, container, false);
+
+        //Button btn  = (Button) view.findViewById(R.id.btn);
+
+        return view; // Inflate the layout for this fragment
+
 //        return super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_master, container, false);
+//        return inflater.inflate(R.layout.fragment_master, container, false);
     }
 
     // onDestroyView method is a life-cycle method that is called when the view previously created by
@@ -107,6 +113,14 @@ public class MasterFragment extends Fragment {
         listener = (OnItemSelectedListener) context;
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        Toast.makeText(getActivity(), "MasterFragment.onDetach()", Toast.LENGTH_SHORT).show();
+
+        listener = null;
+    }
 
 }
 
