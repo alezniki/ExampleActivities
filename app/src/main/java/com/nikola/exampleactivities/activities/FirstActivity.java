@@ -116,7 +116,7 @@ public class FirstActivity extends Activity implements MasterFragment.OnItemSele
         toast.show();
     }
 
-    // Override the method here
+    //3. OnItemSelectedListener METHOD OVERRIDED FROM MASTER FRAGMENT CLASS
     @Override
     public void onItemSelected(int position) {
 
@@ -125,7 +125,7 @@ public class FirstActivity extends Activity implements MasterFragment.OnItemSele
         //Do something with the position value passed back
         Log.i("TAG","Position clicked " + position);
 
-        //3. IF IN LANDSCAPE MODE, UPDATE DETAIL FRAGMENT CONTENT
+        //4. IF IN LANDSCAPE MODE, UPDATE DETAIL FRAGMENT CONTENT
         if (landscape) {
             DetailFragment detailFragment = (DetailFragment) getFragmentManager().findFragmentById(R.id.detail_view);
             detailFragment.updateFragmentContent(position);
@@ -138,7 +138,7 @@ public class FirstActivity extends Activity implements MasterFragment.OnItemSele
             transaction.replace(R.id.master_view, detailFragment, "Detail_Fragment_2");
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             transaction.addToBackStack(null); // So user can reverse transaction and bring back the previous fragment
-            // by pressing the Back butto (from DetailFragment to MasterFragment)
+            // by pressing the Back button (from DetailFragment to MasterFragment)
             transaction.commit();
 
         }

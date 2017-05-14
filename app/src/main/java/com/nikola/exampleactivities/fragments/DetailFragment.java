@@ -40,6 +40,7 @@ public class DetailFragment extends Fragment {
         Toast.makeText(getActivity(), "DetailFragment.onCreate()", Toast.LENGTH_SHORT).show();
     }
 
+    //1. CALLED WHEN THE FRAGMENTS ACTIVITY HAS BEEN INITIALIZED (CREATED)
     // onActivityCreated method is a life-cycle method that is called when the fragment's activity has been created
     // and this fragment's view hierarchy instantiated.
     @Override
@@ -52,6 +53,8 @@ public class DetailFragment extends Fragment {
         }
 
         // MOVED FROM SECOND ACTIVITY CLASS
+        //updateFragmentContent(position);
+
 //        ImageView ivImage = (ImageView) findViewById(R.id.iv_image);
         ImageView ivImage = (ImageView) getView().findViewById(R.id.iv_image);
         InputStream inputStream = null;
@@ -105,6 +108,8 @@ public class DetailFragment extends Fragment {
 
     }
 
+
+    //3. SAVE THE STATE INFORMATIONS OF YOUR FRAGMENT: It used for the scenario where Android kills off your activity to reclaim memory.
     // onSaveInstanceState method is a life-cycle method that is called to ask the fragment to save its current dynamic state,
     // so it can later be reconstructed in a new instance of its process is restarted.
     @Override
@@ -116,6 +121,7 @@ public class DetailFragment extends Fragment {
         outState.putInt("position", position); // CUVA STANJE
     }
 
+    //2. RETURNS FRAGMENT INTO GUI
     // onCreateView method is a life-cycle method that is called  to have the fragment instantiate its user interface view.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -135,7 +141,9 @@ public class DetailFragment extends Fragment {
         Toast.makeText(getActivity(), "DetailFragment.onDestroy()", Toast.LENGTH_SHORT).show();
     }
 
-    // 1. Called to set Fragment's content in FirstActivity overrided onItemSelected() method
+
+    //4. DEFINE METHODS TO COMMUNICATE TO FIRST ACTIVITY VIA onItemSelected()
+    //4-A. Called to set Fragment's content in FirstActivity overrided onItemSelected() method
     public void setFragmentContent(final int position) {
 
         this.position = position;
@@ -144,8 +152,7 @@ public class DetailFragment extends Fragment {
     }
 
 
-    // 2. Called to update Fragment's content in FirstActivity overrided onItemSelected() method
-
+    //4-B. Called to update Fragment's content in FirstActivity overrided onItemSelected() method
     public void updateFragmentContent(final int position) {
 
         this.position = position;
