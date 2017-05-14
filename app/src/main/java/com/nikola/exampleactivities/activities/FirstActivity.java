@@ -42,7 +42,7 @@ public class FirstActivity extends Activity implements MasterFragment.OnItemSele
         if (findViewById(R.id.detail_view) != null) { // Check if Activity is in landscape mode
             landscape = true;
 
-            getFragmentManager().popBackStack(); // Pop the top state off the back stack.
+            getFragmentManager().popBackStack(); // Remove a fragment from the backstack.
 
             DetailFragment detailFragment = (DetailFragment) getFragmentManager().findFragmentById(R.id.detail_view);
 
