@@ -25,15 +25,6 @@
         </activity>
 
         <!--Declare 2nd activity-->
-        <activity
-            android:name="com.nikola.exampleactivities.activities.SecondActivity"
-            android:label="@string/second_activity"
-            android:icon="@mipmap/ic_launcher">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
