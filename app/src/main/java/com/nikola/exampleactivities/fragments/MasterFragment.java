@@ -31,6 +31,7 @@ public class MasterFragment extends Fragment {
         Toast.makeText(getActivity(), "MasterFragment.onCreate()", Toast.LENGTH_SHORT).show();
     }
 
+    //1. CALLED WHEN THE FRAGMENTS ACTIVITY HAS BEEN INITIALIZED (CREATED)
     // onActivityCreated method is a life-cycle method that is called when the fragment's activity has been created
     // and this fragment's view hierarchy instantiated.
     @Override
@@ -59,14 +60,7 @@ public class MasterFragment extends Fragment {
         });
     }
 
-    // onSaveInstanceState method is a life-cycle method that is called to ask the fragment to save its current dynamic state,
-    // so it can later be reconstructed in a new instance of its process is restarted.
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Toast.makeText(getActivity(), "MasterFragment.onSaveInstanceState()", Toast.LENGTH_SHORT).show();
-    }
-
+    //2. RETURNS FRAGMENT INTO GUI
     // onCreateView method is a life-cycle method that is called  to have the fragment instantiate its user interface view.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -83,9 +77,6 @@ public class MasterFragment extends Fragment {
         //Button btn  = (Button) view.findViewById(R.id.btn);
 
         return view; // Inflate the layout for this fragment
-
-//        return super.onCreateView(inflater, container, savedInstanceState);
-//        return inflater.inflate(R.layout.fragment_master, container, false);
     }
 
     // onDestroyView method is a life-cycle method that is called when the view previously created by
@@ -97,7 +88,7 @@ public class MasterFragment extends Fragment {
     }
 
 
-    // CONTAINER ACTIVITY MUST IMPLEMENT THIS INTERFACE
+    //3. CONTAINER ACTIVITY MUST IMPLEMENT THIS INTERFACE
     // The easiest way to communicate between your activity and fragments is using interfaces.
     // The idea is basically to define an interface inside a given Fragment A and let the activity implement that interface.
 
@@ -105,6 +96,7 @@ public class MasterFragment extends Fragment {
         public void onItemSelected(int position);
     }
 
+    //4. ATTACH FRAGMENT TO ACTIIVTY
     // onAttach method is a life-cycle method that is called when a fragment is first attached to its context
     @Override
     public void onAttach(Context context) { // Activity activity
@@ -119,6 +111,7 @@ public class MasterFragment extends Fragment {
        }
     }
 
+    //5. DETACH FRAGMENT FROM ACTIVITY
     @Override
     public void onDetach() {
         super.onDetach();
@@ -129,4 +122,3 @@ public class MasterFragment extends Fragment {
     }
 
 }
-

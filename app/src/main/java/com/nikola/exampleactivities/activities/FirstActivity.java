@@ -116,7 +116,7 @@ public class FirstActivity extends Activity implements MasterFragment.OnItemSele
         toast.show();
     }
 
-    // Override the method here
+    // 3. OVERRIDE onItemSelected METHOD HERE FROM MASTER FRAGMENT CLASS
     @Override
     public void onItemSelected(int position) {
 
@@ -125,12 +125,16 @@ public class FirstActivity extends Activity implements MasterFragment.OnItemSele
         //Do something with the position value passed back
         Log.i("TAG","Position clicked " + position);
 
-        //3. IF IN LANDSCAPE MODE, UPDATE DETAIL FRAGMENT CONTENT
+
         if (landscape) {
+            //3-A. IF IN LANDSCAPE MODE, UPDATE DETAIL FRAGMENT CONTENT
+
             DetailFragment detailFragment = (DetailFragment) getFragmentManager().findFragmentById(R.id.detail_view);
             detailFragment.updateFragmentContent(position);
+
         } else {
-            // REPLACE EVERYTHING FORM MASTER FRAGMENT WITH DETAIL FRAGMENT BASED ON POSITION
+            //3-B. REPLACE EVERYTHING FORM MASTER FRAGMENT WITH DETAIL FRAGMENT BASED ON POSITION
+
             DetailFragment detailFragment = new DetailFragment();
             detailFragment.setFragmentContent(position);
 
