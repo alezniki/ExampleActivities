@@ -40,7 +40,19 @@ public class DetailFragment extends Fragment {
         Toast.makeText(getActivity(), "DetailFragment.onCreate()", Toast.LENGTH_SHORT).show();
     }
 
-    //1. CALLED WHEN THE FRAGMENTS ACTIVITY HAS BEEN INITIALIZED (CREATED)
+    //1. RETURNS FRAGMENT INTO GUI
+    // onCreateView method is a life-cycle method that is called  to have the fragment instantiate its user interface view.
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Toast.makeText(getActivity(), "DetailFragment.onCreateView()", Toast.LENGTH_SHORT).show();
+
+        View view =  inflater.inflate(R.layout.fragment_detail, container, false);
+
+        return view;
+        //return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    //2. CALLED WHEN THE FRAGMENTS ACTIVITY HAS BEEN INITIALIZED (CREATED)
     // onActivityCreated method is a life-cycle method that is called when the fragment's activity has been created
     // and this fragment's view hierarchy instantiated.
     @Override
@@ -67,18 +79,6 @@ public class DetailFragment extends Fragment {
 
         // savedInstanceState
         outState.putInt("position", position); // CUVA STANJE
-    }
-
-    //2. RETURNS FRAGMENT INTO GUI
-    // onCreateView method is a life-cycle method that is called  to have the fragment instantiate its user interface view.
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Toast.makeText(getActivity(), "DetailFragment.onCreateView()", Toast.LENGTH_SHORT).show();
-
-        View view =  inflater.inflate(R.layout.fragment_detail, container, false);
-
-        return view;
-        //return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     // onDestroyView method is a life-cycle method that is called when the view previously created by

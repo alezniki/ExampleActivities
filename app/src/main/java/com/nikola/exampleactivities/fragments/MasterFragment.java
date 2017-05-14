@@ -31,7 +31,26 @@ public class MasterFragment extends Fragment {
         Toast.makeText(getActivity(), "MasterFragment.onCreate()", Toast.LENGTH_SHORT).show();
     }
 
-    //1. CALLED WHEN THE FRAGMENTS ACTIVITY HAS BEEN INITIALIZED (CREATED)
+    //1. RETURNS FRAGMENT INTO GUI
+    // onCreateView method is a life-cycle method that is called  to have the fragment instantiate its user interface view.
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Toast.makeText(getActivity(), "MasterFragment.onCreateView()", Toast.LENGTH_SHORT).show();
+
+        // onCreateView returns GUI of the Fragment
+
+        if (container == null) {
+            return null;
+        }
+
+        View view = inflater.inflate(R.layout.fragment_master, container, false);
+
+        //Button btn  = (Button) view.findViewById(R.id.btn);
+
+        return view; // Inflate the layout for this fragment
+    }
+
+    //2. CALLED WHEN THE FRAGMENTS ACTIVITY HAS BEEN INITIALIZED (CREATED)
     // onActivityCreated method is a life-cycle method that is called when the fragment's activity has been created
     // and this fragment's view hierarchy instantiated.
     @Override
@@ -60,24 +79,6 @@ public class MasterFragment extends Fragment {
         });
     }
 
-    //2. RETURNS FRAGMENT INTO GUI
-    // onCreateView method is a life-cycle method that is called  to have the fragment instantiate its user interface view.
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Toast.makeText(getActivity(), "MasterFragment.onCreateView()", Toast.LENGTH_SHORT).show();
-
-        // onCreateView returns GUI of the Fragment
-
-        if (container == null) {
-            return null;
-        }
-
-        View view = inflater.inflate(R.layout.fragment_master, container, false);
-
-        //Button btn  = (Button) view.findViewById(R.id.btn);
-
-        return view; // Inflate the layout for this fragment
-    }
 
     // onDestroyView method is a life-cycle method that is called when the view previously created by
     // onCreateView(LayoutInflater, ViewGroup, Bundle) has been detached from the fragment.
