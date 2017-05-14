@@ -42,7 +42,7 @@ public class FirstActivity extends Activity implements MasterFragment.OnItemSele
         if (findViewById(R.id.detail_view) != null) { // Check if Activity is in landscape mode
             landscape = true;
 
-            getFragmentManager().popBackStack(); // Pop the top state off the back stack.
+            getFragmentManager().popBackStack(); // Remove a fragment from the backstack.
 
             DetailFragment detailFragment = (DetailFragment) getFragmentManager().findFragmentById(R.id.detail_view);
 
@@ -125,12 +125,14 @@ public class FirstActivity extends Activity implements MasterFragment.OnItemSele
         //Do something with the position value passed back
         Log.i("TAG","Position clicked " + position);
 
-        //4. IF IN LANDSCAPE MODE, UPDATE DETAIL FRAGMENT CONTENT
         if (landscape) {
+            //3_A. IF IN LANDSCAPE MODE, UPDATE DETAIL FRAGMENT CONTENT
+
             DetailFragment detailFragment = (DetailFragment) getFragmentManager().findFragmentById(R.id.detail_view);
             detailFragment.updateFragmentContent(position);
         } else {
-            // REPLACE EVERYTHING FORM MASTER FRAGMENT WITH DETAIL FRAGMENT BASED ON POSITION
+
+            //3-B. REPLACE EVERYTHING FORM MASTER FRAGMENT WITH DETAIL FRAGMENT BASED ON POSITION
             DetailFragment detailFragment = new DetailFragment();
             detailFragment.setFragmentContent(position);
 
