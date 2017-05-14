@@ -28,7 +28,7 @@ public class FirstActivity extends Activity implements MasterFragment.OnItemSele
         toast.show();
 
 
-        // CREATE MASTER FRAGMENT IF THE ACTIVITY IS STARTED FOR THE FIRST TIME
+        //1. CREATE MASTER FRAGMENT IF THE ACTIVITY IS STARTED FOR THE FIRST TIME
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             MasterFragment masterFragment = new MasterFragment();
@@ -38,6 +38,24 @@ public class FirstActivity extends Activity implements MasterFragment.OnItemSele
             transaction.commit();
         }
 
+        //2. CREATE DETAIL FRAGMENT IF THE DEVICE IS IN LANDSCAPE MODE AND DETAIL FRAGMENT IS NULL
+        if (findViewById(R.id.detail_view) != null) { // Check if Activity is in landscape mode
+            landscape = true;
+
+            getFragmentManager().popBackStack(); // Pop the top state off the back stack.
+
+            DetailFragment detailFragment = (DetailFragment) getFragmentManager().findFragmentById(R.id.detail_view);
+
+            if (detailFragment == null) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                detailFragment = new DetailFragment();
+
+                transaction.replace(R.id.detail_view, detailFragment, "Detail_Fragment_1");
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                transaction.commit();
+            }
+
+        }
     }
 
     // onStart method is a lifecycle method called after onCreate (or after onRestart when the
@@ -107,12 +125,12 @@ public class FirstActivity extends Activity implements MasterFragment.OnItemSele
         //Do something with the position value passed back
         Log.i("TAG","Position clicked " + position);
 
-        // If in Landscape mode, update Detail Fragment content
+        //3. IF IN LANDSCAPE MODE, UPDATE DETAIL FRAGMENT CONTENT
         if (landscape) {
-            DetailFragment detailFragment = (DetailFragment) getFragmentManager().findFragmentById(R.layout.fragment_detail);
-            detailFragment.setFragmentContent(position);
+            DetailFragment detailFragment = (DetailFragment) getFragmentManager().findFragmentById(R.id.detail_view);
+            detailFragment.updateFragmentContent(position);
         } else {
-            // Replace everything from MasterFragment with DetailFragment, based on position
+            // REPLACE EVERYTHING FORM MASTER FRAGMENT WITH DETAIL FRAGMENT BASED ON POSITION
             DetailFragment detailFragment = new DetailFragment();
             detailFragment.setFragmentContent(position);
 

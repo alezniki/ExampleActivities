@@ -144,8 +144,6 @@ public class DetailFragment extends Fragment {
     }
 
 
-
-
     // 2. Called to update Fragment's content in FirstActivity overrided onItemSelected() method
 
     public void updateFragmentContent(final int position) {
