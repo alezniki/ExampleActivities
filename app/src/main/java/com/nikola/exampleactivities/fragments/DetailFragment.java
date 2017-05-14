@@ -3,6 +3,7 @@ package com.nikola.exampleactivities.fragments;
 import android.app.Fragment;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -132,5 +133,75 @@ public class DetailFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         Toast.makeText(getActivity(), "DetailFragment.onDestroy()", Toast.LENGTH_SHORT).show();
+    }
+
+    // 1. Called to set Fragment's content in FirstActivity overrided onItemSelected() method
+    public void setFragmentContent(final int position) {
+
+        this.position = position;
+
+        Log.v("DetailFragment", "setFragmentContent() sets position to " + position);
+    }
+
+
+
+
+    // 2. Called to update Fragment's content in FirstActivity overrided onItemSelected() method
+
+    public void updateFragmentContent(final int position) {
+
+        this.position = position;
+        Log.v("DetailFragment", "updateFragmentContent() sets position to " + position);
+
+        //ImageView ivImage = (ImageView) findViewById(R.id.iv_image);
+        ImageView ivImage = (ImageView) getView().findViewById(R.id.iv_image);
+        InputStream inputStream = null;
+        try {
+            //inputStream = getAssets().open(FoodProvider.getFoodById(position).getImage());
+            inputStream = getActivity().getAssets().open(FoodProvider.getFoodById(position).getImage());
+            Drawable drawable = Drawable.createFromStream(inputStream, null);
+            ivImage.setImageDrawable(drawable);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // TextView tvName = (TextView) findViewById(R.id.tv_name);
+        TextView tvName = (TextView) getView().findViewById(R.id.tv_name);
+        tvName.setText("Food Name: " + FoodProvider.getFoodById(position).getName());
+
+        // TextView tvDescription = (TextView) findViewById(R.id.tv_description);
+        TextView tvDescription = (TextView) getView().findViewById(R.id.tv_description);
+        tvDescription.setText("Description: " + FoodProvider.getFoodById(position).getDescription());
+
+        // TextView tvCalories = (TextView) findViewById(R.id.tv_calories);
+        TextView tvCalories = (TextView) getView().findViewById(R.id.tv_calories);
+        tvCalories.setText("Calories: " + String.valueOf(FoodProvider.getFoodById(position).getCalories()));
+
+        // TextView tvPrice = (TextView) findViewById(R.id.tv_price);
+        TextView tvPrice = (TextView) getView().findViewById(R.id.tv_price);
+        tvPrice.setText("Price: $" + String.valueOf(FoodProvider.getFoodById(position).getPrice()));
+
+        // Finds "spCategory" Spinner and sets "selection" property
+        //Spinner spCategory = (Spinner) findViewById(R.id.sp_category);
+        Spinner spCategory = (Spinner) getView().findViewById(R.id.sp_category);
+
+        List<String> categories = CategoryProvider.getCategoryNames();
+        // ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, categories);
+        spCategory.setAdapter(adapter);
+        spCategory.setSelection(FoodProvider.getFoodById(position).getCategory().getId());
+
+        // Loads ingredients from array resource
+        final List<Ingredients> ingredientsNames = FoodProvider.getFoodById(position).getIngredients();
+
+        // Creates ArrayAdapter from the array of Strings
+        //ArrayAdapter<Ingredients> arrayAdapter = new ArrayAdapter<Ingredients>(this,R.layout.list_item, ingredientsNames);
+        ArrayAdapter<Ingredients> arrayAdapter = new ArrayAdapter<Ingredients>(getActivity(),R.layout.list_item, ingredientsNames);
+
+        // ListView lvIngredients = (ListView) findViewById(R.id.lv_ingredients);
+        ListView lvIngredients = (ListView) getView().findViewById(R.id.lv_ingredients);
+
+        lvIngredients.setSelection(IngredientsProvider.getIngredientsById(position).getId());
+        lvIngredients.setAdapter(arrayAdapter);
     }
 }

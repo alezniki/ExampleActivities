@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.nikola.exampleactivities.R;
+import com.nikola.exampleactivities.fragments.DetailFragment;
 import com.nikola.exampleactivities.fragments.MasterFragment;
 
 // Each activity extends Activity class
@@ -29,12 +30,12 @@ public class FirstActivity extends Activity implements MasterFragment.OnItemSele
 
         // CREATE MASTER FRAGMENT IF THE ACTIVITY IS STARTED FOR THE FIRST TIME
         if (savedInstanceState == null) {
-            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
             MasterFragment masterFragment = new MasterFragment();
 
-            fragmentTransaction.add(R.id.master_view, masterFragment,"Master_Fragment");
-            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            fragmentTransaction.commit();
+            transaction.add(R.id.master_view, masterFragment,"Master_Fragment_1");
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            transaction.commit();
         }
 
     }
@@ -106,9 +107,22 @@ public class FirstActivity extends Activity implements MasterFragment.OnItemSele
         //Do something with the position value passed back
         Log.i("TAG","Position clicked " + position);
 
-//        // If in Landscape mode, update Detail Fragment content
-//        if (landscape) {
-//            DetailFragment detailFragment = new DetailFragment();
-//        }
+        // If in Landscape mode, update Detail Fragment content
+        if (landscape) {
+            DetailFragment detailFragment = (DetailFragment) getFragmentManager().findFragmentById(R.layout.fragment_detail);
+            detailFragment.setFragmentContent(position);
+        } else {
+            // Replace everything from MasterFragment with DetailFragment, based on position
+            DetailFragment detailFragment = new DetailFragment();
+            detailFragment.setFragmentContent(position);
+
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.master_view, detailFragment, "Detail_Fragment_2");
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            transaction.addToBackStack(null); // So user can reverse transaction and bring back the previous fragment
+            // by pressing the Back butto (from DetailFragment to MasterFragment)
+            transaction.commit();
+
+        }
     }
 }
