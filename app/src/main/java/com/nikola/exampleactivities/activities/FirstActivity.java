@@ -3,6 +3,7 @@ package com.nikola.exampleactivities.activities;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.nikola.exampleactivities.R;
@@ -10,6 +11,8 @@ import com.nikola.exampleactivities.fragments.MasterFragment;
 
 // Each activity extends Activity class
 public class FirstActivity extends Activity implements MasterFragment.OnItemSelectedListener {
+
+    boolean landscape = false; // Portrait mode initaily
 
     // onCreate method is a lifecycle method called when he activity is starting
     @Override
@@ -101,9 +104,11 @@ public class FirstActivity extends Activity implements MasterFragment.OnItemSele
         Toast.makeText(getBaseContext(), "FirstActivity.onItemSelected() ", Toast.LENGTH_SHORT).show();
 
         //Do something with the position value passed back
-        Toast.makeText(this, "Position clicked " + position, Toast.LENGTH_SHORT).show();
+        Log.i("TAG","Position clicked " + position);
 
-
-
+//        // If in Landscape mode, update Detail Fragment content
+//        if (landscape) {
+//            DetailFragment detailFragment = new DetailFragment();
+//        }
     }
 }

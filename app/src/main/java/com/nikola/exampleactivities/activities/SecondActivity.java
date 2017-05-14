@@ -1,24 +1,10 @@
 package com.nikola.exampleactivities.activities;
 
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nikola.exampleactivities.R;
-import com.nikola.exampleactivities.model.Ingredients;
-import com.nikola.exampleactivities.providers.CategoryProvider;
-import com.nikola.exampleactivities.providers.FoodProvider;
-import com.nikola.exampleactivities.providers.IngredientsProvider;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
 
 
 /**
@@ -32,50 +18,50 @@ public class SecondActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_second);
-//        setContentView(R.layout.activity_second_linear);
-        setContentView(R.layout.activity_second_relative);
+        setContentView(R.layout.activity_second_linear);
+//        setContentView(R.layout.activity_second_relative);
 
         Toast toast = Toast.makeText(this, "SecondActivity.onCreate()", Toast.LENGTH_SHORT);
         toast.show();
 
-         // Loads an URL into the WebView from FirstActivity intent
-         final int position = getIntent().getIntExtra("position",0);
-
-         ImageView ivImage = (ImageView) findViewById(R.id.iv_image);
-         InputStream inputStream = null;
-         try {
-             inputStream = getAssets().open(FoodProvider.getFoodById(position).getImage());
-             Drawable drawable = Drawable.createFromStream(inputStream, null);
-             ivImage.setImageDrawable(drawable);
-         } catch (IOException e) {
-             e.printStackTrace();
-         }
-         TextView tvName = (TextView) findViewById(R.id.tv_name);
-         tvName.setText("Food Name: " + FoodProvider.getFoodById(position).getName());
-         TextView tvDescription = (TextView) findViewById(R.id.tv_description);
-         tvDescription.setText("Description: " + FoodProvider.getFoodById(position).getDescription());
-
-         TextView tvCalories = (TextView) findViewById(R.id.tv_calories);
-         tvCalories.setText("Calories: " + String.valueOf(FoodProvider.getFoodById(position).getCalories()));
-         TextView tvPrice = (TextView) findViewById(R.id.tv_price);
-         tvPrice.setText("Price: $" + String.valueOf(FoodProvider.getFoodById(position).getPrice()));
-
-         // Finds "spCategory" Spinner and sets "selection" property
-         Spinner spCategory = (Spinner) findViewById(R.id.sp_category);
-         List<String> categories = CategoryProvider.getCategoryNames();
-         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
-         spCategory.setAdapter(adapter);
-         spCategory.setSelection(FoodProvider.getFoodById(position).getCategory().getId());
-
-         // Loads ingredients from array resource
-         final List<Ingredients> ingredientsNames = FoodProvider.getFoodById(position).getIngredients();
-
-         // Creates ArrayAdapter from the array of Strings
-         ArrayAdapter<Ingredients> arrayAdapter = new ArrayAdapter<Ingredients>(this,R.layout.list_item, ingredientsNames);
-         ListView lvIngredients = (ListView) findViewById(R.id.lv_ingredients);
-
-         lvIngredients.setSelection(IngredientsProvider.getIngredientsById(position).getId());
-         lvIngredients.setAdapter(arrayAdapter);
+//         // Loads an URL into the WebView from FirstActivity intent
+//         final int position = getIntent().getIntExtra("position",0);
+//
+//         ImageView ivImage = (ImageView) findViewById(R.id.iv_image);
+//         InputStream inputStream = null;
+//         try {
+//             inputStream = getAssets().open(FoodProvider.getFoodById(position).getImage());
+//             Drawable drawable = Drawable.createFromStream(inputStream, null);
+//             ivImage.setImageDrawable(drawable);
+//         } catch (IOException e) {
+//             e.printStackTrace();
+//         }
+//         TextView tvName = (TextView) findViewById(R.id.tv_name);
+//         tvName.setText("Food Name: " + FoodProvider.getFoodById(position).getName());
+//         TextView tvDescription = (TextView) findViewById(R.id.tv_description);
+//         tvDescription.setText("Description: " + FoodProvider.getFoodById(position).getDescription());
+//
+//         TextView tvCalories = (TextView) findViewById(R.id.tv_calories);
+//         tvCalories.setText("Calories: " + String.valueOf(FoodProvider.getFoodById(position).getCalories()));
+//         TextView tvPrice = (TextView) findViewById(R.id.tv_price);
+//         tvPrice.setText("Price: $" + String.valueOf(FoodProvider.getFoodById(position).getPrice()));
+//
+//         // Finds "spCategory" Spinner and sets "selection" property
+//         Spinner spCategory = (Spinner) findViewById(R.id.sp_category);
+//         List<String> categories = CategoryProvider.getCategoryNames();
+//         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+//         spCategory.setAdapter(adapter);
+//         spCategory.setSelection(FoodProvider.getFoodById(position).getCategory().getId());
+//
+//         // Loads ingredients from array resource
+//         final List<Ingredients> ingredientsNames = FoodProvider.getFoodById(position).getIngredients();
+//
+//         // Creates ArrayAdapter from the array of Strings
+//         ArrayAdapter<Ingredients> arrayAdapter = new ArrayAdapter<Ingredients>(this,R.layout.list_item, ingredientsNames);
+//         ListView lvIngredients = (ListView) findViewById(R.id.lv_ingredients);
+//
+//         lvIngredients.setSelection(IngredientsProvider.getIngredientsById(position).getId());
+//         lvIngredients.setAdapter(arrayAdapter);
 
 
      }

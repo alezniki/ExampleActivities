@@ -72,6 +72,8 @@ public class MasterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Toast.makeText(getActivity(), "MasterFragment.onCreateView()", Toast.LENGTH_SHORT).show();
 
+        // onCreateView returns GUI of the Fragment
+
         if (container == null) {
             return null;
         }
@@ -110,7 +112,11 @@ public class MasterFragment extends Fragment {
 
         Toast.makeText(getActivity(), "MasterFragment.onAttach()", Toast.LENGTH_SHORT).show();
 
-        listener = (OnItemSelectedListener) context;
+       try{
+           listener = (OnItemSelectedListener) context;
+       } catch (ClassCastException e) {
+           throw new ClassCastException(context.toString() + " must implement OnItemSelectedListener.");
+       }
     }
 
     @Override
