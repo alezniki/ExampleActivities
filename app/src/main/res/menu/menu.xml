@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/add_food"
+        android:icon="@drawable/ic_action_add"
+        android:title="@string/add_food"
+        app:showAsAction="ifRoom"></item>
+    <item android:id="@+id/edit_food"
+        android:icon="@drawable/ic_action_edit"
+        android:title="@string/edit_food"
+        app:showAsAction="ifRoom"></item>
+    <item android:id="@+id/delete_food"
+        android:icon="@drawable/ic_action_delete"
+        android:title="@string/delete_food"
+        app:showAsAction="ifRoom"></item>
+</menu>

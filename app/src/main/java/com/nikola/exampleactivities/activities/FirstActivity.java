@@ -1,9 +1,12 @@
 package com.nikola.exampleactivities.activities;
 
-import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.nikola.exampleactivities.R;
@@ -11,7 +14,9 @@ import com.nikola.exampleactivities.fragments.DetailFragment;
 import com.nikola.exampleactivities.fragments.MasterFragment;
 
 // Each activity extends Activity class
-public class FirstActivity extends Activity implements MasterFragment.OnItemSelectedListener {
+public class FirstActivity extends AppCompatActivity implements MasterFragment.OnItemSelectedListener {
+
+    Toolbar toolbar;
 
     boolean landscape = false; // Portrait mode initaily
 
@@ -22,6 +27,8 @@ public class FirstActivity extends Activity implements MasterFragment.OnItemSele
         super.onCreate(savedInstanceState);
         // setContentView method draws UI
         setContentView(R.layout.activity_first);
+
+
 
         // Shows a toast message (a pop-up message)
         Toast toast = Toast.makeText(getBaseContext(), "FirstActivity.onCreate()", Toast.LENGTH_SHORT);
@@ -56,6 +63,9 @@ public class FirstActivity extends Activity implements MasterFragment.OnItemSele
             }
 
         }
+
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 
     // onStart method is a lifecycle method called after onCreate (or after onRestart when the
@@ -147,4 +157,32 @@ public class FirstActivity extends Activity implements MasterFragment.OnItemSele
 
         }
     }
+
+    // Menu icons are inflated just as they were with actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_food:
+                Toast.makeText(this, "ADD FOOD", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.edit_food:
+                Toast.makeText(this, "EDIT FOOD", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.delete_food:
+                Toast.makeText(this, "DELETE FOOD", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 }
