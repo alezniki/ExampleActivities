@@ -28,6 +28,8 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
         // setContentView method draws UI
         setContentView(R.layout.activity_first);
 
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
 
         // Shows a toast message (a pop-up message)
@@ -64,8 +66,6 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
 
         }
 
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
     }
 
     // onStart method is a lifecycle method called after onCreate (or after onRestart when the
