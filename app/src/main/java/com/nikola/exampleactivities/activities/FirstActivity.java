@@ -3,23 +3,40 @@ package com.nikola.exampleactivities.activities;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.nikola.exampleactivities.R;
 import com.nikola.exampleactivities.fragments.DetailFragment;
 import com.nikola.exampleactivities.fragments.MasterFragment;
+import com.nikola.exampleactivities.model.NavigationItem;
+
+import java.util.ArrayList;
 
 // Each activity extends Activity class
 public class FirstActivity extends AppCompatActivity implements MasterFragment.OnItemSelectedListener {
 
     Toolbar toolbar;
-
     boolean landscape = false; // Portrait mode initaily
+
+    // NavigationDrawer Attributes
+    private DrawerLayout drawerLayout;
+    private ListView drawerListView;
+    private ActionBarDrawerToggle drawerToggle;
+    private RelativeLayout drawerRelativeLayoutPane;
+    private CharSequence drawerTitle;
+
+    private ArrayList<NavigationItem> drawerNavigationItems = new ArrayList<>();
+
+
 
     // onCreate method is a lifecycle method called when he activity is starting
     @Override
