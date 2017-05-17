@@ -50,6 +50,30 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
         setSupportActionBar(toolbar);
 
 
+        // Manage NavigationDrawer
+
+        // 1. Populates a list of NavigationDrawer items
+
+        NavigationItem home = new NavigationItem("Home", "Show All Products",R.drawable.ic_action_product);
+        drawerNavigationItems.add(home);
+        //drawerNavigationItems.add(new NavigationItem("Home", "Show All Products",R.drawable.ic_action_product));
+        NavigationItem settings = new NavigationItem("Settings", "Change App Settings", R.drawable.ic_action_settings);
+        drawerNavigationItems.add(settings);
+        NavigationItem about = new NavigationItem("About","About us", R.drawable.ic_action_about);
+        drawerNavigationItems.add(about);
+
+        drawerTitle = getTitle();
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        drawerListView = (ListView)findViewById(R.id.navigation_list);
+
+        // 2. Populates NavigationDrawer with otpions
+        drawerRelativeLayoutPane = (RelativeLayout) findViewById(R.id.drawer_pane);
+
+        //TODO add DrawerAdapter
+
+
+
+
         // Shows a toast message (a pop-up message)
         Toast toast = Toast.makeText(getBaseContext(), "FirstActivity.onCreate()", Toast.LENGTH_SHORT);
         toast.show();
