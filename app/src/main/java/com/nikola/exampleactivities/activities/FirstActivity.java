@@ -2,6 +2,7 @@ package com.nikola.exampleactivities.activities;
 
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -170,15 +171,15 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_food:
-                Toast.makeText(this, "ADD FOOD", Toast.LENGTH_SHORT).show();
+                Snackbar.make(findViewById(R.id.add_food),"ADD FOOD",Snackbar.LENGTH_LONG).show();
                 return true;
 
             case R.id.edit_food:
-                Toast.makeText(this, "EDIT FOOD", Toast.LENGTH_SHORT).show();
+                Snackbar.make(findViewById(R.id.edit_food),"EDIT FOOD",Snackbar.LENGTH_LONG).show();
                 return true;
 
             case R.id.delete_food:
-                Toast.makeText(this, "DELETE FOOD", Toast.LENGTH_SHORT).show();
+                Snackbar.make(findViewById(R.id.delete_food),"DELETE FOOD",Snackbar.LENGTH_LONG).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
