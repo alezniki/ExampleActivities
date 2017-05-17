@@ -7,4 +7,8 @@
     <string name="start_activity">Start An Activity</string>
     <string name="open_browser">Open Web Browser</string>
     <string name="open_camera">Open Camera</string>
+    <string name="toolbar_title">Toolbar Title</string>
+    <string name="add_food">Add Food</string>
+    <string name="delete_food">Delete Food</string>
+    <string name="edit_food">Edit Food</string>
 </resources>
