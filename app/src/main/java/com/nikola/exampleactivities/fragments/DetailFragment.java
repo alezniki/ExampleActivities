@@ -1,13 +1,19 @@
 package com.nikola.exampleactivities.fragments;
 
 import android.app.Fragment;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -29,6 +35,8 @@ import java.util.List;
  */
 
 public class DetailFragment extends Fragment {
+
+    private static int NOTIFICATION_ID = 1;
 
     // Position of the item to be displayed in the DetailFragment
     private int position = 0; // Initially T-Bone Steak
@@ -156,5 +164,31 @@ public class DetailFragment extends Fragment {
 
         lvIngredients.setSelection(IngredientsProvider.getIngredientsById(position).getId());
         lvIngredients.setAdapter(arrayAdapter);
+
+        // Add odred button
+        Button btnOrder = (Button)getView().findViewById(R.id.btn_order);
+        btnOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showNotification();
+            }
+        });
     }
+
+
+    public void showNotification(){
+        // Create Notification
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity());
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources() ,R.drawable.ic_stat_order);
+
+        builder.setSmallIcon(R.drawable.ic_action_order);
+        builder.setContentTitle(getString(R.string.notification_title));
+        builder.setContentText(getString(R.string.notification_text));
+
+        builder.setLargeIcon(bitmap);
+        // Manage Notification
+        NotificationManager manager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.notify(NOTIFICATION_ID, builder.build());
+    }
+
 }
