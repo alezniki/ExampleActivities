@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">Activities Example</string>
 
-    <string name="second_activity">Second Activity</string>
-    <string name="third_activity">Third Activity</string>
+    <string name="activity_settings_name">Settings Activity</string>
 
     <string name="start_activity">Start An Activity</string>
     <string name="open_browser">Open Web Browser</string>

@@ -24,7 +24,15 @@
             </intent-filter>
         </activity>
 
-        <!--Declare 2nd activity-->
+        <!--Declare Settings activity-->
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/activity_settings_name"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".activities.FirstActivity">
+
+        </activity>
     </application>
 
 </manifest>

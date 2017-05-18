@@ -29,7 +29,8 @@
         <RelativeLayout
             android:id="@+id/drawer_pane"
             android:layout_width="280dp"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_gravity="start">
 
             <!-- List of NavigationDrawer items(pages) -->
             <ListView android:id="@+id/navigation_list"
