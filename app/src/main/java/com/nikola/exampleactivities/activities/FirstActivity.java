@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.nikola.exampleactivities.R;
 import com.nikola.exampleactivities.adapters.DrawerAdapter;
+import com.nikola.exampleactivities.dialogs.AboutDialog;
 import com.nikola.exampleactivities.fragments.DetailFragment;
 import com.nikola.exampleactivities.fragments.MasterFragment;
 import com.nikola.exampleactivities.model.NavigationItem;
@@ -136,9 +137,9 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
                 Intent settings = new Intent(FirstActivity.this, SettingsActivity.class);
                 startActivity(settings);
             } else if (position == 2){
-                //TODO AboutDialog
+                // AboutDialog
                 if (dialog == null) {
-                    // dialog = new AboutDialog(FirstActivity.this).prepareDialog();
+                    dialog = new AboutDialog(FirstActivity.this).prepareDialog();
                 } else {
                     if (dialog.isShowing()) {
                         dialog.dismiss();
