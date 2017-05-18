@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -37,6 +40,9 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
 
     private ArrayList<NavigationItem> drawerNavigationItems = new ArrayList<>();
 
+    // Attributes used by Dialog
+    private AlertDialog dialog;
+
 
 
     // onCreate method is a lifecycle method called when he activity is starting
@@ -52,7 +58,6 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
 
 
         // Manage NavigationDrawer
-
         // 1. Populates a list of NavigationDrawer items, Initialize the Drawer List
 
         NavigationItem home = new NavigationItem("Home", "Show All Products",R.drawable.ic_action_product);
@@ -69,10 +74,14 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
 
         // 2. Populates NavigationDrawer with otpions
         drawerRelativeLayoutPane = (RelativeLayout) findViewById(R.id.drawer_pane);
-
-        //TODO add DrawerAdapter
         DrawerAdapter drawerAdapter = new DrawerAdapter(this, drawerNavigationItems);
 
+        // Sets a custom shadow that overlays the main content when NavigationDrawer opens
+        //drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+
+        // 3. setOnItemClickListener
+        drawerListView.setOnItemClickListener(new DrawerItemClickListener());
+        drawerListView.setAdapter(drawerAdapter);
 
 
 
@@ -111,6 +120,40 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
 
         }
 
+    }
+
+
+    // SET CLICK LISTENER FOR LISTVIEW IN THE NAVIGATION DRAWER
+    private class DrawerItemClickListener implements ListView.OnItemClickListener{
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            if (position == 0) {
+                // First activity is already shown
+            } else if (position == 1) {
+                // TODO SettingsActivity
+                 //Intent settings = new Intent(FirstActivity.this, SettingsActivity.class) {
+                 //startActivity(settings);
+            } else if (position == 2){
+                //TODO AboutDialog
+                if (dialog == null) {
+                    // dialog = new AboutDialog(FirstActivity.this).prepareDialog();
+                } else {
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+
+                dialog.show();
+            }
+
+            drawerListView.setItemChecked(position, true);
+            setTitle(drawerNavigationItems.get(position).getTitle());
+            drawerLayout.closeDrawer(drawerRelativeLayoutPane);
+
+            //setTitle(drawerItems.get(position).getTitle());
+            //drawerLayout.closeDrawer(drawerPane);
+        }
     }
 
     // onStart method is a lifecycle method called after onCreate (or after onRestart when the
