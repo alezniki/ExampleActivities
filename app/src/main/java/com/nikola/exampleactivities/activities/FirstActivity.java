@@ -1,6 +1,7 @@
 package com.nikola.exampleactivities.activities;
 
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
@@ -131,9 +132,9 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
             if (position == 0) {
                 // First activity is already shown
             } else if (position == 1) {
-                // TODO SettingsActivity
-                 //Intent settings = new Intent(FirstActivity.this, SettingsActivity.class) {
-                 //startActivity(settings);
+                // SettingsActivity
+                Intent settings = new Intent(FirstActivity.this, SettingsActivity.class);
+                startActivity(settings);
             } else if (position == 2){
                 //TODO AboutDialog
                 if (dialog == null) {
@@ -150,9 +151,6 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
             drawerListView.setItemChecked(position, true);
             setTitle(drawerNavigationItems.get(position).getTitle());
             drawerLayout.closeDrawer(drawerRelativeLayoutPane);
-
-            //setTitle(drawerItems.get(position).getTitle());
-            //drawerLayout.closeDrawer(drawerPane);
         }
     }
 

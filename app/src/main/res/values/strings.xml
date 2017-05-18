@@ -15,4 +15,13 @@
     <string name="notification_title">Success Order</string>
     <string name="notification_text">Your meal will be ready shortly</string>
 
+    <!--CheckBoxPreference-->
+    <string name="pref_sync">pref_sync</string>
+    <string name="pref_sync_title">Allow Sync</string>
+    <string name="pref_sync_summ">Allow app to sync data automatically if Wi-fi is available</string>
+
+    <!--ListPreference-->
+    <string name="pref_syncConnectionType">Sync interval</string>
+    <string name="pref_sync_list">pref_sync_list</string>
+
 </resources>
