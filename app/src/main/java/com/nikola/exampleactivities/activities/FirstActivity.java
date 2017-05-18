@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.nikola.exampleactivities.R;
+import com.nikola.exampleactivities.adapters.DrawerAdapter;
 import com.nikola.exampleactivities.fragments.DetailFragment;
 import com.nikola.exampleactivities.fragments.MasterFragment;
 import com.nikola.exampleactivities.model.NavigationItem;
@@ -52,7 +53,7 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
 
         // Manage NavigationDrawer
 
-        // 1. Populates a list of NavigationDrawer items
+        // 1. Populates a list of NavigationDrawer items, Initialize the Drawer List
 
         NavigationItem home = new NavigationItem("Home", "Show All Products",R.drawable.ic_action_product);
         drawerNavigationItems.add(home);
@@ -70,6 +71,8 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
         drawerRelativeLayoutPane = (RelativeLayout) findViewById(R.id.drawer_pane);
 
         //TODO add DrawerAdapter
+        DrawerAdapter drawerAdapter = new DrawerAdapter(this, drawerNavigationItems);
+
 
 
 
