@@ -6,9 +6,9 @@
     android:orientation="vertical">
 
     <!--Added Relative Layout to prevent Toolbar to overlaps fragments in landscape mode-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -19,10 +19,9 @@
             android:background="?attr/colorPrimary">
         </android.support.v7.widget.Toolbar>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/toolbar">
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
 
             <android.support.v4.widget.DrawerLayout
                 android:id="@+id/drawer_layout"
@@ -32,7 +31,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
                     <!-- The main content view -->
                     <FrameLayout
@@ -45,6 +44,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"></FrameLayout>
+
                 </LinearLayout>
 
                 <!-- The navigation drawer layout-->
@@ -64,7 +64,11 @@
                         android:dividerHeight="0dp"
                         android:background="#111"/>
                 </RelativeLayout>
+
             </android.support.v4.widget.DrawerLayout>
-        </LinearLayout>
-    </RelativeLayout>
+
+        <!--</LinearLayout>-->
+
+    <!--</RelativeLayout>-->
+
 </LinearLayout>
