@@ -3,6 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name="actionMenuTextColor">@color/colorPrimaryLight</item>
+        <!--Set Status Bar Color-->
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
     </style>
 
     <!--Toolbar-->

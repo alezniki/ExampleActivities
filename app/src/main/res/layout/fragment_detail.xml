@@ -1,5 +1,9 @@
 <?xml version= "1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -55,13 +59,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_order"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/button_order"/>
-
     <Spinner
         android:id="@+id/sp_category"
         android:layout_width="match_parent"
@@ -74,3 +71,12 @@
         android:layout_weight="1"/>
 
 </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_action_order"
+        android:layout_gravity="bottom|end"
+        android:backgroundTint="@color/colorAccent"/>
+</android.support.design.widget.CoordinatorLayout>
