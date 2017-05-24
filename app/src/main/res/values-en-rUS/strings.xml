@@ -28,5 +28,8 @@
     <string name="refresh">Refresh</string>
     <string name="action_refresh">Good Way to Sync</string>
     <string name="action_add">Bad Way to Sync</string>
+    <string name="action_edit">Edit Food Executed</string>
+    <string name="action_delete">Delete Food Executed</string>
+
 
 </resources>

@@ -28,5 +28,8 @@
     <string name="refresh">Osvezi</string>
     <string name="action_refresh">Dobro Pokrenuta Sinhronizacijac</string>
     <string name="action_add">Lose Pokrenuta Sinhronizacija</string>
+    <string name="action_edit">Izvrsena Izmena</string>
+    <string name="action_delete">Izvrseno Brisanje</string>
+
 
 </resources>

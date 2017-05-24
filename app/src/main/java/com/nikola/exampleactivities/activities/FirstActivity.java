@@ -260,24 +260,25 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
             case R.id.refresh:
                 new SimpleSyncTask(FirstActivity.this).execute(); //Dobro pokrenuta sinhronizacija
                 Snackbar.make(findViewById(R.id.refresh), R.string.action_refresh,Snackbar.LENGTH_SHORT).show();
-                return true;
+                return true; // break
             case R.id.add_food:
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(6000); // Lose pokrenuta sinhronizacija
+                    Snackbar.make(findViewById(R.id.add_food), R.string.action_add,Snackbar.LENGTH_SHORT).show();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                // Lose pokrenuta sinhronizacija
-                Snackbar.make(findViewById(R.id.add_food), R.string.action_add,Snackbar.LENGTH_LONG).show();
+                return true; // break
+
+            case R.id.edit_food:
+                Toast.makeText(this, R.string.action_edit, Toast.LENGTH_SHORT).show();
+                //Snackbar.make(findViewById(R.id.edit_food), R.string.action_edit,Snackbar.LENGTH_LONG).show();
                 return true;
-//
-//            case R.id.edit_food:
-//                Snackbar.make(findViewById(R.id.edit_food),"EDIT FOOD",Snackbar.LENGTH_LONG).show();
-//                return true;
-//
-//            case R.id.delete_food:
-//                Snackbar.make(findViewById(R.id.delete_food),"DELETE FOOD",Snackbar.LENGTH_LONG).show();
-//                return true;
+
+            case R.id.delete_food:
+                Toast.makeText(this, R.string.action_delete, Toast.LENGTH_SHORT).show();
+                //Snackbar.make(findViewById(R.id.delete_food), R.string.action_delete,Snackbar.LENGTH_SHORT).show();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
