@@ -6,15 +6,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.nikola.exampleactivities.R;
-import com.nikola.exampleactivities.providers.FoodProvider;
-
-import java.util.List;
 
 /**
  * Created by androiddevelopment on 13.5.17..
@@ -60,23 +54,26 @@ public class MasterFragment extends Fragment {
 
         // MOVED FROM FIRST ACTIVITY CLASS
 
-        // Loads food names from array resource
-        final List<String> foodNames = FoodProvider.getFoodNames();
+        //Posto zelimo da se lista proizvoda prikazuje kada asinhrno zadatak zavrsi posao
+        //ovaj kod cemo prebaciti u asinhroni zadatk
 
-        // Creates an ArrayAdaptar from the array of String
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),R.layout.list_item, foodNames);
-        ListView listView = (ListView) getActivity().findViewById(R.id.list_view);
-
-        // Assigns ArrayAdaptar to ListView
-        listView.setAdapter(adapter);
-
-        // Update FirstActivity
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                listener.onItemSelected(position); // OnItemSelectedListener
-            }
-        });
+//        // Loads food names from array resource
+//        final List<String> foodNames = FoodProvider.getFoodNames();
+//
+//        // Creates an ArrayAdaptar from the array of String
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),R.layout.list_item, foodNames);
+//        ListView listView = (ListView) getActivity().findViewById(R.id.list_view);
+//
+//        // Assigns ArrayAdaptar to ListView
+//        listView.setAdapter(adapter);
+//
+//        // Update FirstActivity
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                listener.onItemSelected(position); // OnItemSelectedListener
+//            }
+//        });
     }
 
 
