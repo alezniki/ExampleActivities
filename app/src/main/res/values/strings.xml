@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Activities Example</string>
+    <string name="app_name">Services</string>
 
     <string name="activity_settings_name">Settings Activity</string>
 
