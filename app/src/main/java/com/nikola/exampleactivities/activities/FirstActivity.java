@@ -31,7 +31,7 @@ import java.util.ArrayList;
 public class FirstActivity extends AppCompatActivity implements MasterFragment.OnItemSelectedListener {
 
     Toolbar toolbar;
-    boolean landscape = false; // Portrait mode initaily
+    boolean landscape = false; // Portrait mode initially
 
     // NavigationDrawer Attributes
     private DrawerLayout drawerLayout;
@@ -256,17 +256,20 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.refresh:
+                Snackbar.make(findViewById(R.id.refresh), R.string.action_refresh,Snackbar.LENGTH_SHORT).show();
+                return true;
             case R.id.add_food:
-                Snackbar.make(findViewById(R.id.add_food),"ADD FOOD",Snackbar.LENGTH_LONG).show();
+                Snackbar.make(findViewById(R.id.add_food), R.string.action_add,Snackbar.LENGTH_LONG).show();
                 return true;
-
-            case R.id.edit_food:
-                Snackbar.make(findViewById(R.id.edit_food),"EDIT FOOD",Snackbar.LENGTH_LONG).show();
-                return true;
-
-            case R.id.delete_food:
-                Snackbar.make(findViewById(R.id.delete_food),"DELETE FOOD",Snackbar.LENGTH_LONG).show();
-                return true;
+//
+//            case R.id.edit_food:
+//                Snackbar.make(findViewById(R.id.edit_food),"EDIT FOOD",Snackbar.LENGTH_LONG).show();
+//                return true;
+//
+//            case R.id.delete_food:
+//                Snackbar.make(findViewById(R.id.delete_food),"DELETE FOOD",Snackbar.LENGTH_LONG).show();
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

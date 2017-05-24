@@ -28,5 +28,8 @@
     <string name="dialog_about_message">This is the Example18 app which demonstrates usage of toasts, notifications, dialogs, preferences, toolbars and navigation drawers</string>
     <string name="dialog_about_yes">OK</string>
     <string name="dialog_about_no">Cancel</string>
+    <string name="refresh">Refresh</string>
+    <string name="action_refresh">REFRESH EXECUTED</string>
+    <string name="action_add">ADD FOOD EXECUTED</string>
 
 </resources>
