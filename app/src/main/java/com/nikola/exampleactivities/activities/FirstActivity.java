@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.nikola.exampleactivities.R;
 import com.nikola.exampleactivities.adapters.DrawerAdapter;
+import com.nikola.exampleactivities.async.SimpleSyncTask;
 import com.nikola.exampleactivities.dialogs.AboutDialog;
 import com.nikola.exampleactivities.fragments.DetailFragment;
 import com.nikola.exampleactivities.fragments.MasterFragment;
@@ -257,9 +258,16 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.refresh:
+                new SimpleSyncTask(FirstActivity.this).execute(); //Dobro pokrenuta sinhronizacija
                 Snackbar.make(findViewById(R.id.refresh), R.string.action_refresh,Snackbar.LENGTH_SHORT).show();
                 return true;
             case R.id.add_food:
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                // Lose pokrenuta sinhronizacija
                 Snackbar.make(findViewById(R.id.add_food), R.string.action_add,Snackbar.LENGTH_LONG).show();
                 return true;
 //

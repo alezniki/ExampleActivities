@@ -102,11 +102,12 @@ public class MasterFragment extends Fragment {
 
         Toast.makeText(getActivity(), "MasterFragment.onAttach()", Toast.LENGTH_SHORT).show();
 
-       try{
-           listener = (OnItemSelectedListener) context;
-       } catch (ClassCastException e) {
-           throw new ClassCastException(context.toString() + " must implement OnItemSelectedListener.");
-       }
+        // Moved to SympleSyncTask onPostExecute method
+//       try{
+//           listener = (OnItemSelectedListener) context;
+//       } catch (ClassCastException e) {
+//           throw new ClassCastException(context.toString() + " must implement OnItemSelectedListener.");
+//       }
     }
 
     //5. DETACH FRAGMENT FROM ACTIVITY

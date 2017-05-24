@@ -1,11 +1,32 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Activities Example</string>
+    <string name="app_name">Services</string>
 
-    <string name="second_activity">Second Activity</string>
-    <string name="third_activity">Third Activity</string>
+    <string name="activity_settings_name">Settings Activity</string>
 
-    <string name="start_activity">Start An Activity</string>
-    <string name="open_browser">Open Web Browser</string>
-    <string name="open_camera">Open Camera</string>
+    <string name="toolbar_title">Toolbar Title</string>
+    <string name="add_food">Add Food</string>
+    <string name="delete_food">Delete Food</string>
+    <string name="edit_food">Edit Food</string>
+    <string name="button_order">Make Order</string>
+    <string name="notification_title">Success Order</string>
+    <string name="notification_text">Your meal will be ready shortly</string>
+
+    <!--CheckBoxPreference-->
+    <string name="pref_sync">pref_sync</string>
+    <string name="pref_sync_title">Allow Sync</string>
+    <string name="pref_sync_summ">Allow app to sync data automatically if Wi-fi is available</string>
+
+    <!--ListPreference-->
+    <string name="pref_syncConnectionType">Sync interval</string>
+    <string name="pref_sync_list">pref_sync_list</string>
+
+    <!-- AboutDialog -->
+    <string name="dialog_about_title">About</string>
+    <string name="dialog_about_message">This is the Example18 app which demonstrates usage of toasts, notifications, dialogs, preferences, toolbars and navigation drawers</string>
+    <string name="dialog_about_yes">OK</string>
+    <string name="dialog_about_no">Cancel</string>
+    <string name="refresh">Refresh</string>
+    <string name="action_refresh">Good Way to Sync</string>
+    <string name="action_add">Bad Way to Sync</string>
+
 </resources>

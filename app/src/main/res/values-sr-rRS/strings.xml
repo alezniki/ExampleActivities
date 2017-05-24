@@ -1,11 +1,32 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Primer Aktivnosti</string>
+    <string name="app_name">Servisi</string>
 
-    <string name="second_activity">Druga Aktivnost</string>
-    <string name="third_activity">Treca Aktivnost</string>
+    <string name="activity_settings_name">Podesavanje Aktivnost</string>
 
-    <string name="start_activity">Pokreni Aktivnost</string>
-    <string name="open_browser">Pokreni Veb Pretrazivac</string>
-    <string name="open_camera">Pokreni Kameru</string>
+    <string name="toolbar_title">Naziv Toolbar-a</string>
+    <string name="add_food">Dodaj</string>
+    <string name="delete_food">Obrisi</string>
+    <string name="edit_food">Izmeni</string>
+    <string name="button_order">Poruci</string>
+    <string name="notification_title">Uspesna porudzbina</string>
+    <string name="notification_text">Uskoro Vam stize porudzbunina</string>
+
+    <!--CheckBoxPreference-->
+    <string name="pref_sync">pref_sync</string>
+    <string name="pref_sync_title">Dozvoli Sinhronizaciju</string>
+    <string name="pref_sync_summ">Dozvoli aplikaciji da automatski sinhronizuje podatke ako  ima Wi-Fi</string>
+
+    <!--ListPreference-->
+    <string name="pref_syncConnectionType">Sinhronizovani Interval</string>
+    <string name="pref_sync_list">pref_sync_list</string>
+
+    <!-- AboutDialog -->
+    <string name="dialog_about_title">O Nama</string>
+    <string name="dialog_about_message">Ovde je prikazano koriscenje dijaloga, podesavanja, linija alata i navigacionih fioka</string>
+    <string name="dialog_about_yes">OK</string>
+    <string name="dialog_about_no">Ponisti</string>
+    <string name="refresh">Osvezi</string>
+    <string name="action_refresh">Dobro Pokrenuta Sinhronizacijac</string>
+    <string name="action_add">Lose Pokrenuta Sinhronizacija</string>
+
 </resources>

@@ -24,8 +24,11 @@ public class SimpleSyncTask  extends AsyncTask<Void,Void,Void> {
     private Activity activity;
     private MasterFragment.OnItemSelectedListener listener; // Interface
 
-//    public SimpleSyncTask
-    //listener = (OnItemSelectedListener) context;
+    public SimpleSyncTask(Activity activity) {
+        this.activity = activity;
+        listener = (MasterFragment.OnItemSelectedListener) activity;
+    }
+
     // Metoda koja se poziva pre samog starta pozadinskog zadatka
     @Override
     protected void onPreExecute() {
