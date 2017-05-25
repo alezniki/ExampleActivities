@@ -59,6 +59,15 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //ACTION BAR
+        final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_action_drawer);
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.show();
+        }
 
         // Manage NavigationDrawer
         // 1. Populates a list of NavigationDrawer items, Initialize the Drawer List
@@ -86,7 +95,24 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
         drawerListView.setOnItemClickListener(new DrawerItemClickListener());
         drawerListView.setAdapter(drawerAdapter);
 
+        // Toggle Button
+        drawerToggle = new ActionBarDrawerToggle(
+                this,                           /* host Activity */
+                drawerLayout,                   /* DrawerLayout object */
+                toolbar,                        /* nav drawer image to replace 'Up' caret */
+                R.string.drawer_open,           /* "open drawer" description for accessibility */
+                R.string.drawer_close           /* "close drawer" description for accessibility */
+        ) {
+            public void onDrawerClosed(View view) {
+                getSupportActionBar().setTitle(drawerTitle);
+                invalidateOptionsMenu();        // Creates call to onPrepareOptionsMenu()
+            }
 
+            public void onDrawerOpened(View drawerView) {
+                getSupportActionBar().setTitle(drawerTitle);
+                invalidateOptionsMenu();        // Creates call to onPrepareOptionsMenu()
+            }
+        };
 
 
         // Shows a toast message (a pop-up message)

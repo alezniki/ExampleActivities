@@ -31,5 +31,10 @@
     <string name="action_edit">Izvrsena Izmena</string>
     <string name="action_delete">Izvrseno Brisanje</string>
 
+    <!-- Drawer-->
+    <string name="drawer_open">Otvori Navigacionu Fioku</string>
+    <string name="drawer_close">Zatvori Navigacionu Fioku</string>
+
+
 
 </resources>
