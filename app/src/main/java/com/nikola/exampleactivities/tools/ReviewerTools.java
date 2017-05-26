@@ -22,7 +22,7 @@ public class ReviewerTools {
         NetworkInfo activeNetworkInfo = connectivity.getActiveNetworkInfo();
         if (null != activeNetworkInfo) {
             if (activeNetworkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
-                return  TYPE_WIFI;
+                return TYPE_WIFI;
             }
 
             if (activeNetworkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {

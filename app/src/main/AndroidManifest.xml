@@ -5,6 +5,7 @@
     package="com.nikola.exampleactivities">
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -24,6 +25,7 @@
             </intent-filter>
         </activity>
 
+
         <!--Declare Settings activity-->
         <activity
             android:name=".activities.SettingsActivity"
@@ -33,6 +35,9 @@
             android:parentActivityName=".activities.FirstActivity">
 
         </activity>
+
+        <!--Moramo definisati punu putanju do naseg servisa-->
+        <service android:name="com.nikola.exampleactivities.async.SimpleService"/>
     </application>
 
 </manifest>

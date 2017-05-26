@@ -20,11 +20,12 @@ import android.widget.Toast;
 
 import com.nikola.exampleactivities.R;
 import com.nikola.exampleactivities.adapters.DrawerAdapter;
-import com.nikola.exampleactivities.async.SimpleSyncTask;
+import com.nikola.exampleactivities.async.SimpleService;
 import com.nikola.exampleactivities.dialogs.AboutDialog;
 import com.nikola.exampleactivities.fragments.DetailFragment;
 import com.nikola.exampleactivities.fragments.MasterFragment;
 import com.nikola.exampleactivities.model.NavigationItem;
+import com.nikola.exampleactivities.tools.ReviewerTools;
 
 import java.util.ArrayList;
 
@@ -284,8 +285,14 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.refresh:
-                new SimpleSyncTask(FirstActivity.this).execute(); //Dobro pokrenuta sinhronizacija
+                //new SimpleSyncTask(FirstActivity.this).execute(); //Dobro pokrenuta sinhronizacija
                 Snackbar.make(findViewById(R.id.refresh), R.string.action_refresh,Snackbar.LENGTH_SHORT).show();
+                int status = ReviewerTools.getConnectivityStatus(getApplicationContext());
+
+                Intent serviceIntent = new Intent(FirstActivity.this, SimpleService.class);
+                serviceIntent.putExtra("status",status);
+
+                startService(serviceIntent); // Pass Data to SimpleService
                 return true; // break
             case R.id.add_food:
                 try {
