@@ -1,5 +1,7 @@
 package com.nikola.exampleactivities.async;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
@@ -47,6 +49,23 @@ public class SimpleSyncTask extends AsyncTask<Integer,Void,Integer> {
         return params[0];
     }
 
+    // Add Notification Manager
+    public void createNotification(String nTitle, String nText){
+        NotificationManager manager  = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        //Build the notification using Notification.Builder
+        Notification.Builder builder = new Notification.Builder(context);
+
+        builder.setSmallIcon(android.R.drawable.stat_notify_more);
+        builder.setAutoCancel(true);
+        builder.setContentTitle(nTitle);
+        builder.setContentText(nText);
+
+        //Show notification
+        manager.notify(1,builder.build());
+
+
+    }
+
     //2. Kada se posao koji se odvija u pozadini zavrsi, poziva se ova metoda
     @Override
     protected void onPostExecute(Integer type) {
@@ -58,6 +77,9 @@ public class SimpleSyncTask extends AsyncTask<Integer,Void,Integer> {
         String text = ReviewerTools.getConnectionType(type);
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
 
+        //Notification
+        String title =  "Notification Example";
+        createNotification(title,text);
     }
 
 //    private void fillProducts() {
