@@ -1,7 +1,11 @@
 package com.nikola.exampleactivities.activities;
 
+import android.app.AlarmManager;
 import android.app.FragmentTransaction;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
@@ -20,6 +24,7 @@ import android.widget.Toast;
 
 import com.nikola.exampleactivities.R;
 import com.nikola.exampleactivities.adapters.DrawerAdapter;
+import com.nikola.exampleactivities.async.SimpleReceiver;
 import com.nikola.exampleactivities.async.SimpleService;
 import com.nikola.exampleactivities.dialogs.AboutDialog;
 import com.nikola.exampleactivities.fragments.DetailFragment;
@@ -48,6 +53,9 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
     private AlertDialog dialog;
 
 
+    private SimpleReceiver sync;
+    private PendingIntent pendingIntent;
+    private AlarmManager alarmManager;
 
     // onCreate method is a lifecycle method called when he activity is starting
     @Override
@@ -203,25 +211,6 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
         toast.show();
     }
 
-    // onResume method is a lifecycle method called after onRestoreInstanceState, onRestart, or
-    // onPause, for your activity to start interacting with the user
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        Toast toast = Toast.makeText(getBaseContext(), "FirstActivity.onResume()", Toast.LENGTH_SHORT);
-        toast.show();
-    }
-
-    // onPause method is a lifecycle method called when an activity is going into the background,
-    // but has not (yet) been killed
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        Toast toast = Toast.makeText(getBaseContext(), "FirstActivity.onPause()", Toast.LENGTH_SHORT);
-        toast.show();
-    }
 
     // onStop method is a lifecycle method called when the activity are no longer visible to the user
     @Override
@@ -290,7 +279,7 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
                 int status = ReviewerTools.getConnectivityStatus(getApplicationContext());
 
                 Intent serviceIntent = new Intent(FirstActivity.this, SimpleService.class);
-                serviceIntent.putExtra("status",status);
+                serviceIntent.putExtra("STATUS",status);
 
                 startService(serviceIntent); // Pass Data to SimpleService
                 return true; // break
@@ -315,6 +304,87 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+
+    
+    
+    // onResume method is a lifecycle method called after onRestoreInstanceState, onRestart, or
+    // onPause, for your activity to start interacting with the user
+    /**
+     * Prilikom startovanja aplikacije potrebno je registrovati
+     * elemente sa kojima radimo. Kada aplikacija nije aktivna
+     * te elemente moramo da uklonimo.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        setUpReceiver(); // Registracija jednog filtera
+        setUpManager(); // AlarmManager
+        
+        Toast toast = Toast.makeText(getBaseContext(), "FirstActivity.onResume()", Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+
+    /**
+     * Registrujemo nas BroadcastReceiver i dodajemo mu 'filter'.
+     * Filter koristimo prilikom prispeca poruka. Jedan receiver
+     * moze da reaguje na vise tipova poruka. One nam kazu
+     * sta tacno treba da se desi kada poruka odredjenog tipa (filera)
+     * stigne.
+     * */
+    private void setUpReceiver() {
+        sync= new SimpleReceiver(); // BroadcastReceiver
+
+        // Registracija jednog filtera: <intent-filter>
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("SYNC_DATA");
+        registerReceiver(sync,filter);
+    }
+
+
+    /* Kada zelimo da se odredjeni zadaci ponavljaju potrebno je da regustrujemo manager
+    koji ce motriti kada je vreme da se taj posao obavi. Kada registruje vreme za pokretanje zadatka
+    on emituje Intent operativnom sistemu sta je potrebno da se desi
+    * */
+    private void setUpManager() {
+        Intent intent = new Intent(this,SimpleService.class);
+        int status = ReviewerTools.getConnectivityStatus(getApplicationContext());
+        intent.putExtra("STATUS",status);
+
+        // Definisemo manager i kazemo kada je potrebno da se ponavlja
+        pendingIntent = PendingIntent.getService(this,0,intent,0);
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        // Definisemo kako ce alarm da reaguje
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),ReviewerTools.calculateTimeTillNextSync(1),pendingIntent);
+
+
+        Toast.makeText(this,"ALARM SET", Toast.LENGTH_SHORT).show();
+    }
+
+    // onPause method is a lifecycle method called when an activity is going into the background,
+    // but has not (yet) been killed
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        //Ako je manager kreiran potrebno je da ga uklonimp
+        if (alarmManager !=null){
+            alarmManager.cancel(pendingIntent);
+            alarmManager = null;
+        }
+
+        //Osloboditi resurse koje koristi receiver
+        if (sync !=null) {
+            unregisterReceiver(sync);
+            sync = null;
+        }
+
+        Toast toast = Toast.makeText(getBaseContext(), "FirstActivity.onPause()", Toast.LENGTH_SHORT);
+        toast.show();
     }
 
 }

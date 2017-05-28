@@ -38,6 +38,10 @@
 
         <!--Moramo definisati punu putanju do naseg servisa-->
         <service android:name="com.nikola.exampleactivities.async.SimpleService"/>
+
+
+        <!--Moramo definisati punu putanju naseg receivera-->
+        <receiver android:name="com.nikola.exampleactivities.async.SimpleReceiver"/>
     </application>
 
 </manifest>

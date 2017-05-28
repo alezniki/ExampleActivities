@@ -1,12 +1,8 @@
 package com.nikola.exampleactivities.async;
 
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
-import android.widget.Toast;
-
-import com.nikola.exampleactivities.tools.ReviewerTools;
 
 /**
  * Created by Dzoni on 5/24/2017.
@@ -49,58 +45,55 @@ public class SimpleSyncTask extends AsyncTask<Integer,Void,Integer> {
         return params[0];
     }
 
-    // Add Notification Manager
-    public void createNotification(String nTitle, String nText){
-        NotificationManager manager  = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        //Build the notification using Notification.Builder
-        Notification.Builder builder = new Notification.Builder(context);
-
-        builder.setSmallIcon(android.R.drawable.stat_notify_more);
-        builder.setAutoCancel(true);
-        builder.setContentTitle(nTitle);
-        builder.setContentText(nText);
-
-        //Show notification
-        manager.notify(1,builder.build());
-
-
-    }
+//    // Add Notification Manager
+//    public void createNotification(String nTitle, String nText){
+//        NotificationManager manager  = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+//        //Build the notification using Notification.Builder
+//        Notification.Builder builder = new Notification.Builder(context);
+//
+//        builder.setSmallIcon(android.R.drawable.stat_notify_more);
+//        builder.setAutoCancel(true);
+//        builder.setContentTitle(nTitle);
+//        builder.setContentText(nText);
+//
+//        //Show notification
+//        manager.notify(1,builder.build());
+//    }
 
     //2. Kada se posao koji se odvija u pozadini zavrsi, poziva se ova metoda
     @Override
     protected void onPostExecute(Integer type) {
         super.onPostExecute(type);
-        // Ako je potrebno osloboditi resurse ili obrisati elemente koji vise ne trebaju.
-        Toast.makeText(context, "Sync Done", Toast.LENGTH_SHORT).show();
-        //fillProducts(); // Get data from ListView
+//        // Ako je potrebno osloboditi resurse ili obrisati elemente koji vise ne trebaju.
 
-        String text = ReviewerTools.getConnectionType(type);
-        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, "Sync Done", Toast.LENGTH_SHORT).show();
+//        //fillProducts(); // Get data from ListView
+//
+//        String text = ReviewerTools.getConnectionType(type);
+//        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+//
+//        //Notification
+//        String title =  "Notification Example";
+//        createNotification(title,text);
 
-        //Notification
-        String title =  "Notification Example";
-        createNotification(title,text);
+        /**
+        * Da bi poslali poruku BroadcastReceiver-u potrebno je da definisiemo Intent sa sadrzajem.
+        * Definisemo intent i sa njim nasu akciju SYNC_DATA. Ovo radimo da bi BroadcastReceiver
+        * znao kako da reaguje kada dobije poruku tog tipa.
+        * Uz poruku mozemo vezati i neki sadrazaj RESULT_CODE u ovom slucaju.
+        * Jedan BroadcastReceiver moze da prima vise poruka iz aplikacije i iz tog razloga definisanje
+        * akcije je bitna stvar.
+        *
+        * Voditi racuna o tome da se naziv akcije kada korisnik salje Intent mora poklapati sa
+        * nazivom akcije kada akciju proveravamo unutar BroadcastReceiver-a. Isto vazi i za podatke.
+        * Dobra praksa je da se ovi nazivi izdvoje unutar neke staticke promenljive.
+        * */
+
+        Intent intent = new Intent("SYNC_DATA");
+        //Intent intent = new Intent();
+        //intent.setAction("SYNC_DATA");
+        intent.putExtra("RESULT_CODE", type); //RESULT_CODE u onReceive(), type je Connection type
+        context.sendBroadcast(intent);
     }
 
-//    private void fillProducts() {
-//        // Loads food names from array resource
-//        // Moved from MasterFragment onActivityCreated method
-//
-//        final List<String> foodNames = FoodProvider.getFoodNames();
-//
-//        // Creates an ArrayAdaptar from the array of String
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity, R.layout.list_item, foodNames);
-//        ListView listView = (ListView) activity.findViewById(R.id.list_view);
-//
-//        // Assigns ArrayAdaptar to ListView
-//        listView.setAdapter(adapter);
-//
-//        // Update FirstActivity
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                listener.onItemSelected(position); // OnItemSelectedListener
-//            }
-//        });
-//    }
 }

@@ -34,7 +34,7 @@ public class SimpleService extends Service {
          */
 
         // Get data from FirstActivity
-        int status = intent.getExtras().getInt("status");
+        int status = intent.getExtras().getInt("STATUS");
 
         /*Primer poziva asinhronog zadatka ako ima veze ka mrezi
         npr. sinhronizacija mail-ova fotografija, muzike dokumenata isl*/
