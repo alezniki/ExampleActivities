@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -15,7 +16,7 @@ import com.nikola.exampleactivities.tools.ReviewerTools;
 /**
  * Created by nikola on 5/28/17.
  *
- * * BroadcastReceiver je komponenta koja moze da reaguje na poruke drugih delova
+ * BroadcastReceiver je komponenta koja moze da reaguje na poruke drugih delova
  * samog sistema kao i korisnicki definisanih. Cesto se koristi u sprezi sa
  * servisima i asinhronim zadacima.
  *
@@ -25,7 +26,7 @@ import com.nikola.exampleactivities.tools.ReviewerTools;
 
 public class SimpleReceiver extends BroadcastReceiver {
 
-    private static int notificationID = 1;
+    //private static int notificationID = 1;
 
     /**
      * Intent je bitan parametar za BroadcastReceiver. Kada posaljemo neku poruku,
@@ -45,15 +46,21 @@ public class SimpleReceiver extends BroadcastReceiver {
          * Dobra praksa je da se ovi nazivi izdvoje unutar neke staticke promenljive.
          * */
 
-        if (intent.getAction().equals("SYNC_DATA")){
-            int resultCode = intent.getExtras().getInt("RESULT_CODE"); // iz SympleSyncTask-a
+        int resultCode = intent.getExtras().getInt("RESULT_CODE"); // iz SympleSyncTask-a
 
-            prepareNotification(resultCode,context);
+        if (intent.getAction().equals("SYNC_DATA")){
+
+            prepareNotification(resultCode,context,1,null);
+
+        } else  if (intent.getAction().equals("COMMENT")) {
+            prepareNotification(resultCode,context,2,intent.getExtras());
         }
 
     }
 
-    private void prepareNotification(int resultCode, Context context) {
+    // Saljemo i sadrzaj i naslov poruke, kao i Bundle objekat
+    // Takodje cemo poslati i drugi notificationID
+    private void prepareNotification(int resultCode, Context context, int notificationID, Bundle bundle) {
         NotificationManager notification = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder builder  = new NotificationCompat.Builder(context);
 
@@ -61,19 +68,28 @@ public class SimpleReceiver extends BroadcastReceiver {
 
         Log.i("My_Android_App", "NOTIFICATION");
 
-        if (resultCode == ReviewerTools.TYPE_NOT_CONECTED) {
-            builder.setSmallIcon(R.drawable.ic_action_settings);
-            builder.setContentTitle(context.getString(R.string.autosync_problem));
-            builder.setContentText(context.getString(R.string.no_internet));
-        } else if (resultCode == ReviewerTools.TYPE_MOBILE) {
-            builder.setSmallIcon(R.drawable.ic_stat_order);
-            builder.setContentTitle(context.getString(R.string.autosync_warning));
-            builder.setContentText(context.getString(R.string.connect_to_wifi));
-        } else {
-            builder.setSmallIcon(R.drawable.ic_action_refresh);
-            builder.setContentTitle(context.getString(R.string.autosync));
-            builder.setContentText(context.getString(R.string.good_news_sync));
-        }
+       if (bundle == null) {
+           if (resultCode == ReviewerTools.TYPE_NOT_CONECTED) {
+               builder.setSmallIcon(R.drawable.ic_action_settings);
+               builder.setContentTitle(context.getString(R.string.autosync_problem));
+               builder.setContentText(context.getString(R.string.no_internet));
+           } else if (resultCode == ReviewerTools.TYPE_MOBILE) {
+               builder.setSmallIcon(R.drawable.ic_stat_order);
+               builder.setContentTitle(context.getString(R.string.autosync_warning));
+               builder.setContentText(context.getString(R.string.connect_to_wifi));
+           } else {
+               builder.setSmallIcon(R.drawable.ic_action_refresh);
+               builder.setContentTitle(context.getString(R.string.autosync));
+               builder.setContentText(context.getString(R.string.good_news_sync));
+           }
+       } else {
+           String title = bundle.getString("title");
+           String comment = bundle.getString("comment");
+
+           builder.setSmallIcon(android.R.drawable.stat_notify_more);
+           builder.setContentTitle(title);
+           builder.setContentText(comment);
+       }
 
 
         builder.setLargeIcon(bm);

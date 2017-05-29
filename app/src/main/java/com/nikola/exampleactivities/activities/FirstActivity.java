@@ -1,6 +1,7 @@
 package com.nikola.exampleactivities.activities;
 
 import android.app.AlarmManager;
+import android.app.Dialog;
 import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -18,12 +19,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.nikola.exampleactivities.R;
 import com.nikola.exampleactivities.adapters.DrawerAdapter;
+import com.nikola.exampleactivities.async.CommentService;
 import com.nikola.exampleactivities.async.SimpleReceiver;
 import com.nikola.exampleactivities.async.SimpleService;
 import com.nikola.exampleactivities.dialogs.AboutDialog;
@@ -283,13 +287,15 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
 
                 startService(serviceIntent); // Pass Data to SimpleService
                 return true; // break
-            case R.id.add_food:
-                try {
-                    Thread.sleep(6000); // Lose pokrenuta sinhronizacija
-                    Snackbar.make(findViewById(R.id.add_food), R.string.action_add,Snackbar.LENGTH_SHORT).show();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+            case R.id.add_dialog:
+//                try {
+//                    Thread.sleep(6000); // Lose pokrenuta sinhronizacija
+//                    Snackbar.make(findViewById(R.id.add_food), R.string.action_add,Snackbar.LENGTH_SHORT).show();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+
+                addDialog();
                 return true; // break
 
             case R.id.edit_food:
@@ -307,8 +313,49 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
     }
 
 
-    
-    
+    private void addDialog() {
+        // Potvrdom komentara ako ima interneta startuje se novi Servis koji pokrece AsynctAsk
+        // Kada zavrsi posao salje Broadcast poruku sa sadrzajem komentara koja ce se
+        // pokazati u NotificationManager-u.
+
+        final Dialog dialog = new Dialog(FirstActivity.this);
+        dialog.setContentView(R.layout.dialog_layout);
+        dialog.setTitle(R.string.dialog);
+
+        Button btnOK = (Button)dialog.findViewById(R.id.btn_ok);
+        Button btnCancel = (Button)dialog.findViewById(R.id.btn_cancel);
+
+
+        // OK: PREUZIMAMO SADRZAJ TEKSTUALNIH POLJA IZ DIJALOGA
+        btnOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText editTitle = (EditText)dialog.findViewById(R.id.dialog_title);
+                EditText editComment  = (EditText)dialog.findViewById(R.id.dialog_comment);
+
+                Intent comment = new Intent(FirstActivity.this,CommentService.class);
+                comment.putExtra("title",editTitle.getText().toString());
+                comment.putExtra("comment",editComment.getText().toString());
+
+                startService(comment);
+
+                dialog.cancel();
+            }
+        });
+
+        // CANCEL: ISPISUJEMO SNACKBAR
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(FirstActivity.this, R.string.no_comment, Toast.LENGTH_SHORT).show();
+                dialog.cancel();
+            }
+        });
+
+        dialog.show();
+    }
+
+
     // onResume method is a lifecycle method called after onRestoreInstanceState, onRestart, or
     // onPause, for your activity to start interacting with the user
     /**
@@ -341,6 +388,7 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
         // Registracija jednog filtera: <intent-filter>
         IntentFilter filter = new IntentFilter();
         filter.addAction("SYNC_DATA");
+        filter.addAction("COMMENT");
         registerReceiver(sync,filter);
     }
 

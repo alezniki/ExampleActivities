@@ -19,7 +19,7 @@ public class SimpleService extends Service {
         return null;
     }
 
-    /*
+    /**
      * Metoda koja se poziva prilikom izvrsavanja zadatka servisa
      * Koristeci Intent mozemo prilikom startovanja servisa proslediti
      * odredjene parametre.
@@ -27,8 +27,8 @@ public class SimpleService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-       // super.onStartCommand(intent, flags, startId);
-        /*
+        super.onStartCommand(intent, flags, startId);
+        /**
          * Provericemo trenutnu povezanost sa mrezom.
          * Za ovo koristimo dostupne pozive android operativnog sistema
          */

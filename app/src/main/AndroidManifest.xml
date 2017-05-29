@@ -42,6 +42,9 @@
 
         <!--Moramo definisati punu putanju naseg receivera-->
         <receiver android:name="com.nikola.exampleactivities.async.SimpleReceiver"/>
+
+        <!--CommentService-->
+        <service android:name="com.nikola.exampleactivities.async.CommentService"/>
     </application>
 
 </manifest>
