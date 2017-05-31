@@ -52,5 +52,7 @@
     <string name="dialog">Comment Dialog</string>
     <string name="no_comment">NO COMMENT</string>
     <string name="add_dialog">Add Dialog</string>
+    <string name="read">Read From File</string>
+    <string name="write">Write To File</string>
 
 </resources>

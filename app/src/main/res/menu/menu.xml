@@ -14,12 +14,21 @@
         android:title="@string/add_dialog"
         android:icon="@drawable/ic_action_add"
         app:showAsAction="ifRoom"/>
-    <item android:id="@+id/edit_food"
-        android:icon="@drawable/ic_action_edit"
-        android:title="@string/edit_food"
-        app:showAsAction="ifRoom"/>
-    <item android:id="@+id/delete_food"
-        android:icon="@drawable/ic_action_delete"
-        android:title="@string/delete_food"
-        app:showAsAction="ifRoom"/>
+    <!--<item android:id="@+id/edit_food"-->
+        <!--android:icon="@drawable/ic_action_edit"-->
+        <!--android:title="@string/edit_food"-->
+        <!--app:showAsAction="ifRoom"/>-->
+    <!--<item android:id="@+id/delete_food"-->
+        <!--android:icon="@drawable/ic_action_delete"-->
+        <!--android:title="@string/delete_food"-->
+        <!--app:showAsAction="ifRoom"/>-->
+
+    <item android:id="@+id/read"
+        android:title="@string/read"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/write"
+        android:title="@string/write"
+        app:showAsAction="never"/>
+
 </menu>

@@ -34,7 +34,8 @@
     <!-- Drawer-->
     <string name="drawer_open">Otvori Navigacionu Fioku</string>
     <string name="drawer_close">Zatvori Navigacionu Fioku</string>
-
+    <string name="read">Read From File</string>
+    <string name="write">Write To File</string>
 
 
 </resources>

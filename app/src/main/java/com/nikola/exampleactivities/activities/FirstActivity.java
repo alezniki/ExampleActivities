@@ -39,6 +39,7 @@ import com.nikola.exampleactivities.model.NavigationItem;
 import com.nikola.exampleactivities.tools.ReviewerTools;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 // Each activity extends Activity class
 public class FirstActivity extends AppCompatActivity implements MasterFragment.OnItemSelectedListener {
@@ -293,25 +294,20 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
 
                 startService(serviceIntent); // Pass Data to SimpleService
                 return true; // break
-            case R.id.add_dialog:
-//                try {
-//                    Thread.sleep(6000); // Lose pokrenuta sinhronizacija
-//                    Snackbar.make(findViewById(R.id.add_food), R.string.action_add,Snackbar.LENGTH_SHORT).show();
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
 
+            case R.id.add_dialog:
                 addDialog();
                 return true; // break
 
-            case R.id.edit_food:
-                Toast.makeText(this, R.string.action_edit, Toast.LENGTH_SHORT).show();
-                //Snackbar.make(findViewById(R.id.edit_food), R.string.action_edit,Snackbar.LENGTH_LONG).show();
+            case R.id.read:
+                // Read From File
+                String text = ReviewerTools.readFromFile(this,"my-file.txt");
+                Toast.makeText(this,text,Toast.LENGTH_SHORT).show();
                 return true;
 
-            case R.id.delete_food:
-                Toast.makeText(this, R.string.action_delete, Toast.LENGTH_SHORT).show();
-                //Snackbar.make(findViewById(R.id.delete_food), R.string.action_delete,Snackbar.LENGTH_SHORT).show();
+            case R.id.write:
+                // Write To File
+                ReviewerTools.writeToFile(new Date().toString(), this, "my-file.txt");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
