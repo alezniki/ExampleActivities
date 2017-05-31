@@ -7,7 +7,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -60,6 +62,10 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
     private SimpleReceiver sync;
     private PendingIntent pendingIntent;
     private AlarmManager alarmManager;
+
+    private SharedPreferences sharedPreferences;
+    private String syncTime;
+    private boolean allowSync;
 
     // onCreate method is a lifecycle method called when he activity is starting
     @Override
@@ -390,6 +396,26 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
         filter.addAction("SYNC_DATA");
         filter.addAction("COMMENT");
         registerReceiver(sync,filter);
+
+         /*
+            getDefaultSharedPreferences():
+            koristi podrazumevano ime preference-file-a.
+            Podrzazumevani fajl je setovan na nivou aplikacije tako da sve aktivnosti u istom context-u
+            mogu da mu pristupe jednostavnije
+
+            getSharedPreferences(name,mode):
+            trazi da se specificira ime preference file-a requires i mod u kome se radi
+             (e.g. private, world_readable, etc.)
+        */
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        consultPreferences();
+    }
+
+    private void consultPreferences() {
+        // ListPreference KEY
+        syncTime = sharedPreferences.getString(getString(R.string.pref_sync_list), "1");
+        // CheckBoxPreference KEY
+        allowSync = sharedPreferences.getBoolean(getString(R.string.pref_sync), false);
     }
 
 
@@ -402,15 +428,17 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
         int status = ReviewerTools.getConnectivityStatus(getApplicationContext());
         intent.putExtra("STATUS",status);
 
-        // Definisemo manager i kazemo kada je potrebno da se ponavlja
-        pendingIntent = PendingIntent.getService(this,0,intent,0);
-        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        if (allowSync) { // Ukoliko korisnik dozvoli sinhronizaciju
+            // Definisemo manager i kazemo kada je potrebno da se ponavlja
+            pendingIntent = PendingIntent.getService(this,0,intent,0);
+            // Definisemo alarm, i kako ce alarm da reaguje
+            alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),ReviewerTools.calculateTimeTillNextSync(1),pendingIntent);
+            // calculateTimeTillNextSync(1) 1 minute
 
-        // Definisemo kako ce alarm da reaguje
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),ReviewerTools.calculateTimeTillNextSync(1),pendingIntent);
+            Toast.makeText(this,"ALARM SET", Toast.LENGTH_SHORT).show();
+        }
 
-
-        Toast.makeText(this,"ALARM SET", Toast.LENGTH_SHORT).show();
     }
 
     // onPause method is a lifecycle method called when an activity is going into the background,
