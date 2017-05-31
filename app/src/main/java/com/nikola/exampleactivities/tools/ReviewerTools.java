@@ -26,7 +26,7 @@ import java.io.OutputStreamWriter;
 public class ReviewerTools {
     public static int TYPE_WIFI = 1;
     public static int TYPE_MOBILE = 2;
-    public static int TYPE_NOT_CONECTED = 0;
+    public static int TYPE_NOT_CONNECTED = 0;
 
 
     public static int getConnectivityStatus(Context context) {
@@ -45,7 +45,7 @@ public class ReviewerTools {
             }
         }
 
-        return TYPE_NOT_CONECTED;
+        return TYPE_NOT_CONNECTED;
     }
 
     public static String getConnectionType(Integer type) {
@@ -69,8 +69,8 @@ public class ReviewerTools {
 
     public static void writeToFile(String data,Context context, String filename){
         try {
-            FileOutputStream outputStream = context.openFileOutput(filename, Context.MODE_APPEND);
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
+            FileOutputStream outputStream = context.openFileOutput(filename, Context.MODE_APPEND); // OTVARA FAJL U APPEND REZIMU
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream); // PRETVARA U NIZ BAJTOVA
             outputStreamWriter.write(data);
             outputStreamWriter.close();
         } catch (FileNotFoundException e) {
@@ -85,19 +85,19 @@ public class ReviewerTools {
 
         String ret = "";
         try {
-            InputStream inputStream = context.openFileInput(file);
+            InputStream inputStream = context.openFileInput(file); // CITA VREDNOST IZ FAJLA
 
             if (inputStream != null) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream); // FAJL IZ KOGA CITA VREDNOST
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader); // PRIKAZUJE VREDNOST
                 String receiveString = "";
-                StringBuilder stringBuilder = new StringBuilder();
+                StringBuilder stringBuilder = new StringBuilder(); // CUVA VREDNOST
 
                 while ( (receiveString = bufferedReader.readLine()) != null) {
                     stringBuilder.append(receiveString);
                 }
                 inputStream.close();
-                ret = stringBuilder.toString();
+                ret = stringBuilder.toString(); // POVRATNA VREDNOST
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();

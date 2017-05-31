@@ -4,9 +4,11 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -35,6 +37,7 @@ public class SimpleReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.i("My_Android_App", "RECEIVE");
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         /**
          * Posto nas BroadcastReceiver reaguje samo na jednu akciju koju smo definisali
@@ -50,7 +53,15 @@ public class SimpleReceiver extends BroadcastReceiver {
 
         if (intent.getAction().equals("SYNC_DATA")){
 
-            prepareNotification(resultCode,context,1,null);
+            //prepareNotification(resultCode,context,1,null);
+
+            // Prosiren BroadcastReceiver da koristi allow_message Boolean
+            boolean showMessage = sharedPreferences.getBoolean(context.getString(R.string.allow_message),false);
+
+            if (showMessage) {
+                //int resultCode = intent.getExtras().getInt("RESULT_CODE") ;
+                prepareNotification(resultCode,context,1,null);
+            }
 
         } else  if (intent.getAction().equals("COMMENT")) {
             prepareNotification(resultCode,context,2,intent.getExtras());
@@ -69,7 +80,7 @@ public class SimpleReceiver extends BroadcastReceiver {
         Log.i("My_Android_App", "NOTIFICATION");
 
        if (bundle == null) {
-           if (resultCode == ReviewerTools.TYPE_NOT_CONECTED) {
+           if (resultCode == ReviewerTools.TYPE_NOT_CONNECTED) {
                builder.setSmallIcon(R.drawable.ic_action_settings);
                builder.setContentTitle(context.getString(R.string.autosync_problem));
                builder.setContentText(context.getString(R.string.no_internet));

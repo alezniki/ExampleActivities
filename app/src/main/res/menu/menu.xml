@@ -30,5 +30,9 @@
     <item android:id="@+id/write"
         android:title="@string/write"
         app:showAsAction="never"/>
+    <item android:id="@+id/test"
+        android:title="@string/test"
+        app:showAsAction="ifRoom"/>
+
 
 </menu>

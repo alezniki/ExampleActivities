@@ -1,8 +1,14 @@
 package com.nikola.exampleactivities.async;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import com.nikola.exampleactivities.R;
+import com.nikola.exampleactivities.tools.ReviewerTools;
 
 /**
  * Created by Dzoni on 5/24/2017.
@@ -89,11 +95,28 @@ public class SimpleSyncTask extends AsyncTask<Integer,Void,Integer> {
         * Dobra praksa je da se ovi nazivi izdvoje unutar neke staticke promenljive.
         * */
 
-        Intent intent = new Intent("SYNC_DATA");
+        Intent intent = new Intent("SYNC_DATA"); // SYNC_DATA JE TEMA NA KOJU SALJEMO RECEIVER
         //Intent intent = new Intent();
         //intent.setAction("SYNC_DATA");
         intent.putExtra("RESULT_CODE", type); //RESULT_CODE u onReceive(), type je Connection type
-        context.sendBroadcast(intent);
+        context.sendBroadcast(intent); // BROADCAST SE IZVRSAVA UNUTAR FIRST ACTIVITY KLASE
+
+        // Izmeniti primer tako da se sadrzaj fajla prikazuje na glavnoj strani unutar liste,
+        // kada poruka stigne u BroadcastReceiver
+        readFileAndFillList();
     }
+
+    private void readFileAndFillList() {
+        // Load product names from array resource
+        String[] products = ReviewerTools.readFromFile(context,"my-file.txt").split("\n");
+
+        // Create an ArrayAdapter from the array of Strings
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.list_item, products);
+        ListView listView = (ListView) ((Activity)context).findViewById(R.id.list_view); // products
+
+        listView.setAdapter(adapter);
+    }
+
+
 
 }

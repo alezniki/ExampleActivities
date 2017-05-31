@@ -309,6 +309,14 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
                 // Write To File
                 ReviewerTools.writeToFile(new Date().toString(), this, "my-file.txt");
                 return true;
+
+            case R.id.test:
+                // Testira da li fajl postoji i to prikazuje korisniku
+                if (ReviewerTools.isFileExists(FirstActivity.this,"my-file.txt")){
+                    Toast.makeText(this, "FILE EXISTS", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "FILE DOES NOT FEXISTS", Toast.LENGTH_SHORT).show();
+                }
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -393,7 +401,7 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
         filter.addAction("COMMENT");
         registerReceiver(sync,filter);
 
-         /*
+         /**
             getDefaultSharedPreferences():
             koristi podrazumevano ime preference-file-a.
             Podrzazumevani fajl je setovan na nivou aplikacije tako da sve aktivnosti u istom context-u
@@ -412,12 +420,23 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
         syncTime = sharedPreferences.getString(getString(R.string.pref_sync_list), "1");
         // CheckBoxPreference KEY
         allowSync = sharedPreferences.getBoolean(getString(R.string.pref_sync), false);
+
+        /** UPISIVANJE VREDNOSTI
+         * SharedPreferences.Editor editor = sharedPreferences.edit();
+         * editor.putString("KLJUC","VREDNOST");
+         * editor.commit();
+         */
+
+        /** IZVLACENJE VREDNOSTI
+         * String str = sharedPreferences.getString("KLJUC", "PODRAZUMEVANA VREDNOST");
+         */
     }
 
 
-    /* Kada zelimo da se odredjeni zadaci ponavljaju potrebno je da regustrujemo manager
-    koji ce motriti kada je vreme da se taj posao obavi. Kada registruje vreme za pokretanje zadatka
-    on emituje Intent operativnom sistemu sta je potrebno da se desi
+    /**
+     *  Kada zelimo da se odredjeni zadaci ponavljaju potrebno je da regustrujemo manager
+        koji ce motriti kada je vreme da se taj posao obavi. Kada registruje vreme za pokretanje zadatka
+        on emituje Intent operativnom sistemu sta je potrebno da se desi
     * */
     private void setUpManager() {
         Intent intent = new Intent(this,SimpleService.class);

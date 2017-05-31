@@ -38,6 +38,12 @@ public class SettingsActivity extends PreferenceActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
     // PreferenceFragment is used to automatically load preference GUI from an XML resource and
     // save preferences into preferences.xml
     public static class PrefsFragment extends PreferenceFragment {

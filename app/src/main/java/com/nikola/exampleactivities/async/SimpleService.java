@@ -39,6 +39,7 @@ public class SimpleService extends Service {
         /*Primer poziva asinhronog zadatka ako ima veze ka mrezi
         npr. sinhronizacija mail-ova fotografija, muzike dokumenata isl*/
         if (status == ReviewerTools.TYPE_WIFI) {
+            // PROSLEDIMO INFORMACIJU KAKO SMO POVEZANI NA INTERNET
             new SimpleSyncTask(getApplicationContext()).execute(status); // Integer... params
         }
 
