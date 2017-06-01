@@ -1,5 +1,6 @@
 package com.nikola.exampleactivities.async;
 
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,6 +12,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.nikola.exampleactivities.R;
 import com.nikola.exampleactivities.tools.ReviewerTools;
@@ -67,7 +70,28 @@ public class SimpleReceiver extends BroadcastReceiver {
             prepareNotification(resultCode,context,2,intent.getExtras());
         }
 
+        // Izmeniti primer tako da se sadrzaj fajla prikazuje na glavnoj strani unutar liste,
+        // kada poruka stigne u BroadcastReceiver
+        readFileAndFillList(context);
+
     }
+
+    /**
+     +     * Moramo pozvati unutar BroadcastReceiver-a zato sto on ima vezu ka nasoj aktivnosti
+     +     * gde se lista zapravo nalazi.
+     +     * */
+
+    private void readFileAndFillList(Context context) {
+        // Load product names from array resource
+        String[] products = ReviewerTools.readFromFile(context,"my-file.txt").split("\n");
+
+        // Create an ArrayAdapter from the array of Strings
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.list_item, products);
+        ListView listView = (ListView) ((Activity)context).findViewById(R.id.list_view); // products
+
+        listView.setAdapter(adapter);
+    }
+
 
     // Saljemo i sadrzaj i naslov poruke, kao i Bundle objekat
     // Takodje cemo poslati i drugi notificationID

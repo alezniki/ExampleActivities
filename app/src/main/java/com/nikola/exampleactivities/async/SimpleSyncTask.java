@@ -1,13 +1,10 @@
 package com.nikola.exampleactivities.async;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.Toast;
 
-import com.nikola.exampleactivities.R;
 import com.nikola.exampleactivities.tools.ReviewerTools;
 
 /**
@@ -72,11 +69,11 @@ public class SimpleSyncTask extends AsyncTask<Integer,Void,Integer> {
         super.onPostExecute(type);
 //        // Ako je potrebno osloboditi resurse ili obrisati elemente koji vise ne trebaju.
 
-//        Toast.makeText(context, "Sync Done", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Sync Done", Toast.LENGTH_SHORT).show();
 //        //fillProducts(); // Get data from ListView
 //
-//        String text = ReviewerTools.getConnectionType(type);
-//        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+        String text = ReviewerTools.getConnectionType(type);
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
 //
 //        //Notification
 //        String title =  "Notification Example";
@@ -101,22 +98,7 @@ public class SimpleSyncTask extends AsyncTask<Integer,Void,Integer> {
         intent.putExtra("RESULT_CODE", type); //RESULT_CODE u onReceive(), type je Connection type
         context.sendBroadcast(intent); // BROADCAST SE IZVRSAVA UNUTAR FIRST ACTIVITY KLASE
 
-        // Izmeniti primer tako da se sadrzaj fajla prikazuje na glavnoj strani unutar liste,
-        // kada poruka stigne u BroadcastReceiver
-        readFileAndFillList();
     }
-
-    private void readFileAndFillList() {
-        // Load product names from array resource
-        String[] products = ReviewerTools.readFromFile(context,"my-file.txt").split("\n");
-
-        // Create an ArrayAdapter from the array of Strings
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.list_item, products);
-        ListView listView = (ListView) ((Activity)context).findViewById(R.id.list_view); // products
-
-        listView.setAdapter(adapter);
-    }
-
 
 
 }
