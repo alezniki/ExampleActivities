@@ -14,7 +14,6 @@ public class Meal {
     public static final String MEAL_ID = "id";
     public static final String MEAL_NAME = "name";
     public static final String MEAL_DESCRIPTION = "description";
-    public static final String MEAL_INGREDIENTS = "ingredients";
     public static final String MEAL_CATEGORY = "category";
     public static final String MEAL_CALORIES = "calories";
     public static final String MEAL_PRICE = "price";
@@ -28,8 +27,6 @@ public class Meal {
     private String mDescription;
     @DatabaseField(columnName = MEAL_CATEGORY)
     private String mCategory;
-    @DatabaseField(columnName = MEAL_INGREDIENTS)
-    private String mIngredients;
     @DatabaseField(columnName = MEAL_CALORIES)
     double mCalories;
     @DatabaseField(columnName = MEAL_PRICE)
@@ -81,14 +78,6 @@ public class Meal {
         this.mCategory = mCategory;
     }
 
-    public String getmIngredients() {
-        return mIngredients;
-    }
-
-    public void setmIngredients(String mIngredients) {
-        this.mIngredients = mIngredients;
-    }
-
     public double getmCalories() {
         return mCalories;
     }
@@ -109,4 +98,5 @@ public class Meal {
     public String toString() {
         return mName;
     }
+
 }

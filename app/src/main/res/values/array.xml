@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string-array name="product_names">
+        <item>Tuna</item>
+        <item>Salmon</item>
+        <item>Lobster</item>
+    </string-array>
+
+    <string-array name="category_names">
+        <item>Seafood Salad</item>
+        <item>Seafood Entry</item>
+    </string-array>
+
     <string-array name="pref_syncConnectionTypes_entries">
         <item>1 min</item>
         <item>10 min</item>

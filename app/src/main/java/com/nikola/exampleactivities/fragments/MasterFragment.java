@@ -3,12 +3,22 @@ package com.nikola.exampleactivities.fragments;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
+import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.nikola.exampleactivities.R;
+import com.nikola.exampleactivities.db.DataBaseHelper;
+import com.nikola.exampleactivities.db.model.Meal;
+
+import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Created by androiddevelopment on 13.5.17..
@@ -17,20 +27,19 @@ import com.nikola.exampleactivities.R;
 public class MasterFragment extends Fragment {
 
     OnItemSelectedListener listener; // Interface
+    private DataBaseHelper dataBaseHelper;
+    ListAdapter listAdapter;
 
-    // onCreate method is a life-cycle method that is called when creating the fragment.
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(getActivity(), "MasterFragment.onCreate()", Toast.LENGTH_SHORT).show();
     }
 
     //1. RETURNS FRAGMENT INTO GUI
     // onCreateView method is a life-cycle method that is called  to have the fragment instantiate its user interface view.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Toast.makeText(getActivity(), "MasterFragment.onCreateView()", Toast.LENGTH_SHORT).show();
-
         // onCreateView returns GUI of the Fragment
 
         if (container == null) {
@@ -50,15 +59,33 @@ public class MasterFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Toast.makeText(getActivity(), "MasterFragment.onActivityCreated()", Toast.LENGTH_SHORT).show();
 
-        // MOVED FROM FIRST ACTIVITY CLASS
+        try {
+            List<Meal> meals = getDataBaseHelper().getmMealDao().queryForAll();
+            listAdapter = new ArrayAdapter<Meal>(getActivity(),R.layout.list_item,meals);
 
-        //Posto zelimo da se lista proizvoda prikazuje kada asinhrno zadatak zavrsi posao
-        //ovaj kod cemo prebaciti u asinhroni zadatk
+            final ListView listView = (ListView)getActivity().findViewById(R.id.list_view); // fragment_master.xml
+
+            //Assign ArrayAdapter to ListView
+            listView.setAdapter(listAdapter);
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    // Posto radimo sa bazom podataka, svaki element ima jedinstveni ID
+                    // Potrebno je da vidimo na koji tacno element smo kliknuli - izvucemo meal iz liste i dobijemo njegov ID
+
+                    Meal m = (Meal) listView.getItemAtPosition(position);
+                    listener.onItemSelected(m.getmID());
+
+                }
+            });
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
 
-        // MOVED TO SympleReceiver
         // Loads food names from array resource
 //        final List<String> foodNames = FoodProvider.getFoodNames();
 //
@@ -78,16 +105,6 @@ public class MasterFragment extends Fragment {
 //        });
     }
 
-
-    // onDestroyView method is a life-cycle method that is called when the view previously created by
-    // onCreateView(LayoutInflater, ViewGroup, Bundle) has been detached from the fragment.
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Toast.makeText(getActivity(), "MasterFragment.onDestroy()", Toast.LENGTH_SHORT).show();
-    }
-
-
     //3. CONTAINER ACTIVITY MUST IMPLEMENT THIS INTERFACE
     // The easiest way to communicate between your activity and fragments is using interfaces.
     // The idea is basically to define an interface inside a given Fragment A and let the activity implement that interface.
@@ -102,8 +119,6 @@ public class MasterFragment extends Fragment {
     public void onAttach(Context context) { // Activity activity
         super.onAttach(context);
 
-        Toast.makeText(getActivity(), "MasterFragment.onAttach()", Toast.LENGTH_SHORT).show();
-
         // Moved to SympleSyncTask onPostExecute method
        try{
            listener = (OnItemSelectedListener) context;
@@ -117,9 +132,14 @@ public class MasterFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
 
-        Toast.makeText(getActivity(), "MasterFragment.onDetach()", Toast.LENGTH_SHORT).show();
-
         listener = null;
     }
 
+    public DataBaseHelper getDataBaseHelper() {
+        if (dataBaseHelper == null) {
+            dataBaseHelper = OpenHelperManager.getHelper(getActivity(),DataBaseHelper.class);
+        }
+
+        return dataBaseHelper;
+    }
 }

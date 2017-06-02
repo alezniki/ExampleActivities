@@ -14,7 +14,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,9 +44,13 @@ import java.util.List;
 public class FirstActivity extends AppCompatActivity implements MasterFragment.OnItemSelectedListener {
 
     private DataBaseHelper dataBaseHelper;
+    private int mealID = 0;
 
     Toolbar toolbar;
-    boolean landscape = false; // Portrait mode initially
+
+    private boolean landscape = false; // Portrait mode initially
+    private boolean masterShown = false;
+    private boolean detailShown = false;
 
     // NavigationDrawer Attributes
     private DrawerLayout drawerLayout;
@@ -61,7 +64,6 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
     // Attributes used by Dialog
     private AlertDialog dialog;
 
-
     private SimpleReceiver sync;
     private PendingIntent pendingIntent;
     private AlarmManager alarmManager;
@@ -70,12 +72,9 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
     private String syncTime;
     private boolean allowSync;
 
-    // onCreate method is a lifecycle method called when he activity is starting
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Each lifecycle method should call the method it overrides
         super.onCreate(savedInstanceState);
-        // setContentView method draws UI
         setContentView(R.layout.activity_first);
 
         toolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -136,12 +135,6 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
             }
         };
 
-
-        // Shows a toast message (a pop-up message)
-        Toast toast = Toast.makeText(getBaseContext(), "FirstActivity.onCreate()", Toast.LENGTH_SHORT);
-        toast.show();
-
-
         //1. CREATE MASTER FRAGMENT IF THE ACTIVITY IS STARTED FOR THE FIRST TIME
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -172,13 +165,30 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
         }
 
     }
+    // Da bi dodali podatak u bazu, potrebno je da napravimo objekat klase
+    // koji reprezentuje tabelu i popunimo podacima
+    private void addItem() {
+        Meal meal = new Meal();
+        meal.setmName("Seafood Salad");
+        meal.setmDescription("Brimming with a combination of six types of fresh seafood, this simply seasoned salad could be the star of your dinner.");
+        meal.setmCalories(247.50);
+        meal.setmPrice(49.99);
+        meal.setmImage("seafood.jpg");
 
-    public DataBaseHelper getDataBaseHelper() {
-        if (dataBaseHelper == null) {
-            dataBaseHelper = OpenHelperManager.getHelper(this,DataBaseHelper.class);
+        // Pozovemo metodu create da bi upisali u bazu
+        try {
+            getDataBaseHelper().getmMealDao().create(meal);
+            refresh();
+            Toast.makeText(this, "Meal Inserted", Toast.LENGTH_SHORT).show();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return dataBaseHelper;
+
+
     }
+
+
 
 
     // SET CLICK LISTENER FOR LISTVIEW IN THE NAVIGATION DRAWER
@@ -211,75 +221,42 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
         }
     }
 
-    // onStart method is a lifecycle method called after onCreate (or after onRestart when the
-    // activity had been stopped, but is now again being displayed to the user)
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        Toast toast = Toast.makeText(getBaseContext(), "FirstActivity.onStart()", Toast.LENGTH_SHORT);
-        toast.show();
-    }
-
-    // onRestart method is a lifecycle method called after onStop when the current activity is
-    // being re-displayed to the user
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-
-        Toast toast = Toast.makeText(getBaseContext(), "FirstActivity.onRestart()", Toast.LENGTH_SHORT);
-        toast.show();
-    }
-
-
-    // onStop method is a lifecycle method called when the activity are no longer visible to the user
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        Toast toast = Toast.makeText(getBaseContext(), "FirstActivity.onStop()", Toast.LENGTH_SHORT);
-        toast.show();
-    }
-
-    // onDestroy method is a lifecycle method that perform any final cleanup before an activity is destroyed
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        Toast toast = Toast.makeText(getBaseContext(), "FirstActivity.onDestroy()", Toast.LENGTH_SHORT);
-        toast.show();
-    }
-
     // 3. OVERRIDE onItemSelected METHOD HERE FROM MASTER FRAGMENT CLASS
     @Override
-    public void onItemSelected(int position) {
+    public void onItemSelected(int id) {
+        mealID = id;
 
-        Toast.makeText(getBaseContext(), "FirstActivity.onItemSelected() ", Toast.LENGTH_SHORT).show();
+        try {
+            Meal meal = getDataBaseHelper().getmMealDao().queryForId(id);
 
-        //Do something with the position value passed back
-        Log.i("TAG","Position clicked " + position);
+            if (landscape) {
+                //3-A. IF IN LANDSCAPE MODE, UPDATE DETAIL FRAGMENT CONTENT
 
+                DetailFragment detailFragment = (DetailFragment) getFragmentManager().findFragmentById(R.id.detail_view);
+                //detailFragment.updateFragmentContent(position);
+                detailFragment.updateMeal(meal);
 
-        if (landscape) {
-            //3-A. IF IN LANDSCAPE MODE, UPDATE DETAIL FRAGMENT CONTENT
+            } else {
+                //3-B. REPLACE EVERYTHING FORM MASTER FRAGMENT WITH DETAIL FRAGMENT BASED ON POSITION
 
-            DetailFragment detailFragment = (DetailFragment) getFragmentManager().findFragmentById(R.id.detail_view);
-            detailFragment.updateFragmentContent(position);
+                DetailFragment detailFragment = new DetailFragment();
+                //detailFragment.setFragmentContent(position);
+                detailFragment.setMeal(meal);
 
-        } else {
-            //3-B. REPLACE EVERYTHING FORM MASTER FRAGMENT WITH DETAIL FRAGMENT BASED ON POSITION
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.master_view, detailFragment, "Detail_Fragment_2");
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                transaction.addToBackStack(null); // So user can reverse transaction and bring back the previous fragment
+                // by pressing the Back butto (from DetailFragment to MasterFragment)
+                transaction.commit();
+                masterShown = false;
+                detailShown = true;
 
-            DetailFragment detailFragment = new DetailFragment();
-            detailFragment.setFragmentContent(position);
-
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.master_view, detailFragment, "Detail_Fragment_2");
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            transaction.addToBackStack(null); // So user can reverse transaction and bring back the previous fragment
-            // by pressing the Back butto (from DetailFragment to MasterFragment)
-            transaction.commit();
-
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -295,14 +272,12 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
         switch (item.getItemId()) {
             case R.id.refresh:
                 refresh();
-                return true; // break
-
+                break;
             case R.id.add:
                addItem();
-               return true; // break
-            default:
-                return super.onOptionsItemSelected(item);
+                break;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     // refresh() prikazuje novi sadrzaj.Povucemo nov sadrzaj iz baze i popunimo listu
@@ -328,33 +303,7 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
     }
 
 
-    // Da bi dodali podatak u bazu, potrebno je da napravimo objekat klase
-    // koji reprezentuje tabelu i popunimo podacima
-    private void addItem() {
-        Meal meal = new Meal();
-        meal.setmName("Seafood Salad");
-        meal.setmDescription("Brimming with a combination of six types of fresh seafood, this simply seasoned salad could be the star of your dinner.");
-        meal.setmCategory("Seafood");
-        meal.setmIngredients("Tuna, Salmon, Lobster");
-        meal.setmCalories(247.50);
-        meal.setmPrice(49.99);
-        meal.setmImage("seafood.jpg");
 
-        // Pozovemo metodu create da bi upisali u bazu
-        try {
-            getDataBaseHelper().getmMealDao().create(meal);
-            refresh();
-            Toast.makeText(this, "Meal Inserted", Toast.LENGTH_SHORT).show();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
-    }
-
-    // onResume method is a lifecycle method called after onRestoreInstanceState, onRestart, or
-    // onPause, for your activity to start interacting with the user
     /**
      * Prilikom startovanja aplikacije potrebno je registrovati
      * elemente sa kojima radimo. Kada aplikacija nije aktivna
@@ -366,11 +315,7 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
 
         setUpReceiver(); // Registracija jednog filtera
         setUpManager(); // AlarmManager
-        
-        Toast toast = Toast.makeText(getBaseContext(), "FirstActivity.onResume()", Toast.LENGTH_SHORT);
-        toast.show();
     }
-
 
     /**
      * Registrujemo nas BroadcastReceiver i dodajemo mu 'filter'.
@@ -449,7 +394,7 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
     protected void onPause() {
         super.onPause();
 
-        //Ako je manager kreiran potrebno je da ga uklonimp
+        //Ako je manager kreiran potrebno je da ga uklonimo
         if (alarmManager !=null){
             alarmManager.cancel(pendingIntent);
             alarmManager = null;
@@ -464,5 +409,45 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
         Toast toast = Toast.makeText(getBaseContext(), "FirstActivity.onPause()", Toast.LENGTH_SHORT);
         toast.show();
     }
-    
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if (landscape) {
+            finish();
+        } else if (masterShown == true) {
+            finish();
+        } else if (detailShown == true) {
+            getFragmentManager().popBackStack();
+
+            MasterFragment masterFragment = new MasterFragment();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.master_view, masterFragment,"Master_Fragment_2");
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            transaction.commit();
+
+            masterShown = true;
+            detailShown = false;
+        }
+    }
+
+    public DataBaseHelper getDataBaseHelper() {
+        if (dataBaseHelper == null) {
+            dataBaseHelper = OpenHelperManager.getHelper(this,DataBaseHelper.class);
+        }
+        return dataBaseHelper;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // Nakon rada sa bazom podataka potrebno je obavezno osloboditi resurse
+        if (dataBaseHelper != null) {
+            OpenHelperManager.releaseHelper();
+            dataBaseHelper = null;
+        }
+    }
 }

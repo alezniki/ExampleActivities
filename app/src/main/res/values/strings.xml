@@ -61,6 +61,8 @@
     <string name="test">Test</string>
     <string name="fragment_master_action_refresh">Refresh</string>
     <string name="fragment_master_action_add">Add</string>
+    <string name="menu_action_delete">Delete</string>
+    <string name="menu_action_update">Update</string>
 
 
 </resources>

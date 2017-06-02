@@ -1,194 +1,236 @@
 package com.nikola.exampleactivities.fragments;
 
 import android.app.Fragment;
-import android.app.NotificationManager;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.NotificationCompat;
-import android.util.Log;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nikola.exampleactivities.R;
-import com.nikola.exampleactivities.model.Ingredients;
-import com.nikola.exampleactivities.providers.CategoryProvider;
-import com.nikola.exampleactivities.providers.FoodProvider;
-import com.nikola.exampleactivities.providers.IngredientsProvider;
+import com.nikola.exampleactivities.activities.FirstActivity;
+import com.nikola.exampleactivities.db.model.Meal;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
+import java.sql.SQLException;
 
 /**
  * Created by androiddevelopment on 13.5.17..
  */
 
-public class DetailFragment extends Fragment {
+public class DetailFragment extends Fragment implements AdapterView.OnItemSelectedListener{
 
-    private static int NOTIFICATION_ID = 1;
+    private Meal meal = null;
 
-    // Position of the item to be displayed in the DetailFragment
-    private int position = 0; // Initially T-Bone Steak
-
-    // onCreate method is a life-cycle method that is called when creating the fragment.
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(getActivity(), "DetailFragment.onCreate()", Toast.LENGTH_SHORT).show();
+    }
+
+    //2. CALLED WHEN THE FRAGMENTS ACTIVITY HAS BEEN INITIALIZED (CREATED)
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState != null) {
+//            position = savedInstanceState.getInt("position", 0);
+            meal = new Meal();
+            meal.setmID(savedInstanceState.getInt("id"));
+            meal.setmName(savedInstanceState.getString("name"));
+            meal.setmDescription(savedInstanceState.getString("description"));
+            meal.setmCalories(savedInstanceState.getDouble("calories"));
+            meal.setmPrice(savedInstanceState.getDouble("price"));
+            meal.setmImage(savedInstanceState.getString("image"));
+
+        }
+//
+//        // MOVED FROM SECOND ACTIVITY CLASS
+//        updateFragmentContent(position);
+    }
+
+
+    //3. SAVE THE STATE INFORMATIONS OF YOUR FRAGMENT: It used for the scenario where Android kills off your activity to reclaim memory.
+    @Override
+    public void onSaveInstanceState(Bundle outState) { // savedInstanceState
+        super.onSaveInstanceState(outState); // savedInstanceState
+
+        if (outState !=null) {
+            outState.putInt("id",meal.getmID());
+            outState.putString("name",meal.getmName());
+            outState.putString("description", meal.getmDescription());
+            outState.putDouble("calories", meal.getmCalories());
+            outState.putDouble("price",meal.getmPrice());
+            outState.putString("image",meal.getmImage());
+        }
+
+
+//        // savedInstanceState
+//        outState.putInt("position", position); // CUVA STANJE
     }
 
     //1. RETURNS FRAGMENT INTO GUI
-    // onCreateView method is a life-cycle method that is called  to have the fragment instantiate its user interface view.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Toast.makeText(getActivity(), "DetailFragment.onCreateView()", Toast.LENGTH_SHORT).show();
-
+        setHasOptionsMenu(true);
         View view =  inflater.inflate(R.layout.fragment_detail, container, false);
+
+        TextView name = (TextView)view.findViewById(R.id.name);
+        name.setText(meal.getmName());
+
+        TextView description = (TextView)view.findViewById(R.id.description);
+        description.setText(meal.getmDescription());
+
+        TextView calories = (TextView)view.findViewById(R.id.calories);
+        calories.setText("Calories: " +  meal.getmCalories());
+
+        TextView price = (TextView)view.findViewById(R.id.price);
+        price.setText("Price: $" + meal.getmPrice());
+
+        ImageView imageView = (ImageView)view.findViewById(R.id.iv_image);
+        InputStream is = null;
+        try {
+            is = getActivity().getAssets().open(meal.getmImage());
+            Drawable drawable = Drawable.createFromStream(is, null);
+            imageView.setImageDrawable(drawable);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Spinner spinner = (Spinner)view.findViewById(R.id.category);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(
+                getActivity(),
+                android.R.layout.simple_spinner_dropdown_item,
+                getResources().getStringArray(R.array.category_names)
+        ); // sellected item will look like a spinner set fot XML
+
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerAdapter);
+
+        String[] data = getResources().getStringArray(R.array.category_names);
+        for (int i = 0; i < data.length; i++) {
+            spinner.setSelection(i);
+            break;
+        }
+
 
         return view;
         //return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    //2. CALLED WHEN THE FRAGMENTS ACTIVITY HAS BEEN INITIALIZED (CREATED)
-    // onActivityCreated method is a life-cycle method that is called when the fragment's activity has been created
-    // and this fragment's view hierarchy instantiated.
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Toast.makeText(getActivity(), "DetailFragment.onActivityCreated()", Toast.LENGTH_SHORT).show();
 
-        if (savedInstanceState != null) {
-            position = savedInstanceState.getInt("position", 0);
-        }
-
-        // MOVED FROM SECOND ACTIVITY CLASS
-        updateFragmentContent(position);
+    public void setMeal(Meal meal) {
+        this.meal = meal;
     }
 
+    public void updateMeal(Meal meal) {
+        this.meal = meal;
 
-    //3. SAVE THE STATE INFORMATIONS OF YOUR FRAGMENT: It used for the scenario where Android kills off your activity to reclaim memory.
-    // onSaveInstanceState method is a life-cycle method that is called to ask the fragment to save its current dynamic state,
-    // so it can later be reconstructed in a new instance of its process is restarted.
-    @Override
-    public void onSaveInstanceState(Bundle outState) { // savedInstanceState
-        super.onSaveInstanceState(outState); // savedInstanceState
-        Toast.makeText(getActivity(), "DetailFragment.onSaveInstanceState()", Toast.LENGTH_SHORT).show();
+        EditText name = (EditText)getActivity().findViewById(R.id.name);
+        name.setText("Meal Name: " + meal.getmName());
 
-        // savedInstanceState
-        outState.putInt("position", position); // CUVA STANJE
-    }
+        EditText description = (EditText)getActivity().findViewById(R.id.description);
+        description.setText("Description: " + meal.getmDescription());
 
-    // onDestroyView method is a life-cycle method that is called when the view previously created by
-    // onCreateView(LayoutInflater, ViewGroup, Bundle) has been detached from the fragment.
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Toast.makeText(getActivity(), "DetailFragment.onDestroy()", Toast.LENGTH_SHORT).show();
-    }
+        EditText calories = (EditText)getActivity().findViewById(R.id.calories);
+        calories.setText("Calories: " +  meal.getmCalories());
 
+        EditText price = (EditText)getActivity().findViewById(R.id.price);
+        price.setText("Price: $" + meal.getmPrice());
 
-    //4. DEFINE METHODS TO COMMUNICATE TO FIRST ACTIVITY VIA onItemSelected()
-    //4-A. Called to set Fragment's content in FirstActivity overrided onItemSelected() method
-    public void setFragmentContent(final int position) {
-
-        this.position = position;
-
-        Log.v("DetailFragment", "setFragmentContent() sets position to " + position);
-    }
-
-
-    //4-B. Called to update Fragment's content in FirstActivity overrided onItemSelected() method
-    public void updateFragmentContent(final int position) {
-
-        this.position = position;
-        Log.v("DetailFragment", "updateFragmentContent() sets position to " + position);
-
-        //ImageView ivImage = (ImageView) findViewById(R.id.iv_image);
-        ImageView ivImage = (ImageView) getView().findViewById(R.id.iv_image);
-        InputStream inputStream = null;
+        ImageView imageView = (ImageView)getActivity().findViewById(R.id.image);
+        InputStream is = null;
         try {
-            //inputStream = getAssets().open(FoodProvider.getFoodById(position).getImage());
-            inputStream = getActivity().getAssets().open(FoodProvider.getFoodById(position).getImage());
-            Drawable drawable = Drawable.createFromStream(inputStream, null);
-            ivImage.setImageDrawable(drawable);
+            is = getActivity().getAssets().open(meal.getmImage());
+            Drawable drawable = Drawable.createFromStream(is, null);
+            imageView.setImageDrawable(drawable);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        // TextView tvName = (TextView) findViewById(R.id.tv_name);
-        TextView tvName = (TextView) getView().findViewById(R.id.tv_name);
-        tvName.setText("Food Name: " + FoodProvider.getFoodById(position).getName());
+    }
 
-        // TextView tvDescription = (TextView) findViewById(R.id.tv_description);
-        TextView tvDescription = (TextView) getView().findViewById(R.id.tv_description);
-        tvDescription.setText("Description: " + FoodProvider.getFoodById(position).getDescription());
 
-        // TextView tvCalories = (TextView) findViewById(R.id.tv_calories);
-        TextView tvCalories = (TextView) getView().findViewById(R.id.tv_calories);
-        tvCalories.setText("Calories: " + String.valueOf(FoodProvider.getFoodById(position).getCalories()));
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+    }
 
-        // TextView tvPrice = (TextView) findViewById(R.id.tv_price);
-        TextView tvPrice = (TextView) getView().findViewById(R.id.tv_price);
-        tvPrice.setText("Price: $" + String.valueOf(FoodProvider.getFoodById(position).getPrice()));
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+    }
 
-        // Finds "spCategory" Spinner and sets "selection" property
-        //Spinner spCategory = (Spinner) findViewById(R.id.sp_category);
-        Spinner spCategory = (Spinner) getView().findViewById(R.id.sp_category);
+    /**
+     * Kada dodajemo novi element u toolbar potrebno je da oobrisemo prethodne elemente
+     * Zato pozivamo menu.clear() i dodajemo nove toolbar elemente
+     */
 
-        List<String> categories = CategoryProvider.getCategoryNames();
-        // ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, categories);
-        spCategory.setAdapter(adapter);
-        spCategory.setSelection(FoodProvider.getFoodById(position).getCategory().getId());
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        // Inflate the menu; this adds items to the action bar if it is present.
+        inflater.inflate(R.menu.detail_fragment_menu, menu);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
 
-        // Loads ingredients from array resource
-        final List<Ingredients> ingredientsNames = FoodProvider.getFoodById(position).getIngredients();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.remove:
+                doRemoveElement();
+                break;
+            case R.id.update:
+                doUpdateElement();
+                break;
+        }
 
-        // Creates ArrayAdapter from the array of Strings
-        //ArrayAdapter<Ingredients> arrayAdapter = new ArrayAdapter<Ingredients>(this,R.layout.list_item, ingredientsNames);
-        ArrayAdapter<Ingredients> arrayAdapter = new ArrayAdapter<Ingredients>(getActivity(),R.layout.list_item, ingredientsNames);
+        return super.onOptionsItemSelected(item);
+    }
 
-        // ListView lvIngredients = (ListView) findViewById(R.id.lv_ingredients);
-        ListView lvIngredients = (ListView) getView().findViewById(R.id.lv_ingredients);
+    private void doUpdateElement() {
+        if (meal != null) {
+            EditText name = (EditText)getActivity().findViewById(R.id.name);
+            meal.setmImage(name.getText().toString());
+            EditText description = (EditText)getActivity().findViewById(R.id.description);
+            meal.setmDescription(description.getText().toString());
+//            EditText calories = (EditText)getActivity().findViewById(R.id.calories);
+//            String calVal = calories.getText().toString();
+//            meal.setmCalories(Double.parseDouble(calVal));
+//            EditText price = (EditText)getActivity().findViewById(R.id.price);
+//            String priceVal =  price.getText().toString();
+//            meal.setmPrice(Double.parseDouble(priceVal));
 
-        lvIngredients.setSelection(IngredientsProvider.getIngredientsById(position).getId());
-        lvIngredients.setAdapter(arrayAdapter);
-
-        // Add odred button
-        FloatingActionButton btnOrder = (FloatingActionButton)getView().findViewById(R.id.btn_order);
-        btnOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showNotification();
+            try {
+                ( (FirstActivity)getActivity()).getDataBaseHelper().getmMealDao().update(meal);
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        });
+
+            getActivity().onBackPressed();
+        }
     }
 
+    private void doRemoveElement() {
+        if (meal !=null) {
+            try {
+                ((FirstActivity)getActivity()).getDataBaseHelper().getmMealDao().delete(meal);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            getActivity().onBackPressed();
 
-    public void showNotification(){
-        // Create Notification
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity());
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources() ,R.drawable.ic_stat_order);
+        }
 
-        builder.setSmallIcon(R.drawable.ic_action_order);
-        builder.setContentTitle(getString(R.string.notification_title));
-        builder.setContentText(getString(R.string.notification_text));
-
-        builder.setLargeIcon(bitmap);
-        // Manage Notification
-        NotificationManager manager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(NOTIFICATION_ID, builder.build());
     }
+
 
 }
