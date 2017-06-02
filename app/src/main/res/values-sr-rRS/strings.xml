@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Servisi</string>
+    <string name="app_name">OrmLite</string>
 
     <string name="activity_settings_name">Podesavanje Aktivnost</string>
 
@@ -36,6 +36,8 @@
     <string name="drawer_close">Zatvori Navigacionu Fioku</string>
     <string name="read">Read From File</string>
     <string name="write">Write To File</string>
+    <string name="fragment_master_action_refresh">Refresh</string>
+    <string name="fragment_master_action_add">Add</string>
 
 
 </resources>

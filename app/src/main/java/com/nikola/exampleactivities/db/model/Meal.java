@@ -14,8 +14,8 @@ public class Meal {
     public static final String MEAL_ID = "id";
     public static final String MEAL_NAME = "name";
     public static final String MEAL_DESCRIPTION = "description";
-    public static final String MEAL_CATEGORY = "category";
     public static final String MEAL_INGREDIENTS = "ingredients";
+    public static final String MEAL_CATEGORY = "category";
     public static final String MEAL_CALORIES = "calories";
     public static final String MEAL_PRICE = "price";
     public static final String MEAL_IMAGE = "image";
@@ -26,7 +26,7 @@ public class Meal {
     private String mName;
     @DatabaseField(columnName = MEAL_DESCRIPTION)
     private String mDescription;
-    @DatabaseField(columnName = MEAL_CALORIES)
+    @DatabaseField(columnName = MEAL_CATEGORY)
     private String mCategory;
     @DatabaseField(columnName = MEAL_INGREDIENTS)
     private String mIngredients;

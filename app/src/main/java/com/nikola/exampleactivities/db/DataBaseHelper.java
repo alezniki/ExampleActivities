@@ -15,7 +15,7 @@ import java.sql.SQLException;
  * Created by Dzoni on 6/2/2017.
  */
 
-public class DataBaseHeper extends OrmLiteSqliteOpenHelper {
+public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
 
     // Database Name and Version
     private static final String DATABASE_NAME = "ormlite.db";
@@ -23,7 +23,7 @@ public class DataBaseHeper extends OrmLiteSqliteOpenHelper {
 
     private Dao<Meal,Integer> mMealDao = null;
 
-    public DataBaseHeper(Context context) {
+    public DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -47,7 +47,6 @@ public class DataBaseHeper extends OrmLiteSqliteOpenHelper {
 
     //jedan Dao objekat sa kojim komuniciramo. Ukoliko imamo vise tabela
     //potrebno je napraviti Dao objekat za svaku tabelu
-
     public Dao<Meal, Integer> getmMealDao() throws SQLException {
         if (mMealDao == null) {
             mMealDao = getDao(Meal.class);
@@ -58,8 +57,6 @@ public class DataBaseHeper extends OrmLiteSqliteOpenHelper {
 
 
     // Free resources when closing database
-
-
     @Override
     public void close() {
         super.close();

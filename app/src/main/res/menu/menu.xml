@@ -3,36 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item android:id="@+id/refresh"
-        android:title="@string/refresh"
+        android:title="@string/fragment_master_action_refresh"
         android:icon="@drawable/ic_action_refresh"
         app:showAsAction="ifRoom"/>
-    <!--<item android:id="@+id/add_food"-->
-        <!--android:title="@string/add_food"-->
-        <!--android:icon="@drawable/ic_action_add"-->
-        <!--app:showAsAction="ifRoom"/>-->
-    <item android:id="@+id/add_dialog"
-        android:title="@string/add_dialog"
+    <item android:id="@+id/add"
+        android:title="@string/fragment_master_action_add"
         android:icon="@drawable/ic_action_add"
         app:showAsAction="ifRoom"/>
-    <!--<item android:id="@+id/edit_food"-->
-        <!--android:icon="@drawable/ic_action_edit"-->
-        <!--android:title="@string/edit_food"-->
-        <!--app:showAsAction="ifRoom"/>-->
-    <!--<item android:id="@+id/delete_food"-->
-        <!--android:icon="@drawable/ic_action_delete"-->
-        <!--android:title="@string/delete_food"-->
-        <!--app:showAsAction="ifRoom"/>-->
-
-    <item android:id="@+id/read"
-        android:title="@string/read"
-        app:showAsAction="never"/>
-
-    <item android:id="@+id/write"
-        android:title="@string/write"
-        app:showAsAction="never"/>
-    <item android:id="@+id/test"
-        android:title="@string/test"
-        app:showAsAction="ifRoom"/>
-
-
 </menu>

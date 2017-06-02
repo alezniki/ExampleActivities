@@ -1,7 +1,6 @@
 package com.nikola.exampleactivities.activities;
 
 import android.app.AlarmManager;
-import android.app.Dialog;
 import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -10,7 +9,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -21,28 +19,32 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.nikola.exampleactivities.R;
 import com.nikola.exampleactivities.adapters.DrawerAdapter;
-import com.nikola.exampleactivities.async.CommentService;
 import com.nikola.exampleactivities.async.SimpleReceiver;
 import com.nikola.exampleactivities.async.SimpleService;
+import com.nikola.exampleactivities.db.DataBaseHelper;
+import com.nikola.exampleactivities.db.model.Meal;
 import com.nikola.exampleactivities.dialogs.AboutDialog;
 import com.nikola.exampleactivities.fragments.DetailFragment;
 import com.nikola.exampleactivities.fragments.MasterFragment;
 import com.nikola.exampleactivities.model.NavigationItem;
 import com.nikola.exampleactivities.tools.ReviewerTools;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 // Each activity extends Activity class
 public class FirstActivity extends AppCompatActivity implements MasterFragment.OnItemSelectedListener {
+
+    private DataBaseHelper dataBaseHelper;
 
     Toolbar toolbar;
     boolean landscape = false; // Portrait mode initially
@@ -171,6 +173,13 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
 
     }
 
+    public DataBaseHelper getDataBaseHelper() {
+        if (dataBaseHelper == null) {
+            dataBaseHelper = OpenHelperManager.getHelper(this,DataBaseHelper.class);
+        }
+        return dataBaseHelper;
+    }
+
 
     // SET CLICK LISTENER FOR LISTVIEW IN THE NAVIGATION DRAWER
     private class DrawerItemClickListener implements ListView.OnItemClickListener{
@@ -285,86 +294,64 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.refresh:
-                //new SimpleSyncTask(FirstActivity.this).execute(); //Dobro pokrenuta sinhronizacija
-                Snackbar.make(findViewById(R.id.refresh), R.string.action_refresh,Snackbar.LENGTH_SHORT).show();
-                int status = ReviewerTools.getConnectivityStatus(getApplicationContext());
-
-                Intent serviceIntent = new Intent(FirstActivity.this, SimpleService.class);
-                serviceIntent.putExtra("STATUS",status);
-
-                startService(serviceIntent); // Pass Data to SimpleService
+                refresh();
                 return true; // break
 
-            case R.id.add_dialog:
-                addDialog();
-                return true; // break
-
-            case R.id.read:
-                // Read From File
-                String text = ReviewerTools.readFromFile(this,"my-file.txt");
-                Toast.makeText(this,text,Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.write:
-                // Write To File
-                ReviewerTools.writeToFile(new Date().toString(), this, "my-file.txt");
-                return true;
-
-            case R.id.test:
-                // Testira da li fajl postoji i to prikazuje korisniku
-                if (ReviewerTools.isFileExists(FirstActivity.this,"my-file.txt")){
-                    Toast.makeText(this, "FILE EXISTS", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "FILE DOES NOT FEXISTS", Toast.LENGTH_SHORT).show();
-                }
+            case R.id.add:
+               addItem();
+               return true; // break
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    // refresh() prikazuje novi sadrzaj.Povucemo nov sadrzaj iz baze i popunimo listu
+    private void refresh() {
+        ListView listView =(ListView)findViewById(R.id.list_view); // fragment_master.xml
 
-    private void addDialog() {
-        // Potvrdom komentara ako ima interneta startuje se novi Servis koji pokrece AsynctAsk
-        // Kada zavrsi posao salje Broadcast poruku sa sadrzajem komentara koja ce se
-        // pokazati u NotificationManager-u.
+        if (listView != null) {
+            ArrayAdapter<Meal> adapter = (ArrayAdapter<Meal>) listView.getAdapter();
 
-        final Dialog dialog = new Dialog(FirstActivity.this);
-        dialog.setContentView(R.layout.dialog_layout);
-        dialog.setTitle(R.string.dialog);
+            if (adapter != null) {
+                try {
+                    adapter.clear();
+                    List<Meal> meals = getDataBaseHelper().getmMealDao().queryForAll();
 
-        Button btnOK = (Button)dialog.findViewById(R.id.btn_ok);
-        Button btnCancel = (Button)dialog.findViewById(R.id.btn_cancel);
-
-
-        // OK: PREUZIMAMO SADRZAJ TEKSTUALNIH POLJA IZ DIJALOGA
-        btnOK.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText editTitle = (EditText)dialog.findViewById(R.id.dialog_title);
-                EditText editComment  = (EditText)dialog.findViewById(R.id.dialog_comment);
-
-                Intent comment = new Intent(FirstActivity.this,CommentService.class);
-                comment.putExtra("title",editTitle.getText().toString());
-                comment.putExtra("comment",editComment.getText().toString());
-
-                startService(comment);
-
-                dialog.cancel();
+                    adapter.addAll(meals);
+                    adapter.notifyDataSetChanged();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
-        });
+        }
 
-        // CANCEL: ISPISUJEMO SNACKBAR
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(FirstActivity.this, R.string.no_comment, Toast.LENGTH_SHORT).show();
-                dialog.cancel();
-            }
-        });
-
-        dialog.show();
     }
 
+
+    // Da bi dodali podatak u bazu, potrebno je da napravimo objekat klase
+    // koji reprezentuje tabelu i popunimo podacima
+    private void addItem() {
+        Meal meal = new Meal();
+        meal.setmName("Seafood Salad");
+        meal.setmDescription("Brimming with a combination of six types of fresh seafood, this simply seasoned salad could be the star of your dinner.");
+        meal.setmCategory("Seafood");
+        meal.setmIngredients("Tuna, Salmon, Lobster");
+        meal.setmCalories(247.50);
+        meal.setmPrice(49.99);
+        meal.setmImage("seafood.jpg");
+
+        // Pozovemo metodu create da bi upisali u bazu
+        try {
+            getDataBaseHelper().getmMealDao().create(meal);
+            refresh();
+            Toast.makeText(this, "Meal Inserted", Toast.LENGTH_SHORT).show();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
 
     // onResume method is a lifecycle method called after onRestoreInstanceState, onRestart, or
     // onPause, for your activity to start interacting with the user
@@ -477,5 +464,5 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
         Toast toast = Toast.makeText(getBaseContext(), "FirstActivity.onPause()", Toast.LENGTH_SHORT);
         toast.show();
     }
-
+    
 }

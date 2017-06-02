@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Services</string>
+    <string name="app_name">OrmLite</string>
 
     <string name="activity_settings_name">Settings Activity</string>
 
@@ -59,6 +59,8 @@
     <string name="write">Write To File</string>
     <string name="allow_message">allow_message</string>
     <string name="test">Test</string>
+    <string name="fragment_master_action_refresh">Refresh</string>
+    <string name="fragment_master_action_add">Add</string>
 
 
 </resources>
