@@ -19,11 +19,13 @@ import android.widget.TextView;
 
 import com.nikola.exampleactivities.R;
 import com.nikola.exampleactivities.activities.FirstActivity;
+import com.nikola.exampleactivities.db.model.Category;
 import com.nikola.exampleactivities.db.model.Meal;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Created by androiddevelopment on 13.5.17..
@@ -108,20 +110,22 @@ public class DetailFragment extends Fragment implements AdapterView.OnItemSelect
         }
 
         Spinner spinner = (Spinner)view.findViewById(R.id.category);
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(
-                getActivity(),
-                android.R.layout.simple_spinner_dropdown_item,
-                getResources().getStringArray(R.array.category_names)
-        ); // sellected item will look like a spinner set fot XML
+        try {
+            List<Category> categoryList = ((FirstActivity)getActivity()).getDataBaseHelper().getmCategoryDao().queryForAll();
+            ArrayAdapter<Category> categoryAdapter =
+                    new ArrayAdapter<Category>(getActivity(),android.R.layout.simple_spinner_dropdown_item,categoryList);
+            spinner.setAdapter(categoryAdapter);
 
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(spinnerAdapter);
-
-        String[] data = getResources().getStringArray(R.array.category_names);
-        for (int i = 0; i < data.length; i++) {
-            spinner.setSelection(i);
-            break;
+            for (int i = 0; i < categoryList.size() ; i++) {
+                if (categoryList.get(i).getId() == meal.getmCategory().getId()) {
+                    spinner.setSelection(i);
+                    break;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
 
 
         return view;
@@ -206,6 +210,9 @@ public class DetailFragment extends Fragment implements AdapterView.OnItemSelect
             //meal.setmCalories(Double.parseDouble(calories.getText().toString()));
             EditText price = (EditText)getActivity().findViewById(R.id.price);
             //meal.setmPrice(Double.parseDouble(price.getText().toString());
+            Spinner category = (Spinner)getActivity().findViewById(R.id.category);
+            Category c = (Category) category.getSelectedItem();
+            meal.setmCategory(c);
 
             try {
                 ( (FirstActivity)getActivity()).getDataBaseHelper().getmMealDao().update(meal);

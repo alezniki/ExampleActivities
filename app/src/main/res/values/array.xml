@@ -2,7 +2,7 @@
 <resources>
 
     <string-array name="product_names">
-        <item>Tuna</item>
+        <item>Seafood</item>
         <item>Salmon</item>
         <item>Lobster</item>
     </string-array>

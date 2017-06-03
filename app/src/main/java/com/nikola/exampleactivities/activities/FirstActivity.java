@@ -1,6 +1,7 @@
 package com.nikola.exampleactivities.activities;
 
 import android.app.AlarmManager;
+import android.app.Dialog;
 import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -14,13 +15,17 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
@@ -29,6 +34,7 @@ import com.nikola.exampleactivities.adapters.DrawerAdapter;
 import com.nikola.exampleactivities.async.SimpleReceiver;
 import com.nikola.exampleactivities.async.SimpleService;
 import com.nikola.exampleactivities.db.DataBaseHelper;
+import com.nikola.exampleactivities.db.model.Category;
 import com.nikola.exampleactivities.db.model.Meal;
 import com.nikola.exampleactivities.dialogs.AboutDialog;
 import com.nikola.exampleactivities.fragments.DetailFragment;
@@ -164,28 +170,98 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
 
         }
 
+        masterShown = true;
+        detailShown = false;
+        mealID = 0;
+        addInitCategoty();
+
     }
-    // Da bi dodali podatak u bazu, potrebno je da napravimo objekat klase
-    // koji reprezentuje tabelu i popunimo podacima
-    private void addItem() {
-        Meal meal = new Meal();
-        meal.setmName("Seafood Salad");
-        meal.setmDescription("Brimming with a combination of six types of fresh seafood, this simply seasoned salad could be the star of your dinner.");
-        meal.setmCalories(247.50);
-        meal.setmPrice(49.99);
-        meal.setmImage("seafood.jpg");
 
-        // Pozovemo metodu create da bi upisali u bazu
+    private void  addInitCategoty() {
+
         try {
-            getDataBaseHelper().getmMealDao().create(meal);
-            refresh();
-            Toast.makeText(this, "Meal Inserted", Toast.LENGTH_SHORT).show();
+            if (getDataBaseHelper().getmCategoryDao().queryForAll().size() == 0) {
+                Category salad = new Category();
+                salad.setName("Seafood Salad");
 
+                Category entry = new Category();
+                entry.setName("Seafood Entry");
+
+                getDataBaseHelper().getmCategoryDao().create(salad);
+                getDataBaseHelper().getmCategoryDao().create(entry );
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    // Da bi dodali podatak u bazu, potrebno je da napravimo objekat klase
+    // koji reprezentuje tabelu i popunimo podacima
+    private void addItem() throws SQLException {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_add_layout);
+
+        final Spinner imgSpinner = (Spinner)dialog.findViewById(R.id.meal_image);
+        List<String>listOfImages = new ArrayList<>();
+        listOfImages.add("lobster.jpeg");
+        listOfImages.add("salmon.jpeg");
+        listOfImages.add("seafood.jpg");
+
+        ArrayAdapter<String> imgAdapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,listOfImages);
+        imgSpinner.setAdapter(imgAdapter);
+        imgSpinner.setSelection(0);
+
+        final Spinner mealSpinner = (Spinner)dialog.findViewById(R.id.meal_category);
+        List<Category> listOfCategories = getDataBaseHelper().getmCategoryDao().queryForAll();
+        ArrayAdapter<Category> categoryAdapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,listOfCategories);
+        mealSpinner.setAdapter(categoryAdapter);
+        mealSpinner.setSelection(0);
+
+        final EditText mealName = (EditText)dialog.findViewById(R.id.meal_name);
+        final EditText mealDescription = (EditText)dialog.findViewById(R.id.meal_description);
+        final EditText mealCalories = (EditText)dialog.findViewById(R.id.meal_calories);
+        final EditText mealPrice = (EditText)dialog.findViewById(R.id.meal_price);
+
+        Button btnOK = (Button)dialog.findViewById(R.id.ok);
+        Button btnCancel = (Button)dialog.findViewById(R.id.cancel);
+
+        btnOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = mealName.getText().toString();
+                String description = mealDescription.getText().toString();
+                Double calories = Double.parseDouble(mealCalories.getText().toString());
+                Double price = Double.parseDouble(mealPrice.getText().toString());
+                Category category = (Category) mealSpinner.getSelectedItem();
+                String image = (String)imgSpinner.getSelectedItem();
+
+                Meal meal = new Meal();
+                meal.setmName(name);
+                meal.setmDescription(description);
+                meal.setmCalories(calories);
+                meal.setmPrice(price);
+                meal.setmCategory(category);
+                meal.setmImage(image);
 
 
+                try {
+                    getDataBaseHelper().getmMealDao().create(meal);
+                    refresh();
+                    Toast.makeText(FirstActivity.this, "MEAL INSERTED", Toast.LENGTH_SHORT).show();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
 
@@ -274,7 +350,12 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
                 refresh();
                 break;
             case R.id.add:
-               addItem();
+                try {
+                    addItem();
+                } catch (SQLException e) {
+                    Log.v("TAG", "EXCEPTION:" + e.toString());
+                    e.printStackTrace();
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);

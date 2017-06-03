@@ -34,7 +34,7 @@ public class Meal {
 
 //    @DatabaseField(columnName = MEAL_CATEGORY)
 //    private String mCategory;
-    @DatabaseField(columnName = MEAL_CATEGORY, foreign = true, foreignAutoRefresh = true)
+    @DatabaseField(columnName = MEAL_CATEGORY, foreign = true,foreignAutoCreate = true, foreignAutoRefresh = true)
     private Category mCategory;
 
 
