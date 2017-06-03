@@ -251,6 +251,7 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+                dialog.dismiss();
             }
         });
 
