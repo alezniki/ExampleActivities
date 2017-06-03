@@ -7,6 +7,7 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import com.nikola.exampleactivities.db.model.Category;
 import com.nikola.exampleactivities.db.model.Meal;
 
 import java.sql.SQLException;
@@ -22,6 +23,7 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     private Dao<Meal,Integer> mMealDao = null;
+    private Dao<Category,Integer> mCategoryDao = null;
 
     public DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -30,6 +32,7 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
+            TableUtils.createTable(connectionSource, Category.class);
             TableUtils.createTable(connectionSource, Meal.class);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -39,6 +42,7 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
+            TableUtils.dropTable(connectionSource, Category.class,true);
             TableUtils.dropTable(connectionSource, Meal.class,true);
             onCreate(database,connectionSource);
         } catch (SQLException e) {
@@ -57,11 +61,20 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
     }
 
 
+    public Dao<Category, Integer> getmCategoryDao() throws SQLException {
+        if (mCategoryDao == null) {
+            mCategoryDao = getDao(Category.class);
+        }
+
+        return mCategoryDao;
+    }
+
     // Free resources when closing database
     @Override
     public void close() {
         super.close();
 
         mMealDao = null;
+        mCategoryDao = null;
     }
 }

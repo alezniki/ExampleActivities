@@ -14,10 +14,10 @@ public class Meal {
     public static final String MEAL_ID = "id";
     public static final String MEAL_NAME = "name";
     public static final String MEAL_DESCRIPTION = "description";
-    public static final String MEAL_CATEGORY = "category";
     public static final String MEAL_CALORIES = "calories";
     public static final String MEAL_PRICE = "price";
     public static final String MEAL_IMAGE = "image";
+    public static final String MEAL_CATEGORY = "category";
 
     @DatabaseField(columnName = MEAL_ID, generatedId = true)
     private int mID;
@@ -25,14 +25,17 @@ public class Meal {
     private String mName;
     @DatabaseField(columnName = MEAL_DESCRIPTION)
     private String mDescription;
-    @DatabaseField(columnName = MEAL_CATEGORY)
-    private String mCategory;
-    @DatabaseField(columnName = MEAL_CALORIES)
-    double mCalories;
     @DatabaseField(columnName = MEAL_PRICE)
     double mPrice;
     @DatabaseField(columnName = MEAL_IMAGE)
     private String mImage;
+    @DatabaseField(columnName = MEAL_CALORIES)
+    double mCalories;
+
+//    @DatabaseField(columnName = MEAL_CATEGORY)
+//    private String mCategory;
+    @DatabaseField(columnName = MEAL_CATEGORY, foreign = true, foreignAutoRefresh = true)
+    private Category mCategory;
 
 
     // ORMLite needs empty constructor in classes that describes database tables
@@ -70,14 +73,6 @@ public class Meal {
         this.mDescription = mDescription;
     }
 
-    public String getmCategory() {
-        return mCategory;
-    }
-
-    public void setmCategory(String mCategory) {
-        this.mCategory = mCategory;
-    }
-
     public double getmCalories() {
         return mCalories;
     }
@@ -92,6 +87,14 @@ public class Meal {
 
     public void setmPrice(double mPrice) {
         this.mPrice = mPrice;
+    }
+
+    public Category getmCategory() {
+        return mCategory;
+    }
+
+    public void setmCategory(Category mCategory) {
+        this.mCategory = mCategory;
     }
 
     @Override

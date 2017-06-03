@@ -202,12 +202,10 @@ public class DetailFragment extends Fragment implements AdapterView.OnItemSelect
             meal.setmImage(name.getText().toString());
             EditText description = (EditText)getActivity().findViewById(R.id.description);
             meal.setmDescription(description.getText().toString());
-//            EditText calories = (EditText)getActivity().findViewById(R.id.calories);
-//            String calVal = calories.getText().toString();
-//            meal.setmCalories(Double.parseDouble(calVal));
-//            EditText price = (EditText)getActivity().findViewById(R.id.price);
-//            String priceVal =  price.getText().toString();
-//            meal.setmPrice(Double.parseDouble(priceVal));
+            EditText calories = (EditText)getActivity().findViewById(R.id.calories);
+            //meal.setmCalories(Double.parseDouble(calories.getText().toString()));
+            EditText price = (EditText)getActivity().findViewById(R.id.price);
+            //meal.setmPrice(Double.parseDouble(price.getText().toString());
 
             try {
                 ( (FirstActivity)getActivity()).getDataBaseHelper().getmMealDao().update(meal);
