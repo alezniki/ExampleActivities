@@ -33,6 +33,8 @@ import java.util.List;
 
 public class DetailFragment extends Fragment implements AdapterView.OnItemSelectedListener{
 
+    // Position of the item to be displayed in the detail fragment
+    private int position = 0;
     private Meal meal = null;
 
     @Override
@@ -47,7 +49,8 @@ public class DetailFragment extends Fragment implements AdapterView.OnItemSelect
         super.onActivityCreated(savedInstanceState);
 
         if (savedInstanceState != null) {
-//            position = savedInstanceState.getInt("position", 0);
+            position = savedInstanceState.getInt("position", 0);
+
             meal = new Meal();
             meal.setmID(savedInstanceState.getInt("id"));
             meal.setmName(savedInstanceState.getString("name"));
@@ -78,8 +81,8 @@ public class DetailFragment extends Fragment implements AdapterView.OnItemSelect
         }
 
 
-//        // savedInstanceState
-//        outState.putInt("position", position); // CUVA STANJE
+        // savedInstanceState
+        outState.putInt("position", position); // CUVA STANJE
     }
 
     //1. RETURNS FRAGMENT INTO GUI
