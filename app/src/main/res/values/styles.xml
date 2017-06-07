@@ -6,6 +6,7 @@
         <item name="actionMenuTextColor">@color/colorPrimaryLight</item>
         <!--Set Status Bar Color-->
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+
     </style>
 
     <!--Toolbar-->
@@ -16,8 +17,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <!-- Dart theme with an action bar -->
+    <!-- Dark theme with an action bar -->
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
 
     <!-- Light theme -->
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

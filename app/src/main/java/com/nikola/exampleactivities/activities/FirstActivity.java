@@ -40,13 +40,21 @@ import com.nikola.exampleactivities.db.model.Meal;
 import com.nikola.exampleactivities.dialogs.AboutDialog;
 import com.nikola.exampleactivities.fragments.DetailFragment;
 import com.nikola.exampleactivities.fragments.MasterFragment;
+import com.nikola.exampleactivities.json.RetroService;
+import com.nikola.exampleactivities.json.model.Event;
 import com.nikola.exampleactivities.model.NavigationItem;
 import com.nikola.exampleactivities.tools.ReviewerTools;
 import com.squareup.picasso.Picasso;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 // Each activity extends Activity class
 public class FirstActivity extends AppCompatActivity implements MasterFragment.OnItemSelectedListener {
@@ -423,9 +431,100 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
     protected void onResume() {
         super.onResume();
 
+        // Pozovemo metodu kada je potrebno da se ona izvrsi
+
+//        getArtistByName("Foo Fighters");
+        inputDialogShowArtist();
+
         setUpReceiver(); // Registracija jednog filtera
         setUpManager(); // AlarmManager
     }
+
+
+
+    private void getArtistByName(String name) {
+        //@GET("artists/{name}/events")
+        //Call<List<Event>>getArtistByName(@Path("name") String artist, @QueryMap Map<String,String> options);
+        // https://rest.bandsintown.com/artists/foo%20fighters/events?app_id=test"
+
+        Map<String,String> query = new HashMap<>();
+        query.put("app_id","test"); // String key, String value
+
+        Call<List<Event>> eventCALL = RetroService.apiEndpointInterface()
+                        .getArtistByName(name,query); //String, Map<String,String>
+
+        // Callback<List<Event>>
+        eventCALL.enqueue(new Callback<List<Event>>() {
+            @Override
+            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                // Obavezno proveriti da li je upit zavrsen uspesno
+                if (response.code() == 200) {
+                    List<Event> listEvents = response.body();
+
+                    String str = "";
+                    for (Event e : listEvents) {
+                        str+=""+e.getLineup() + ": " + e.getVenue().getName() + "\n";
+                    }
+                    Toast.makeText(FirstActivity.this,str,Toast.LENGTH_LONG).show();
+
+                    if (listEvents.size() > 0) {
+                        //List<String> data = new ArrayList<String>();
+                        String[]data = new String[listEvents.size()];
+
+                        for (int i = 0; i <listEvents.size() ; i++) {
+                            data[i] = listEvents.get(i).getVenue().getName() + ":" + listEvents.get(i).getDatetime();
+                        }
+
+                        Intent results = new Intent(FirstActivity.this, ResultActivity.class);
+                        results.putExtra("data",data);
+                        startActivity(results);
+
+                        Toast.makeText(FirstActivity.this, "Events List", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(FirstActivity.this, "No Events", Toast.LENGTH_LONG).show();
+                    }
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Event>> call, Throwable t) {
+                // Ispisujemo poruku sa greskom
+                Toast.makeText(FirstActivity.this, t.getMessage(),Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+    }
+
+    private void inputDialogShowArtist() {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.input_dialog_artist);
+
+        final EditText inputArtistName = (EditText) dialog.findViewById(R.id.input_artist_name);
+        Button getDataBTN = (Button) dialog.findViewById(R.id.btn_get_data);
+
+        getDataBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String data = inputArtistName.getText().toString();
+
+                // Ako naziv izvodjaca sadrzi razmak, zameniti sa %20
+
+                if (data.contains(" ")) {
+                    data.replace(" ", "%20");
+                }
+
+                getArtistByName(data);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
+    }
+
 
     /**
      * Registrujemo nas BroadcastReceiver i dodajemo mu 'filter'.

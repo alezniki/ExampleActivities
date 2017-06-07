@@ -17,7 +17,7 @@ import retrofit2.http.QueryMap;
 // Kasa koja mapira putanju servisa
 // Opisuje koji metod koristimo ali i sta ocekujemo kao rezultat
 
-// https://rest.bandsintown.com/artists/foo%20fighters/events?app_id=app_id%253Dtes
+// https://rest.bandsintown.com/artists/foo%20fighters/events?app_id=test"
 
 public interface ApiEndpointInterface {
 
@@ -25,7 +25,7 @@ public interface ApiEndpointInterface {
     // Request method and URL specified in the annotation
     // Callback for the parsed response is the last parameter
     @GET("artists/{name}/events")
-    Call<List<Event>>getArtistByName(@Path("name") String artist, @QueryMap Map<String,String> options);
+    Call<List<Event>>getArtistByName(@Path("name") String s, @QueryMap Map<String,String> options);
 
 
 

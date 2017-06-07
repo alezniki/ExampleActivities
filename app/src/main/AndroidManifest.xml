@@ -60,6 +60,15 @@
 
         <!--CommentService-->
         <service android:name="com.nikola.exampleactivities.async.CommentService"/>
+
+        <activity android:name=".activities.ResultActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
+
+                <!--<category android:name="android.intent.category.DEFAULT"/>-->
+            <!--</intent-filter>-->
+            
+        </activity>
     </application>
 
 </manifest>
