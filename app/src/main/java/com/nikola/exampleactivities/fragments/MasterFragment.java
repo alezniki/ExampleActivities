@@ -1,7 +1,7 @@
 package com.nikola.exampleactivities.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -88,13 +88,13 @@ public class MasterFragment extends Fragment {
 
     //4. ATTACH FRAGMENT TO ACTIIVTY
     @Override
-    public void onAttach(Context context) { // Activity activity
-        super.onAttach(context);
+    public void onAttach(Activity activity) { // Activity activity
+        super.onAttach(activity);
 
        try{
-           listener = (OnItemSelectedListener) context;
+           listener = (OnItemSelectedListener) activity;
        } catch (ClassCastException e) {
-           throw new ClassCastException(context.toString() + " must implement OnItemSelectedListener.");
+           throw new ClassCastException(activity.toString() + " must implement OnItemSelectedListener.");
        }
     }
 

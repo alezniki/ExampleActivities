@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -41,6 +42,7 @@ import com.nikola.exampleactivities.fragments.DetailFragment;
 import com.nikola.exampleactivities.fragments.MasterFragment;
 import com.nikola.exampleactivities.model.NavigationItem;
 import com.nikola.exampleactivities.tools.ReviewerTools;
+import com.squareup.picasso.Picasso;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -358,8 +360,34 @@ public class FirstActivity extends AppCompatActivity implements MasterFragment.O
                     e.printStackTrace();
                 }
                 break;
+            case R.id.action_image:
+                showRandomImage();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showRandomImage() {
+
+        final Dialog imgDialog = new Dialog(this);
+        imgDialog.setContentView(R.layout.image_dialog_layout);
+
+        ImageView image = (ImageView) imgDialog.findViewById(R.id.iv_dialog_image);
+
+        // A powerful image downloading and caching library for Android
+
+        Picasso.with(FirstActivity.this)
+                .load("https://source.unsplash.com/random")
+                .into(image);
+
+        Button close = (Button)imgDialog.findViewById(R.id.btn_close_img);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imgDialog.dismiss();
+            }
+        });
+
+        imgDialog.show();
     }
 
     // refresh() prikazuje novi sadrzaj.Povucemo nov sadrzaj iz baze i popunimo listu

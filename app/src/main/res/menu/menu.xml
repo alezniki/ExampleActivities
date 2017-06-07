@@ -10,4 +10,8 @@
         android:title="@string/fragment_master_action_add"
         android:icon="@drawable/ic_action_add"
         app:showAsAction="ifRoom"/>
+    <item android:id="@+id/action_image"
+        android:title="@string/fragment_master_action_image"
+        android:icon="@drawable/ic_action_camera"
+        app:showAsAction="ifRoom"/>
 </menu>

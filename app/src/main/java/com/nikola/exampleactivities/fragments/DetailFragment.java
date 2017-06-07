@@ -117,7 +117,7 @@ public class DetailFragment extends Fragment implements AdapterView.OnItemSelect
         try {
             List<Category> categoryList = ((FirstActivity)getActivity()).getDataBaseHelper().getmCategoryDao().queryForAll();
             ArrayAdapter<Category> categoryAdapter =
-                    new ArrayAdapter<Category>(getActivity(),android.R.layout.simple_spinner_dropdown_item,categoryList);
+                    new ArrayAdapter<>(getActivity(),android.R.layout.simple_spinner_dropdown_item,categoryList);
             spinner.setAdapter(categoryAdapter);
 
             for (int i = 0; i < categoryList.size() ; i++) {
@@ -126,11 +126,10 @@ public class DetailFragment extends Fragment implements AdapterView.OnItemSelect
                     break;
                 }
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
 
         return view;
         //return super.onCreateView(inflater, container, savedInstanceState);

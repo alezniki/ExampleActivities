@@ -30,9 +30,12 @@ dependencies {
     // ormlite-android
     compile group: 'com.j256.ormlite', name: 'ormlite-android', version: '4.48'
 
+    // Gson and Retrofit
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
 
+    // Picasso
+    compile 'com.squareup.picasso:picasso:2.5.2'
 
 }

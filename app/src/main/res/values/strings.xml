@@ -63,6 +63,7 @@
     <string name="fragment_master_action_add">Add</string>
     <string name="menu_action_delete">Delete</string>
     <string name="menu_action_update">Update</string>
+    <string name="fragment_master_action_image">Show Image</string>
 
 
 </resources>
